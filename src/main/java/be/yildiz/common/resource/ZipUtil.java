@@ -1,0 +1,140 @@
+//        This file is part of the Yildiz-Online project, licenced under the MIT License
+//        (MIT)
+//
+//        Copyright (c) 2016 Grégory Van den Borre
+//
+//        More infos available: http://yildiz.bitbucket.org
+//
+//        Permission is hereby granted, free of charge, to any person obtaining a copy
+//        of this software and associated documentation files (the "Software"), to deal
+//        in the Software without restriction, including without limitation the rights
+//        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//        copies of the Software, and to permit persons to whom the Software is
+//        furnished to do so, subject to the following conditions:
+//
+//        The above copyright notice and this permission notice shall be included in all
+//        copies or substantial portions of the Software.
+//
+//        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//        SOFTWARE.
+
+package be.yildiz.common.resource;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+
+import be.yildiz.common.log.Logger;
+
+/**
+ * Utility class to use zip files.
+ * @author Grégory Van den Borre
+ */
+public final class ZipUtil {
+
+    /**
+     * Size of the buffer to use.
+     */
+    private static final int BUFFER_SIZE = 1024;
+
+    /**
+     * Logic to extract the file.
+     * @param in
+     *            Zip input stream.
+     * @param out
+     *            File output stream.
+     * @throws IOException
+     *             If Exception occurs during the copy.
+     */
+    private static void extractFile(final InputStream in, final OutputStream out) throws IOException {
+        byte[] buf = new byte[ZipUtil.BUFFER_SIZE];
+        int l;
+        while ((l = in.read(buf)) >= 0) {
+            out.write(buf, 0, l);
+        }
+        in.close();
+        out.close();
+    }
+
+    /**
+     * Extract a directory and all its content from a zip file.
+     * @param zipFile
+     *            Zip file to extract the data from.
+     * @param destination
+     *            Path where the directory will be extracted.
+     */
+    public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
+        try (ZipFile file = new ZipFile(zipFile)) {
+            String rootDir = "";
+            new File(destination).mkdirs();
+            Enumeration < ? extends ZipEntry > entries = file.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry zipentry = entries.nextElement();
+                if (zipentry.isDirectory()) {
+                    if (!keepRootDir && rootDir.isEmpty()) {
+                        rootDir = zipentry.getName();
+                    } else {
+                        new File(destination + File.separator + zipentry.getName().replace(rootDir, "")).mkdirs();
+                    }
+                } else {
+                    File current;
+                    if (keepRootDir) {
+                        current = new File(destination + File.separator + zipentry.getName());
+                    } else {
+                        current = new File(destination + File.separator + zipentry.getName().replace(rootDir, ""));
+                    }
+                    ZipUtil.extractFile(file.getInputStream(zipentry), new FileOutputStream(current));
+                }
+            }
+        } catch (IOException ioe) {
+            Logger.error(ioe);
+        }
+    }
+
+    /**
+     * Extract a directory and all its content from a zip file.
+     * @param zipFile
+     *            Zip file to extract the data from.
+     * @param directory
+     *            Directory to extract.
+     * @param destination
+     *            Path where the directory will be extracted.
+     */
+    public static void extractFilesFromDirectory(final File zipFile, final String directory, final String destination) {
+        try (ZipFile file = new ZipFile(zipFile)) {
+            new File(destination + File.separator + directory).mkdirs();
+            Enumeration < ? extends ZipEntry > entries = file.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry zipentry = entries.nextElement();
+                if (zipentry.getName().startsWith(directory + "/")) {
+                    if (zipentry.isDirectory()) {
+                        new File(zipentry.getName()).mkdir();
+                    } else {
+                        File current = new File(destination + File.separator + zipentry.getName());
+                        ZipUtil.extractFile(file.getInputStream(zipentry), new FileOutputStream(current));
+                    }
+                }
+            }
+        } catch (IOException ioe) {
+            Logger.error(ioe);
+        }
+    }
+
+    /**
+     * Simple constructor, private to prevent use.
+     */
+    private ZipUtil() {
+        super();
+    }
+
+}
