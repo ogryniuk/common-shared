@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Exception to throw with resources errors like files.
+ *
  * @author Grégory Van den Borre
  */
 public class ResourceException extends BaseException {
@@ -42,8 +43,8 @@ public class ResourceException extends BaseException {
 
     /**
      * Full constructor, log the error.
-     * @param message
-     *            Message to print to the user.
+     *
+     * @param message Message to print to the user.
      */
     public ResourceException(final String message) {
         super(ResourceException.ERROR_TYPE + message);
@@ -51,10 +52,9 @@ public class ResourceException extends BaseException {
 
     /**
      * Full constructor, log the error.
-     * @param message
-     *            Message to print to the user.
-     * @param exception
-     *            Original exception stack.
+     *
+     * @param message   Message to print to the user.
+     * @param exception Original exception stack.
      */
     public ResourceException(final String message, final Throwable exception) {
         super(ResourceException.ERROR_TYPE + message, exception);

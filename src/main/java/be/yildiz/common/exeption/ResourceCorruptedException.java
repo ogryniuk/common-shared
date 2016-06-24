@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Exception thrown a the crc check of a resource fails.
+ *
  * @author Grégory Van den Borre
  */
 public final class ResourceCorruptedException extends ResourceException {
@@ -38,8 +39,8 @@ public final class ResourceCorruptedException extends ResourceException {
 
     /**
      * Full Constructor.
-     * @param message
-     *            Error message.
+     *
+     * @param message Error message.
      */
     public ResourceCorruptedException(final String message) {
         super(message);

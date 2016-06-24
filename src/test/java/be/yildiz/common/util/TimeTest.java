@@ -25,32 +25,32 @@
 
 package be.yildiz.common.util;
 
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.Assert;
 import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * @author Grégory Van den Borre
  */
 public class TimeTest {
-    
+
     @Rule
     public ExpectedException rule = ExpectedException.none();
-    
+
     @Test
     public void testTimeZero() {
         Time t = Time.ZERO;
         Assert.assertEquals(0L, t.timeInMs);
     }
-    
+
     @Test
     public void testMillisecondsLong() {
         Time t = Time.milliSeconds(10);
         Assert.assertEquals(10L, t.timeInMs);
     }
-    
-    
+
+
     @Test
     public void testMilliSecondsNegative() {
         rule.expect(IllegalArgumentException.class);

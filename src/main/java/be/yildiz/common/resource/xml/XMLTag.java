@@ -25,9 +25,9 @@
 
 package be.yildiz.common.resource.xml;
 
-import java.security.InvalidParameterException;
-
 import lombok.Getter;
+
+import java.security.InvalidParameterException;
 
 /**
  * @author Grégory Van den Borre

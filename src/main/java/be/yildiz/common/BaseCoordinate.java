@@ -25,11 +25,12 @@
 
 package be.yildiz.common;
 
-import lombok.EqualsAndHashCode;
 import be.yildiz.common.util.Checker;
+import lombok.EqualsAndHashCode;
 
 /**
  * Base class for coordinates, only to be subclassed.
+ *
  * @author Grégory Van den Borre
  */
 @EqualsAndHashCode
@@ -62,14 +63,11 @@ public class BaseCoordinate {
 
     /**
      * Full constructor.
-     * @param widthValue
-     *            Width coordinate, must be positive.
-     * @param heightValue
-     *            Height coordinate, must be positive.
-     * @param leftValue
-     *            Left coordinate.
-     * @param topValue
-     *            Top coordinate.
+     *
+     * @param widthValue  Width coordinate, must be positive.
+     * @param heightValue Height coordinate, must be positive.
+     * @param leftValue   Left coordinate.
+     * @param topValue    Top coordinate.
      */
     protected BaseCoordinate(final int widthValue, final int heightValue, final int leftValue, final int topValue) {
         super();
@@ -83,8 +81,8 @@ public class BaseCoordinate {
 
     /**
      * Check if a coordinate is contained in another one.
-     * @param toCheck
-     *            Point to check.
+     *
+     * @param toCheck Point to check.
      * @return <code>true</code> if the given coordinate is contained
      */
     public final boolean contains(final BaseCoordinate toCheck) {

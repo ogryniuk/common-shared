@@ -25,72 +25,29 @@
 
 package be.yildiz.common.util;
 
+import be.yildiz.common.collections.Maps;
+
 import java.security.InvalidParameterException;
 import java.util.Map;
 import java.util.Optional;
 
-import be.yildiz.common.collections.Maps;
-
 /**
  * Register objects to be retrieved by their name.
- * @param <T>
- *            Type to register.
+ *
+ * @param <T> Type to register.
  * @author Grégory Van den Borre
  */
-public final class Registerer < T extends Registerable > {
-
-    /**
-     * Default behavior when no result is found.
-     */
-    private final class DefaultNoResult implements NoResult < T > {
-
-        /**
-         * Simple constructor.
-         */
-        private DefaultNoResult() {
-            super();
-        }
-
-        @Override
-        public T resultNotFound(final String name) {
-            throw new InvalidParameterException(name + " not found");
-        }
-
-    }
-
-    /**
-     * Factory to build a new Registerer instance, default NoResult is
-     * applied(throw InvalidParameterException).
-     * @param <T>
-     *            Type to use in the registerer.
-     * @return A new Registerer instance with default NoResult behavior.
-     */
-    public static < T extends Registerable > Registerer < T > newRegisterer() {
-        return new Registerer < T >();
-    }
-
-    /**
-     * Factory to build a new Registerer instance.
-     * @param <T>
-     *            Type to use in the registerer.
-     * @param noResult
-     *            Behavior to use when no result is found for a given name.
-     * @return A new Registerer instance.
-     */
-    public static < T extends Registerable > Registerer < T > newRegisterer(final NoResult < T > noResult) {
-        return new Registerer < T >(noResult);
-    }
+public final class Registerer<T extends Registerable> {
 
     /**
      * Map containing the Registerable elements, the key is the name and the
      * value is the element.
      */
-    private final Map < String, T > list = Maps.newMap();
-
+    private final Map<String, T> list = Maps.newMap();
     /**
      * Behavior to call when no result is found for a given name.
      */
-    private final NoResult < T > noResult;
+    private final NoResult<T> noResult;
 
     /**
      * Default constructor, use the default NoResult behavior when no result is
@@ -105,19 +62,41 @@ public final class Registerer < T extends Registerable > {
     /**
      * Full constructor, use a given NoResult behavior when no result is found.
      * Private to be used only by the factory.
-     * @param noResultBehavior
-     *            Given NoResult to use when no result is found.
+     *
+     * @param noResultBehavior Given NoResult to use when no result is found.
      */
-    private Registerer(final NoResult < T > noResultBehavior) {
+    private Registerer(final NoResult<T> noResultBehavior) {
         super();
         this.noResult = noResultBehavior;
     }
 
     /**
+     * Factory to build a new Registerer instance, default NoResult is
+     * applied(throw InvalidParameterException).
+     *
+     * @param <T> Type to use in the registerer.
+     * @return A new Registerer instance with default NoResult behavior.
+     */
+    public static <T extends Registerable> Registerer<T> newRegisterer() {
+        return new Registerer<T>();
+    }
+
+    /**
+     * Factory to build a new Registerer instance.
+     *
+     * @param <T>      Type to use in the registerer.
+     * @param noResult Behavior to use when no result is found for a given name.
+     * @return A new Registerer instance.
+     */
+    public static <T extends Registerable> Registerer<T> newRegisterer(final NoResult<T> noResult) {
+        return new Registerer<T>(noResult);
+    }
+
+    /**
      * Retrieve an element from its name, if nothing matches, the NoResult
      * behavior is called.
-     * @param name
-     *            Name of the object to retrieve.
+     *
+     * @param name Name of the object to retrieve.
      * @return The object matching the name.
      */
     public T get(final String name) {
@@ -130,19 +109,19 @@ public final class Registerer < T extends Registerable > {
 
     /**
      * Search for an element from its name.
-     * @param name
-     *            Name of the object to search for.
+     *
+     * @param name Name of the object to search for.
      * @return An optional result.
      */
-    public Optional < T > find(final String name) {
+    public Optional<T> find(final String name) {
         return Optional.ofNullable(this.list.get(name));
     }
 
     /**
      * Register a new element, if the element name is already registered, an
      * İnvalıidParameterExeption is thrown.
-     * @param element
-     *            Object to insert.
+     *
+     * @param element Object to insert.
      */
     public void register(final T element) {
         if (this.list.containsKey(element.getName())) {
@@ -154,10 +133,29 @@ public final class Registerer < T extends Registerable > {
 
     /**
      * Unregister an element.
-     * @param element
-     *            Object to remove.
+     *
+     * @param element Object to remove.
      */
     public void remove(final T element) {
         this.list.remove(element.getName());
+    }
+
+    /**
+     * Default behavior when no result is found.
+     */
+    private final class DefaultNoResult implements NoResult<T> {
+
+        /**
+         * Simple constructor.
+         */
+        private DefaultNoResult() {
+            super();
+        }
+
+        @Override
+        public T resultNotFound(final String name) {
+            throw new InvalidParameterException(name + " not found");
+        }
+
     }
 }

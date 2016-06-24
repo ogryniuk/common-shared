@@ -27,14 +27,15 @@ package be.yildiz.common.framelistener;
 
 /**
  * The listener will be notified when the frame starts.
+ *
  * @author Grégory Van den Borre
  */
 public abstract class StartFrameListener extends FrameListener {
 
     /**
      * Does nothing.
-     * @param time
-     *            Unused.
+     *
+     * @param time Unused.
      * @return Always <code>true</code>.
      */
     @Override

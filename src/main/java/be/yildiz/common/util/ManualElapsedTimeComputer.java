@@ -30,28 +30,27 @@ import lombok.Getter;
 public class ManualElapsedTimeComputer {
 
     /**
+     * Total time to wait.
+     */
+    private final long timeToWait;
+    /**
      * Current elapsed time.
      */
     @Getter
     private long elapsedTime;
 
     /**
-     * Total time to wait.
-     */
-    private final long timeToWait;
-
-    /**
      * Constructor initialize the last action time with the current time.
-     * @param deltaTime
-     *            Counter to wait between the last check and the current time,
-     *            in milliseconds.
+     *
+     * @param deltaTime Counter to wait between the last check and the current time,
+     *                  in milliseconds.
      */
     public ManualElapsedTimeComputer(final long deltaTime) {
         super();
         this.timeToWait = deltaTime;
     }
 
-    
+
     public boolean isTimeElapsed(long timeToAdd) {
         this.elapsedTime += timeToAdd;
         if (this.elapsedTime > this.timeToWait) {

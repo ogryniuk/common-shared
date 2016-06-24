@@ -29,66 +29,54 @@ import java.io.Serializable;
 
 /**
  * Class representing RGBA color.
- * 
- * @immutable
- * 
+ * Immutable class.
+ *
  * @author Grégory Van den Borre
  */
 public final class Color implements Serializable {
-
-    /***/
-    private static final long serialVersionUID = -2169198600911019532L;
-
-    /**
-     * Max value for a color parameter(255).
-     */
-    static final int MAX_VALUE = 255;
-
-    /**
-     * Min value for a color parameter(0).
-     */
-    static final int MIN_VALUE = 0;
-
-    /**
-     * White constant.
-     */
-    public static final Color WHITE = new Color(Color.MAX_VALUE, Color.MAX_VALUE, Color.MAX_VALUE);
 
     /**
      * Black constant.
      */
     public static final Color BLACK = new Color(0, 0, 0);
-
+    /**
+     * Max value for a color parameter(255).
+     */
+    static final int MAX_VALUE = 255;
+    /**
+     * White constant.
+     */
+    public static final Color WHITE = new Color(Color.MAX_VALUE, Color.MAX_VALUE, Color.MAX_VALUE);
     /**
      * Red constant.
      */
     public static final Color RED = new Color(Color.MAX_VALUE, 0, 0);
-
     /**
      * Green constant.
      */
     public static final Color GREEN = new Color(0, Color.MAX_VALUE, 0);
-
     /**
      * Blue constant.
      */
     public static final Color BLUE = new Color(0, 0, Color.MAX_VALUE);
-
     /**
      * Yellow constant.
      */
     public static final Color YELLOW = new Color(Color.MAX_VALUE, Color.MAX_VALUE, 0);
-
     /**
      * Orange constant.
      */
     public static final Color ORANGE = new Color(Color.MAX_VALUE, 70, 0);
-
     /**
      * Gray constant.
      */
     public static final Color GRAY = new Color(127, 127, 127, Color.MAX_VALUE);
-
+    /**
+     * Min value for a color parameter(0).
+     */
+    static final int MIN_VALUE = 0;
+    /***/
+    private static final long serialVersionUID = -2169198600911019532L;
     /**
      * Red value, must be between MIN_VALUE and MAX_VALUE.
      */
@@ -131,9 +119,9 @@ public final class Color implements Serializable {
 
     /**
      * Full constructor, alpha is set to MAX_VALUE.
-     * @param value
-     *            Value for red, green and blue(must be between MIN_VALUE and
-     *            MAX_VALUE).
+     *
+     * @param value Value for red, green and blue(must be between MIN_VALUE and
+     *              MAX_VALUE).
      */
     public Color(final int value) {
         this(value, value, value, Color.MAX_VALUE);
@@ -141,12 +129,10 @@ public final class Color implements Serializable {
 
     /**
      * Full constructor, alpha is set to MAX_VALUE.
-     * @param redValue
-     *            Red value(must be between MIN_VALUE and MAX_VALUE).
-     * @param greenValue
-     *            Green value(must be between MIN_VALUE and MAX_VALUE).
-     * @param blueValue
-     *            Blue value(must be between MIN_VALUE and MAX_VALUE).
+     *
+     * @param redValue   Red value(must be between MIN_VALUE and MAX_VALUE).
+     * @param greenValue Green value(must be between MIN_VALUE and MAX_VALUE).
+     * @param blueValue  Blue value(must be between MIN_VALUE and MAX_VALUE).
      */
     public Color(final int redValue, final int greenValue, final int blueValue) {
         this(redValue, greenValue, blueValue, Color.MAX_VALUE);
@@ -154,14 +140,11 @@ public final class Color implements Serializable {
 
     /**
      * Full constructor.
-     * @param redValue
-     *            Red value(must be between MIN_VALUE and MAX_VALUE).
-     * @param greenValue
-     *            Green value(must be between MIN_VALUE and MAX_VALUE).
-     * @param blueValue
-     *            Blue value(must be between MIN_VALUE and MAX_VALUE).
-     * @param alphaValue
-     *            Alpha value (must be between MIN_VALUE and MAX_VALUE).
+     *
+     * @param redValue   Red value(must be between MIN_VALUE and MAX_VALUE).
+     * @param greenValue Green value(must be between MIN_VALUE and MAX_VALUE).
+     * @param blueValue  Blue value(must be between MIN_VALUE and MAX_VALUE).
+     * @param alphaValue Alpha value (must be between MIN_VALUE and MAX_VALUE).
      */
     public Color(final int redValue, final int greenValue, final int blueValue, final int alphaValue) {
         super();
@@ -177,10 +160,10 @@ public final class Color implements Serializable {
 
     /**
      * Check if the value is between MIN_VALUE and MAX_VALUE.
-     * @param value
-     *            Value to check.
+     *
+     * @param value Value to check.
      * @return MIN_VALUE if value is <=MIN_VALUE, MAX_VALUE if value >=
-     *         MAX_VALUE or value if it is between MIN_VALUE and MAX_VALUE.
+     * MAX_VALUE or value if it is between MIN_VALUE and MAX_VALUE.
      */
     private static int checkValue(final int value) {
         if (value >= Color.MAX_VALUE) {
@@ -195,23 +178,23 @@ public final class Color implements Serializable {
     /**
      * Create a copy of this color with a value added to RGB values, alpha is
      * not updated.
-     * @param value
-     *            Value to add.
+     *
+     * @param value Value to add.
      * @return A new color with the same value as this one added to the given
-     *         value.
+     * value.
      */
     public Color add(final int value) {
         return new Color(this.red + value, this.green + value, this.blue + value, this.alpha);
     }
-    
-	public Color add(int red, int green, int blue) {
-		return new Color(this.red + red, this.green + green, this.blue + blue, this.alpha);
-	}
+
+    public Color add(int red, int green, int blue) {
+        return new Color(this.red + red, this.green + green, this.blue + blue, this.alpha);
+    }
 
     /**
      * Test equality between the RGBA values.
-     * @param obj
-     *            Other object to test.
+     *
+     * @param obj Other object to test.
      * @return true if the 2 object have RGBA identical values.
      */
     @Override

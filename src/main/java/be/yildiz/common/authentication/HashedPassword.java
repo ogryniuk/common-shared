@@ -31,14 +31,15 @@ import lombok.NonNull;
  * Wrap a password, the password is assumed to be already hashed with the
  * default algorithm used by the application, if not the authentication system
  * will be broken.
+ *
  * @author Grégory Van den Borre
  */
 public final class HashedPassword extends Password {
 
     /**
      * Constructor.
-     * @param hashedPassword
-     *            Already hashed password, stored without modification.
+     *
+     * @param hashedPassword Already hashed password, stored without modification.
      */
     public HashedPassword(@NonNull final String hashedPassword) {
         super(hashedPassword);

@@ -30,6 +30,7 @@ import org.junit.Test;
 
 /**
  * Test class for ElapsedTimeComputer.
+ *
  * @author Grégory Van den Borre
  */
 public class ElapsedTimeComputerTest {
@@ -42,14 +43,14 @@ public class ElapsedTimeComputerTest {
     /**
      * Test if <li>elapsed time is correct.</li> <li>isTimeElapsed return
      * value.</li>
-     * @throws InterruptedException
-     *             From Thread class.
+     *
+     * @throws InterruptedException From Thread class.
      */
     @Test
     public final void testIsTimeElapsed() throws InterruptedException {
         final int testTime = 500;
         final int error = 50;
-		ElapsedTimeComputer c = new ElapsedTimeComputer(ElapsedTimeComputerTest.TOTAL);
+        ElapsedTimeComputer c = new ElapsedTimeComputer(ElapsedTimeComputerTest.TOTAL);
         Thread.sleep(testTime);
         Assert.assertFalse(c.isTimeElapsed());
         Assert.assertTrue(Checker.inRange(c.getElapsedTime(), testTime, testTime + error));

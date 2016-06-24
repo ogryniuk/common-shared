@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * Utility class to build and manipulate list implementations.
+ *
  * @author Grégory Van den Borre
  */
 public interface Lists {
@@ -39,12 +40,12 @@ public interface Lists {
     /**
      * Build a new List with NoNullArrayList implementation and set a collection
      * of objects inside.
-     * @param values
-     *            Collection of objects placed in the list.
+     *
+     * @param values Collection of objects placed in the list.
      * @return The new list.
      */
-    static List < Float > fromFloat(final float... values) {
-        List < Float > list = new ArrayList < Float >(values.length);
+    static List<Float> fromFloat(final float... values) {
+        List<Float> list = new ArrayList<Float>(values.length);
         for (float f : values) {
             list.add(Float.valueOf(f));
         }
@@ -53,23 +54,23 @@ public interface Lists {
 
     /**
      * Build a new List with NoNullArrayList implementation.
-     * @param <T>
-     *            Contained objects type.
+     *
+     * @param <T> Contained objects type.
      * @return The new list.
      */
-    static < T > List < T > newList() {
-        return new ArrayList < T >();
+    static <T> List<T> newList() {
+        return new ArrayList<T>();
     }
 
     /**
      * Build a new List with NoNullArrayList implementation and set a collection
      * of objects inside.
-     * @param values
-     *            Collection of objects placed in the list.
+     *
+     * @param values Collection of objects placed in the list.
      * @return The new list.
      */
-    static List < Integer > newList(final int... values) {
-        List < Integer > list = new ArrayList < Integer >(values.length);
+    static List<Integer> newList(final int... values) {
+        List<Integer> list = new ArrayList<Integer>(values.length);
         for (int f : values) {
             list.add(Integer.valueOf(f));
         }
@@ -78,43 +79,41 @@ public interface Lists {
 
     /**
      * Build a new List with NoNullArrayList implementation and a given size.
-     * @param <T>
-     *            Contained objects type.
-     * @param size
-     *            List initial size.
+     *
+     * @param <T>  Contained objects type.
+     * @param size List initial size.
      * @return The new list.
      */
-    static < T > List < T > newList(final int size) {
-        return new ArrayList < T >(size);
+    static <T> List<T> newList(final int size) {
+        return new ArrayList<T>(size);
     }
 
     /**
      * Build a new List with NoNullArrayList implementation and set a collection
      * of objects inside.
-     * @param <T>
-     *            Contained objects type.
-     * @param t
-     *            Collection of objects placed in the list.
+     *
+     * @param <T> Contained objects type.
+     * @param t   Collection of objects placed in the list.
      * @return The new list.
      */
     @SuppressWarnings("unchecked")
-    static < T > List < T > newList(final T... t) {
-        return new ArrayList < T >(Arrays.asList(t));
+    static <T> List<T> newList(final T... t) {
+        return new ArrayList<T>(Arrays.asList(t));
     }
 
-    static < T > List < T > newList(final Collection < T > c) {
-        return new ArrayList < T >(c);
+    static <T> List<T> newList(final Collection<T> c) {
+        return new ArrayList<T>(c);
     }
 
     /**
      * Create a new List being a copy of the one provided. The copy is light,
      * only references are copied, changes in object in original list will be
      * reflected in the copy.
-     * @param list
-     *            List to copy.
+     *
+     * @param list List to copy.
      * @return The copy of the given list.
      */
-    static < T > List < T > copy(List < T > list) {
+    static <T> List<T> copy(List<T> list) {
         return Lists.newList(list);
     }
 }

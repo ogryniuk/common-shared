@@ -27,6 +27,7 @@ package be.yildiz.common.nativeresources;
 
 /**
  * Common interface for native object.
+ *
  * @author Grégory Van den Borre
  */
 public interface Native {

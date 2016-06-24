@@ -25,32 +25,31 @@
 
 package be.yildiz.common.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.Properties;
-
+import be.yildiz.common.exeption.ResourceException;
+import be.yildiz.common.exeption.ResourceMissingException;
+import be.yildiz.common.resource.PropertiesHelper;
+import be.yildiz.common.resource.ResourceUtil;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import be.yildiz.common.exeption.ResourceException;
-import be.yildiz.common.exeption.ResourceMissingException;
-import be.yildiz.common.resource.PropertiesHelper;
-import be.yildiz.common.resource.ResourceUtil;
+import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Properties;
 
 /**
  * Test class for PropertiesHelper.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public class PropertiesHelperTest {
 
     @Rule
     public final ExpectedException rule = ExpectedException.none();
-    
+
     @AfterClass
     public static void clean() {
         File ff = new File("locked.properties");
@@ -64,13 +63,13 @@ public class PropertiesHelperTest {
         p.setProperty("aValue", ":)");
         Assert.assertEquals(":)", PropertiesHelper.getValue(p, "aValue"));
     }
-    
-    @Test(expected=IllegalArgumentException.class)
+
+    @Test(expected = IllegalArgumentException.class)
     public void testValueNotFound() {
         Properties p = new Properties();
         PropertiesHelper.getValue(p, "aValue");
     }
-    
+
     @Test
     public void testGetBooleanValue() {
         Properties p = new Properties();
@@ -79,20 +78,20 @@ public class PropertiesHelperTest {
         p.setProperty("aValue", "false");
         Assert.assertFalse(PropertiesHelper.getBooleanValue(p, "aValue"));
     }
-    
-    @Test(expected=IllegalArgumentException.class)
+
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBooleanValueNotFound() {
         Properties p = new Properties();
         PropertiesHelper.getBooleanValue(p, "aValue");
     }
-    
-    @Test(expected=IllegalArgumentException.class)
+
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBooleanValueNotBoolean() {
         Properties p = new Properties();
         p.setProperty("aValue", ":)");
         PropertiesHelper.getBooleanValue(p, "aValue");
     }
-    
+
     @Test
     public void testGetIntegerValue() {
         Properties p = new Properties();
@@ -103,48 +102,48 @@ public class PropertiesHelperTest {
         p.setProperty("aValue", "17");
         Assert.assertEquals(17, PropertiesHelper.getIntValue(p, "aValue"));
     }
-    
-    @Test(expected=IllegalArgumentException.class)
+
+    @Test(expected = IllegalArgumentException.class)
     public void testIntegerValueNotFound() {
         Properties p = new Properties();
         PropertiesHelper.getIntValue(p, "aValue");
     }
-    
-    @Test(expected=IllegalArgumentException.class)
+
+    @Test(expected = IllegalArgumentException.class)
     public void testIntegerValueNotInteger() {
         Properties p = new Properties();
         p.setProperty("aValue", ":)");
         PropertiesHelper.getIntValue(p, "aValue");
     }
-    
+
     @Test
     public final void testGetPropertyFromFile() throws IOException {
         this.testGetPropertyFromFileName("f.properties");
     }
-    
+
     @Test
     public final void testGetPropertyFromFileWithSpace() throws IOException {
         this.testGetPropertyFromFileName("f f.properties");
     }
-    
+
     @Test
     public final void testGetPropertyFromFileWithUnicode() throws IOException {
         this.testGetPropertyFromFileName("éùriè$.properties");
     }
-    
+
     @Test
     public final void testGetPropertyFromFileInDirectory() throws IOException {
         this.testGetPropertyFromFileName("test/f.properties");
     }
-    
+
     private void testGetPropertyFromFileName(final String name) throws IOException {
         File file = new File(name);
         file.delete();
-        if(file.getParentFile() != null && !file.getParentFile().exists()) {
+        if (file.getParentFile() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
         Assert.assertTrue(file.createNewFile());
-        
+
         Properties p = new Properties();
         p.setProperty("aValue", "something");
         try (Writer fileWriter = ResourceUtil.getFileWriter(file)) {
@@ -152,18 +151,18 @@ public class PropertiesHelperTest {
         } catch (IOException e) {
             throw new ResourceException("Configuration could not be saved in file " + file.getAbsolutePath());
         }
-        
+
         Properties result = PropertiesHelper.getPropertiesFromFile(file);
         Assert.assertEquals("something", PropertiesHelper.getValue(result, "aValue"));
-        
+
         Assert.assertTrue(file.delete());
     }
-    
-    @Test(expected=ResourceMissingException.class)
+
+    @Test(expected = ResourceMissingException.class)
     public final void testGetPropertyFromFileNotFound() throws IOException {
         PropertiesHelper.getPropertiesFromFile(new File("nevermind.properties"));
     }
-    
+
     @Test
     public void testSave() {
         Properties p = new Properties();
@@ -173,7 +172,7 @@ public class PropertiesHelperTest {
         Assert.assertEquals("aValue", PropertiesHelper.getValue(PropertiesHelper.getPropertiesFromFile(f), "test"));
         f.delete();
     }
-    
+
     @Test
     public void testSaveDirectory() {
         Properties p = new Properties();
@@ -184,7 +183,7 @@ public class PropertiesHelperTest {
         f.delete();
         f.getParentFile().delete();
     }
-    
+
     @Test
     public void testSaveDirectoryWithSpace() {
         Properties p = new Properties();
@@ -195,7 +194,7 @@ public class PropertiesHelperTest {
         f.delete();
         f.getParentFile().delete();
     }
-    
+
     @Test
     public void testSaveUnicode() {
         Properties p = new Properties();

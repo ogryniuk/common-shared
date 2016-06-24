@@ -25,19 +25,17 @@
 
 package be.yildiz.common.authentication;
 
-import java.util.List;
-
 import be.yildiz.common.authentication.AuthenticationChecker.AuthenticationError;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * Exception thrown if a login or a password does not match some criteria(min or
  * max size, no invalid characters...)
+ *
  * @author Grégory Van den Borre
  */
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class CredentialException extends Exception {
 
     /***/
@@ -47,6 +45,9 @@ public final class CredentialException extends Exception {
      * List of errors.
      */
     @Getter
-    private final List < AuthenticationError > errors;
+    private final List<AuthenticationError> errors;
 
+    public CredentialException(List<AuthenticationError> errors) {
+        this.errors = errors;
+    }
 }

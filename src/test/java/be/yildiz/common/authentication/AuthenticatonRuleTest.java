@@ -25,10 +25,10 @@
 
 package be.yildiz.common.authentication;
 
-import java.util.regex.Pattern;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.regex.Pattern;
 
 public class AuthenticatonRuleTest {
 
@@ -41,7 +41,7 @@ public class AuthenticatonRuleTest {
         Assert.assertEquals("[a-zA-Z0-9]*", AuthenticationRules.DEFAULT.loginPattern.pattern());
         Assert.assertEquals("[a-zA-Z0-9]*", AuthenticationRules.DEFAULT.passPattern.pattern());
     }
-    
+
     @Test
     public void testAuthenticationRules() {
         AuthenticationRules r = new AuthenticationRules(10, 15, 3, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));

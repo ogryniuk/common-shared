@@ -29,6 +29,7 @@ import be.yildiz.common.util.BaseRegisterable;
 
 /**
  * Resource meant to be loaded, contains the loaded state and the resource name.
+ *
  * @author Grégory Van Den Borre
  */
 public abstract class Resource extends BaseRegisterable {
@@ -40,8 +41,8 @@ public abstract class Resource extends BaseRegisterable {
 
     /**
      * Full constructor.
-     * @param name
-     *            Unique font name.
+     *
+     * @param name Unique font name.
      */
     protected Resource(final String name) {
         super(name);

@@ -25,16 +25,14 @@
 
 package be.yildiz.common.authentication;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * Wrap a password, the return value is hashed, once this object is built, the
  * clear password is no longer available.
+ *
  * @author Grégory Van den Borre
  */
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
 
     /**
@@ -42,6 +40,10 @@ public class Password {
      */
     @Getter
     private final String hashedPassword;
+
+    protected Password(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
 
     @Override
     public final int hashCode() {

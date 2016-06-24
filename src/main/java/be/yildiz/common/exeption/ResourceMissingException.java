@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Exception thrown when a resource is not found at a given path.
+ *
  * @author Grégory Van den Borre
  */
 public class ResourceMissingException extends ResourceException {
@@ -38,8 +39,8 @@ public class ResourceMissingException extends ResourceException {
 
     /**
      * Full constructor.
-     * @param message
-     *            Error message.
+     *
+     * @param message Error message.
      */
     public ResourceMissingException(final String message) {
         super(message);
@@ -47,10 +48,9 @@ public class ResourceMissingException extends ResourceException {
 
     /**
      * Full constructor.
-     * @param message
-     *            Error message.
-     * @param e
-     *            Initial exception.
+     *
+     * @param message Error message.
+     * @param e       Initial exception.
      */
     public ResourceMissingException(final String message, final Exception e) {
         super(message, e);

@@ -25,6 +25,7 @@
 
 /**
  * Contains data classes to build shapes.
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common.shape;

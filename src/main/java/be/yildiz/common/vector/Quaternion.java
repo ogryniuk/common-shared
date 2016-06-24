@@ -27,39 +27,23 @@ package be.yildiz.common.vector;
 
 /**
  * This class represent a quaternion.
+ *
  * @author Grégory Van den Borre
  */
 public final class Quaternion {
 
     /**
-     * Build a new Quaternion resulting from the multiplication of 2 other
-     * quaternions.
-     * @param q1
-     *            1st quaternion to use.
-     * @param q2
-     *            2nd quaternion to use.
-     * @return the newly build Quaternion.
-     */
-    public static Quaternion multiply2Quaternions(final Quaternion q1, final Quaternion q2) {
-        return new Quaternion(q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z, q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
-                q1.w * q2.y + q1.y * q2.w + q1.z * q2.x - q1.x * q2.z, q1.w * q2.z + q1.z * q2.w + q1.x * q2.y - q1.y * q2.x);
-    }
-
-    /**
      * W value.
      */
     public final float w;
-
     /**
      * X value.
      */
     public final float x;
-
     /**
      * Y value.
      */
     public final float y;
-
     /**
      * Z value.
      */
@@ -67,14 +51,11 @@ public final class Quaternion {
 
     /**
      * Full constructor.
-     * @param wValue
-     *            initialize W attribute.
-     * @param xValue
-     *            initialize X attribute.
-     * @param yValue
-     *            initialize Y attribute.
-     * @param zValue
-     *            initialize Z attribute.
+     *
+     * @param wValue initialize W attribute.
+     * @param xValue initialize X attribute.
+     * @param yValue initialize Y attribute.
+     * @param zValue initialize Z attribute.
      */
     public Quaternion(final float wValue, final float xValue, final float yValue, final float zValue) {
         super();
@@ -82,5 +63,18 @@ public final class Quaternion {
         this.x = xValue;
         this.y = yValue;
         this.z = zValue;
+    }
+
+    /**
+     * Build a new Quaternion resulting from the multiplication of 2 other
+     * quaternions.
+     *
+     * @param q1 1st quaternion to use.
+     * @param q2 2nd quaternion to use.
+     * @return the newly build Quaternion.
+     */
+    public static Quaternion multiply2Quaternions(final Quaternion q1, final Quaternion q2) {
+        return new Quaternion(q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z, q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
+                q1.w * q2.y + q1.y * q2.w + q1.z * q2.x - q1.x * q2.z, q1.w * q2.z + q1.z * q2.w + q1.x * q2.y - q1.y * q2.x);
     }
 }

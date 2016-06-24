@@ -25,16 +25,16 @@
 
 package be.yildiz.common.resource.xml;
 
-import java.util.List;
-
 import be.yildiz.common.collections.Lists;
+
+import java.util.List;
 
 /**
  * @author Grégory Van den Borre
  */
 public final class XMLWrapTag extends XMLTag {
 
-    private final List < XMLTag > children;
+    private final List<XMLTag> children;
 
     public XMLWrapTag(final String name) {
         super(name);

@@ -25,6 +25,13 @@
 
 package be.yildiz.common.resource;
 
+import be.yildiz.common.exeption.ResourceCorruptedException;
+import be.yildiz.common.exeption.ResourceException;
+import be.yildiz.common.exeption.ResourceMissingException;
+import be.yildiz.common.log.Logger;
+import be.yildiz.common.util.Literals;
+import lombok.Getter;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,38 +43,15 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.CRC32;
 
-import be.yildiz.common.exeption.ResourceCorruptedException;
-import be.yildiz.common.exeption.ResourceException;
-import be.yildiz.common.exeption.ResourceMissingException;
-import be.yildiz.common.log.Logger;
-import be.yildiz.common.util.Literals;
-import lombok.Getter;
-
 /**
  * @author Grégory Van den Borre
  */
 public final class FileResource {
 
-    public enum FileType {
-        FILE(0), DIRECTORY(3), VFS(2), ZIP(1);
-        
-        /**
-         * Associated value to avoid to depend on the natural order.
-         */
-        public final int value;
-
-        /**
-         * Constructor set the value.
-         * 
-         * @param value
-         *            Associated value.
-         */
-        FileType(final int value) {
-            this.value = value;
-        }
-    }
-    
-
+    /**
+     * Associated File object.
+     */
+    private final File file;
     /**
      * Path and name of the file.
      */
@@ -86,16 +70,11 @@ public final class FileResource {
     private long size;
 
     /**
-     * Associated File object.
-     */
-    private final File file;
-
-    /**
      * Full constructor. Build the associated file, throw a
      * {@link ResourceMissingException} if the file does not exist, retrieve the
      * size, and compute the CRC32.
-     * @param fileName
-     *            Path and name of the resource.
+     *
+     * @param fileName Path and name of the resource.
      */
     public FileResource(final String fileName) {
         super();
@@ -110,8 +89,8 @@ public final class FileResource {
     /**
      * Full constructor. Build the associated file, throw a if the file does not
      * exist, it is created. Retrieve the size, and compute the CRC32.
-     * @param fileName
-     *            Path and name of the resource.
+     *
+     * @param fileName Path and name of the resource.
      */
     public FileResource(final String fileName, final FileType type) {
         super();
@@ -136,8 +115,8 @@ public final class FileResource {
      * Check if the String received(the string must match the
      * {@link FileResource#toString()}) contains the same values as this object.
      * Otherwise Exceptions will be thrown.
-     * @param expected
-     *            Validation string.
+     *
+     * @param expected Validation string.
      */
     public void check(final String expected) {
         if (this.crc32 == 0) {
@@ -157,6 +136,7 @@ public final class FileResource {
 
     /**
      * Compute the file CRC32.
+     *
      * @return The computed value.
      */
     private long computeCrc() {
@@ -180,10 +160,10 @@ public final class FileResource {
      * Check if an other object is equals to this file, first check is made on
      * memory address, then on object class, then on crc and finally on name
      * ignoring the '\' and '/' to get equality on different systems.
-     * @param obj
-     *            Other object to test.
+     *
+     * @param obj Other object to test.
      * @return <code>true</code> If the two objects are considered equals,
-     *         <code>false</code> otherwise.
+     * <code>false</code> otherwise.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -209,6 +189,7 @@ public final class FileResource {
 
     /**
      * Check if the file is present on the hard disk.
+     *
      * @return True if the file exists.
      */
     public boolean exists() {
@@ -217,6 +198,7 @@ public final class FileResource {
 
     /**
      * Get the file absolute path.
+     *
      * @return The file absolute path.
      */
     public String getAbsolutePath() {
@@ -225,6 +207,7 @@ public final class FileResource {
 
     /**
      * Build a byte[] from the file wrapped in this object.
+     *
      * @return the byte[] if not problem occurred, null otherwise.
      */
     public byte[] getBytesFromFile() {
@@ -282,16 +265,14 @@ public final class FileResource {
 
     /**
      * List all files contained in this folder.
-     * @param files
-     *            List to fill with result.
-     * @param toIgnore
-     *            If the file name contains this value, it will be ignored.
-     * @throws IOException
-     *             If an exception occurs during the search.
+     *
+     * @param files    List to fill with result.
+     * @param toIgnore If the file name contains this value, it will be ignored.
+     * @throws IOException If an exception occurs during the search.
      */
-    public void listFile(final List < FileResource > files, final String... toIgnore) throws IOException {
+    public void listFile(final List<FileResource> files, final String... toIgnore) throws IOException {
         Path folder = Paths.get(this.getName());
-        try (DirectoryStream < Path > directory = Files.newDirectoryStream(folder, new DirectoryStream.Filter < Path >() {
+        try (DirectoryStream<Path> directory = Files.newDirectoryStream(folder, new DirectoryStream.Filter<Path>() {
             @Override
             public boolean accept(final Path entry) {
                 return !entry.toString().contains("Thumbs.db") && !entry.toString().contains("list.xml");
@@ -310,8 +291,8 @@ public final class FileResource {
     /**
      * Rename the file or move it if the path is changed. This only work if the
      * new name is in the same physical drive.
-     * @param newName
-     *            New name and path of the file.
+     *
+     * @param newName New name and path of the file.
      * @return True if completed successfully.
      */
     public boolean rename(final String newName) {
@@ -332,11 +313,29 @@ public final class FileResource {
 
     /**
      * Remove OS dependent path char from the file name.
-     * @param toUnify
-     *            File name.
+     *
+     * @param toUnify File name.
      * @return The name with all '\\' and '/' char removed.
      */
     private String unifyName(final String toUnify) {
         return toUnify.contains("\\") ? toUnify.replace("\\", "") : toUnify.replace("/", "");
+    }
+
+    public enum FileType {
+        FILE(0), DIRECTORY(3), VFS(2), ZIP(1);
+
+        /**
+         * Associated value to avoid to depend on the natural order.
+         */
+        public final int value;
+
+        /**
+         * Constructor set the value.
+         *
+         * @param value Associated value.
+         */
+        FileType(final int value) {
+            this.value = value;
+        }
     }
 }

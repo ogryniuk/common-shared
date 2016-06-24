@@ -25,24 +25,27 @@
 
 package be.yildiz.common.util;
 
-import java.io.Serializable;
-
 import lombok.Getter;
+
+import java.io.Serializable;
 
 /**
  * Check if a given time is elapsed.
+ *
  * @author Grégory Van Den Borre
  */
 public final class ElapsedTimeComputer implements Serializable {
 
     /***/
     private static final long serialVersionUID = -8851199529330811505L;
-
+    /**
+     * Total time to wait.
+     */
+    private final long timeToWait;
     /**
      * last checked time.
      */
     private long lastTime;
-
     /**
      * Current elapsed time.
      */
@@ -50,15 +53,10 @@ public final class ElapsedTimeComputer implements Serializable {
     private long elapsedTime;
 
     /**
-     * Total time to wait.
-     */
-    private final long timeToWait;
-
-    /**
      * Constructor initialize the last action time with the current time.
-     * @param deltaTime
-     *            Counter to wait between the last check and the current time,
-     *            in milliseconds.
+     *
+     * @param deltaTime Counter to wait between the last check and the current time,
+     *                  in milliseconds.
      */
     public ElapsedTimeComputer(final long deltaTime) {
         super();
@@ -68,8 +66,8 @@ public final class ElapsedTimeComputer implements Serializable {
 
     /**
      * Constructor initialize the last action time with the current time.
-     * @param deltaTime
-     *            Counter to wait between the last check and the current time.
+     *
+     * @param deltaTime Counter to wait between the last check and the current time.
      */
     public ElapsedTimeComputer(final Time deltaTime) {
         this(deltaTime.timeInMs);
@@ -77,6 +75,7 @@ public final class ElapsedTimeComputer implements Serializable {
 
     /**
      * Compute the completion ratio.
+     *
      * @return The ration, between 0 and 1(completed).
      */
     public float getCompletion() {
@@ -86,8 +85,9 @@ public final class ElapsedTimeComputer implements Serializable {
     /**
      * If the time initialized by the constructor is elapsed, the counter is
      * reset and the method return true.
+     *
      * @return True if more time than the counter has passed since the last
-     *         reinitialisation.
+     * reinitialisation.
      */
     public boolean isTimeElapsed() {
         long current = System.currentTimeMillis();

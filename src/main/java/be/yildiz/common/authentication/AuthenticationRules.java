@@ -27,13 +27,11 @@ package be.yildiz.common.authentication;
 
 import java.util.regex.Pattern;
 
-import lombok.AllArgsConstructor;
-
 /**
  * List of rules for the authentication.
+ *
  * @author Grégory Van den Borre
  */
-@AllArgsConstructor
 public final class AuthenticationRules {
 
     /**
@@ -73,4 +71,12 @@ public final class AuthenticationRules {
      */
     public final Pattern passPattern;
 
+    public AuthenticationRules(int loginMaxLength, int passMaxLength, int loginMinLength, int passMinLength, Pattern loginPattern, Pattern passPattern) {
+        this.loginMaxLength = loginMaxLength;
+        this.passMaxLength = passMaxLength;
+        this.loginMinLength = loginMinLength;
+        this.passMinLength = passMinLength;
+        this.loginPattern = loginPattern;
+        this.passPattern = passPattern;
+    }
 }

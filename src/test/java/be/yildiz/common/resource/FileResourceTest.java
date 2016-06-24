@@ -25,21 +25,21 @@
 
 package be.yildiz.common.resource;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
+import be.yildiz.common.exeption.ResourceCorruptedException;
+import be.yildiz.common.exeption.ResourceMissingException;
+import be.yildiz.common.util.Literals;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import be.yildiz.common.exeption.ResourceCorruptedException;
-import be.yildiz.common.exeption.ResourceMissingException;
-import be.yildiz.common.util.Literals;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /**
  * Test class for FileResouce.
+ *
  * @author Grégory Van den Borre
  */
 public final class FileResourceTest {

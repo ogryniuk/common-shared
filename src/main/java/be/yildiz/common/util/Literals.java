@@ -27,6 +27,7 @@ package be.yildiz.common.util;
 
 /**
  * Utility class to hold literals constant.
+ *
  * @author Grégory Van den Borre
  */
 public interface Literals {

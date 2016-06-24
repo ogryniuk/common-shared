@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Unchecked exception occurring when an initialization process has failed.
+ *
  * @author Grégory Van den Borre
  */
 public class InitializationException extends BaseException {
@@ -36,8 +37,8 @@ public class InitializationException extends BaseException {
 
     /**
      * Full constructor.
-     * @param message
-     *            Error message to display.
+     *
+     * @param message Error message to display.
      */
     public InitializationException(final String message) {
         super(message);

@@ -25,10 +25,10 @@
 
 package be.yildiz.common.collections;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * @author Grégory Van den Borre
@@ -37,8 +37,8 @@ public final class ListsTest {
 
     @Test
     public void testFromFloat() {
-        float[] floats = new float[] {2, 4, 9, 8};
-        List < Float > list = Lists.fromFloat(floats);
+        float[] floats = new float[]{2, 4, 9, 8};
+        List<Float> list = Lists.fromFloat(floats);
         Assert.assertEquals(floats.length, list.size());
         for (int i = 0; i < floats.length; i++) {
             Assert.assertEquals(floats[i], list.get(i).floatValue(), 0.0001f);

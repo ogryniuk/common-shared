@@ -25,13 +25,11 @@
 
 package be.yildiz.common;
 
-import lombok.AllArgsConstructor;
-
 /**
  * Wrapper class for a relative value.
+ *
  * @author Grégory Van den Borre
  */
-@AllArgsConstructor
 public final class Relative {
 
     /**
@@ -53,4 +51,8 @@ public final class Relative {
      * Relative value.
      */
     public final float value;
+
+    public Relative(float value) {
+        this.value = value;
+    }
 }

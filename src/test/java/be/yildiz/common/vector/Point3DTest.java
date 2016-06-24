@@ -28,8 +28,6 @@ package be.yildiz.common.vector;
 import org.junit.Assert;
 import org.junit.Test;
 
-import be.yildiz.common.vector.Point3D;
-
 /**
  * @author Grégory Van den Borre
  */

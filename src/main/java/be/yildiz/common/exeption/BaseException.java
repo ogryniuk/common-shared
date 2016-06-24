@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Basic unchecked Exception.
+ *
  * @author Grégory Van den Borre
  */
 public class BaseException extends RuntimeException {
@@ -38,8 +39,8 @@ public class BaseException extends RuntimeException {
 
     /**
      * Full constructor.
-     * @param message
-     *            Message to print to the user.
+     *
+     * @param message Message to print to the user.
      */
     protected BaseException(final String message) {
         super(message);
@@ -47,10 +48,9 @@ public class BaseException extends RuntimeException {
 
     /**
      * Full constructor.
-     * @param message
-     *            Message to print to the user.
-     * @param exception
-     *            Original exception stack.
+     *
+     * @param message   Message to print to the user.
+     * @param exception Original exception stack.
      */
     protected BaseException(final String message, final Throwable exception) {
         super(message, exception);

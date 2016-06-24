@@ -25,6 +25,7 @@
 
 /**
  * Package for the client side entity data.
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common.gameobject;

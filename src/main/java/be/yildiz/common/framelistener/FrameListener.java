@@ -30,6 +30,7 @@ import be.yildiz.common.util.Timer;
 /**
  * Listen when a frame starts and finishes, the frame end method provide the
  * time since the last frame.
+ *
  * @author Grégory Van den Borre
  */
 public abstract class FrameListener {
@@ -49,15 +50,17 @@ public abstract class FrameListener {
 
     /**
      * Called when a frame begins.
+     *
      * @return <code>false</code> if the listener has finished his job and must
-     *         be removed from the notify list.
+     * be removed from the notify list.
      */
     public abstract boolean frameStarted();
 
     /**
      * Called when a frame ends.
+     *
      * @return <code>false</code> if the listener has finished his job and must
-     *         be removed from the notify list.
+     * be removed from the notify list.
      */
     public final boolean frameEnded() {
         return this.frameEnded(this.timer.getActionTime());
@@ -65,10 +68,10 @@ public abstract class FrameListener {
 
     /**
      * Called when a frame ends.
-     * @param time
-     *            Time since the begin of this frame.
+     *
+     * @param time Time since the begin of this frame.
      * @return <code>false</code> if the listener has finished his job and must
-     *         be removed from the notify list.
+     * be removed from the notify list.
      */
     protected abstract boolean frameEnded(long time);
 

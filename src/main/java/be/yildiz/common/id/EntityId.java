@@ -33,9 +33,9 @@ import java.util.Map;
 
 /**
  * An id represent an unique instance of a class of object. The same id can be shared between different class but two objects of the same class cannot have the same id.
- * 
+ * <p>
  * Immutable class.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public final class EntityId implements Serializable {
@@ -70,9 +70,8 @@ public final class EntityId implements Serializable {
 
     /**
      * Full constructor, private to prevent use, to create an id, retrieve it from Id.get.
-     * 
-     * @param idValue
-     *            Initialize the wrapped value.
+     *
+     * @param idValue Initialize the wrapped value.
      */
     private EntityId(final long idValue) {
         super();
@@ -83,9 +82,8 @@ public final class EntityId implements Serializable {
 
     /**
      * Retrieve an Id from a value.
-     * 
-     * @param value
-     *            Id value to get, positive and negative values are allowed, -1 is WORLD.
+     *
+     * @param value Id value to get, positive and negative values are allowed, -1 is WORLD.
      * @return The Id with the internal value correspond to the parameter.
      */
     public static EntityId get(final long value) {
@@ -97,9 +95,8 @@ public final class EntityId implements Serializable {
 
     /**
      * Retrieve an Id from a value.
-     * 
-     * @param value
-     *            Id value to get, positive and negative values are allowed, -1 is WORLD.
+     *
+     * @param value Id value to get, positive and negative values are allowed, -1 is WORLD.
      * @return The Id with the internal value correspond to the parameter.
      */
     public static EntityId get(final int value) {
@@ -108,9 +105,8 @@ public final class EntityId implements Serializable {
 
     /**
      * Check if an id is world.
-     * 
-     * @param id
-     *            Id to check.
+     *
+     * @param id Id to check.
      * @return <code>true</code> if Id matches world Id.
      */
     public static boolean isWorld(final EntityId id) {
@@ -119,9 +115,8 @@ public final class EntityId implements Serializable {
 
     /**
      * Check if an id is world.
-     * 
-     * @param id
-     *            Internal value to check.
+     *
+     * @param id Internal value to check.
      * @return <code>true</code> if the internal value matches world internal value.
      */
     public static boolean isWorld(final long id) {
@@ -137,7 +132,7 @@ public final class EntityId implements Serializable {
 
     /**
      * Check if this is world.
-     * 
+     *
      * @return <code>true</code> if this id is world.
      */
     public boolean isWorld() {

@@ -32,14 +32,15 @@ import java.util.Set;
 
 /**
  * Utility class to manipulate collections.
+ *
  * @author Grégory Van den Borre
  */
 public interface CollectionUtil {
 
     /**
      * Copy an array.
-     * @param arrayToCopy
-     *            Array to copy.
+     *
+     * @param arrayToCopy Array to copy.
      * @return the copy.
      */
     static float[] arrayCopy(final float[] arrayToCopy) {
@@ -48,13 +49,12 @@ public interface CollectionUtil {
 
     /**
      * Copy an array.
-     * @param arrayToCopy
-     *            Array to copy.
-     * @param <T>
-     *            Type of objects in array.
+     *
+     * @param arrayToCopy Array to copy.
+     * @param <T>         Type of objects in array.
      * @return the copy.
      */
-    static < T > T[] arrayCopy(final T[] arrayToCopy) {
+    static <T> T[] arrayCopy(final T[] arrayToCopy) {
         return Arrays.copyOf(arrayToCopy, arrayToCopy.length);
     }
 
@@ -62,12 +62,11 @@ public interface CollectionUtil {
      * Check that every float in the first array are bigger than the second at
      * the same index. i.e: a[3] = 4 and b[3] = 2 will return
      * <code>false</code>.
-     * @param a
-     *            First array to check.
-     * @param b
-     *            Second array to check.
+     *
+     * @param a First array to check.
+     * @param b Second array to check.
      * @return <code>true</code> if all element at same index of first array are
-     *         bigger than in second array.
+     * bigger than in second array.
      */
     static boolean checkBiggerOrEqual(final float[] a, final float[] b) {
         for (int i = 0; i < a.length; i++) {
@@ -80,10 +79,9 @@ public interface CollectionUtil {
 
     /**
      * Fill an array with the content of another.
-     * @param destination
-     *            Array to fill.
-     * @param dataToCopy
-     *            Array to get data.
+     *
+     * @param destination Array to fill.
+     * @param dataToCopy  Array to get data.
      */
     static void cloneArray(final float[] destination, final float[] dataToCopy) {
         System.arraycopy(dataToCopy, 0, destination, 0, destination.length);
@@ -91,10 +89,9 @@ public interface CollectionUtil {
 
     /**
      * Concatenate 2 arrays of bytes.
-     * @param array1
-     *            The first array.
-     * @param array2
-     *            The second array.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      * @return A new byte array containing the 2 arrays data.
      */
     static byte[] concatByteArrays(final byte[] array1, final byte[] array2) {
@@ -104,13 +101,13 @@ public interface CollectionUtil {
         return result;
     }
 
-	static <K, V> Set<V> getOrCreateSetFromMap(Map<K, Set<V>> map,
-			K key) {
-		Set<V> result = map.get(key);
-		if(result == null) {
-			result = new HashSet<>();
-			map.put(key, result);
-		}
-		return result;
-	}
+    static <K, V> Set<V> getOrCreateSetFromMap(Map<K, Set<V>> map,
+                                               K key) {
+        Set<V> result = map.get(key);
+        if (result == null) {
+            result = new HashSet<>();
+            map.put(key, result);
+        }
+        return result;
+    }
 }

@@ -25,9 +25,11 @@
 
 package be.yildiz.common.resource.xml;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
+import be.yildiz.common.log.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -37,16 +39,13 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import be.yildiz.common.log.Logger;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * Helper class to get Document from an XML file.
+ *
  * @author Grégory Van den Borre
  */
 public final class XMLParser {
@@ -71,9 +70,16 @@ public final class XMLParser {
     }
 
     /**
+     * Private constructor, to prevent use.
+     */
+    private XMLParser() {
+        super();
+    }
+
+    /**
      * Create an usable Document from a XML file.
-     * @param file
-     *            XML file.
+     *
+     * @param file XML file.
      * @return The generated Document to parse.
      */
     public static Document getDocument(final File file) {
@@ -87,10 +93,9 @@ public final class XMLParser {
 
     /**
      * Create an usable Document from a XML file and check it with a schema.
-     * @param file
-     *            XML file.
-     * @param schemaFile
-     *            File to use for validation.
+     *
+     * @param file       XML file.
+     * @param schemaFile File to use for validation.
      * @return The generated Document to parse.
      */
     public static Document getDocument(final File file, final File schemaFile) {
@@ -109,8 +114,8 @@ public final class XMLParser {
 
     /**
      * Create an usable Document from a String.
-     * @param doc
-     *            String to use to create the Document.
+     *
+     * @param doc String to use to create the Document.
      * @return The generated Document to parse.
      */
     public static Document getDocument(final String doc) {
@@ -123,10 +128,9 @@ public final class XMLParser {
 
     /**
      * Retrieve an element from an XML document.
-     * @param doc
-     *            Document.
-     * @param tag
-     *            Element tag.
+     *
+     * @param doc Document.
+     * @param tag Element tag.
      * @return The element value.
      */
     public static String getElement(final Document doc, final String tag) {
@@ -135,13 +139,6 @@ public final class XMLParser {
             return l.item(0).getNodeValue();
         }
         return "";
-    }
-
-    /**
-     * Private constructor, to prevent use.
-     */
-    private XMLParser() {
-        super();
     }
 
 }

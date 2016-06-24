@@ -25,31 +25,32 @@
 
 package be.yildiz.common.authentication;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
  * Store a login and a password. Use the {@link AuthenticationChecker} to create
  * an instance of this class.
+ *
  * @author Grégory Van den Borre
  */
-@AllArgsConstructor(access=AccessLevel.PACKAGE)
 public final class Credentials {
 
     /**
      * User login.
      */
     @Getter
-    @NonNull
     private final String login;
 
     /**
      * User hashed password.
      */
-    @NonNull
     private final Password hashedPassword;
+
+    Credentials(@NonNull String login, @NonNull Password hashedPassword) {
+        this.login = login;
+        this.hashedPassword = hashedPassword;
+    }
 
     /**
      * @return The hashed password value.

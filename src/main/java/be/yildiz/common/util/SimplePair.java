@@ -25,15 +25,14 @@
 
 package be.yildiz.common.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Unparameterized pair.
+ * Unparametrized pair.
+ *
  * @author Grégory Van den Borre
  */
 @Getter
-@AllArgsConstructor
 public final class SimplePair {
 
     /**
@@ -45,4 +44,9 @@ public final class SimplePair {
      * Second object.
      */
     private final Object object2;
+
+    public SimplePair(Object object1, Object object2) {
+        this.object1 = object1;
+        this.object2 = object2;
+    }
 }

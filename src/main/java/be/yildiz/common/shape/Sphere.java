@@ -27,10 +27,9 @@ package be.yildiz.common.shape;
 
 import be.yildiz.common.util.Checker;
 
-import java.security.InvalidParameterException;
-
 /**
  * Data to create a sphere.
+ *
  * @author Grégory Van den Borre
  */
 public final class Sphere {
@@ -42,8 +41,8 @@ public final class Sphere {
 
     /**
      * Full constructor.
-     * @param radiusSize
-     *            Radius size of the sphere.
+     *
+     * @param radiusSize Radius size of the sphere.
      */
     public Sphere(final float radiusSize) {
         super();

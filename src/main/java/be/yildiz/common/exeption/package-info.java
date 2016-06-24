@@ -25,6 +25,7 @@
 
 /**
  * Provide a set of precreated exception to handle common error cases.
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common.exeption;

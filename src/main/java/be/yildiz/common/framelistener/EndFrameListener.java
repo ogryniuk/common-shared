@@ -28,12 +28,14 @@ package be.yildiz.common.framelistener;
 /**
  * The listener will be notified when the frame finishes and will provide the
  * time since the last frame.
+ *
  * @author Grégory Van den Borre
  */
 public abstract class EndFrameListener extends FrameListener {
 
     /**
      * Does nothing.
+     *
      * @return Always <code>true</code>.
      */
     @Override

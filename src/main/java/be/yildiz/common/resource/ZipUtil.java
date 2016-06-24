@@ -25,19 +25,16 @@
 
 package be.yildiz.common.resource;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import be.yildiz.common.log.Logger;
+
+import java.io.*;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import be.yildiz.common.log.Logger;
-
 /**
  * Utility class to use zip files.
+ *
  * @author Grégory Van den Borre
  */
 public final class ZipUtil {
@@ -48,13 +45,18 @@ public final class ZipUtil {
     private static final int BUFFER_SIZE = 1024;
 
     /**
+     * Simple constructor, private to prevent use.
+     */
+    private ZipUtil() {
+        super();
+    }
+
+    /**
      * Logic to extract the file.
-     * @param in
-     *            Zip input stream.
-     * @param out
-     *            File output stream.
-     * @throws IOException
-     *             If Exception occurs during the copy.
+     *
+     * @param in  Zip input stream.
+     * @param out File output stream.
+     * @throws IOException If Exception occurs during the copy.
      */
     private static void extractFile(final InputStream in, final OutputStream out) throws IOException {
         byte[] buf = new byte[ZipUtil.BUFFER_SIZE];
@@ -68,16 +70,15 @@ public final class ZipUtil {
 
     /**
      * Extract a directory and all its content from a zip file.
-     * @param zipFile
-     *            Zip file to extract the data from.
-     * @param destination
-     *            Path where the directory will be extracted.
+     *
+     * @param zipFile     Zip file to extract the data from.
+     * @param destination Path where the directory will be extracted.
      */
     public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
         try (ZipFile file = new ZipFile(zipFile)) {
             String rootDir = "";
             new File(destination).mkdirs();
-            Enumeration < ? extends ZipEntry > entries = file.entries();
+            Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipentry = entries.nextElement();
                 if (zipentry.isDirectory()) {
@@ -103,17 +104,15 @@ public final class ZipUtil {
 
     /**
      * Extract a directory and all its content from a zip file.
-     * @param zipFile
-     *            Zip file to extract the data from.
-     * @param directory
-     *            Directory to extract.
-     * @param destination
-     *            Path where the directory will be extracted.
+     *
+     * @param zipFile     Zip file to extract the data from.
+     * @param directory   Directory to extract.
+     * @param destination Path where the directory will be extracted.
      */
     public static void extractFilesFromDirectory(final File zipFile, final String directory, final String destination) {
         try (ZipFile file = new ZipFile(zipFile)) {
             new File(destination + File.separator + directory).mkdirs();
-            Enumeration < ? extends ZipEntry > entries = file.entries();
+            Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipentry = entries.nextElement();
                 if (zipentry.getName().startsWith(directory + "/")) {
@@ -128,13 +127,6 @@ public final class ZipUtil {
         } catch (IOException ioe) {
             Logger.error(ioe);
         }
-    }
-
-    /**
-     * Simple constructor, private to prevent use.
-     */
-    private ZipUtil() {
-        super();
     }
 
 }

@@ -28,6 +28,7 @@ package be.yildiz.common.util;
 /**
  * Registerable mean the object can used with a Registerer, its name must be
  * unique for the used Registerer.
+ *
  * @author Grégory Van den Borre
  */
 public class BaseRegisterable implements Registerable {
@@ -45,9 +46,9 @@ public class BaseRegisterable implements Registerable {
     /**
      * Full constructor. This class is only meant to be extended, the
      * constructor is protected.
-     * @param registerableName
-     *            Name associated to the registerable, must be unique by
-     *            Registerer.
+     *
+     * @param registerableName Name associated to the registerable, must be unique by
+     *                         Registerer.
      */
     protected BaseRegisterable(final String registerableName) {
         super();
@@ -76,6 +77,7 @@ public class BaseRegisterable implements Registerable {
 
     /**
      * Simple implementation based on the name.
+     *
      * @return The name hashcode.
      */
     @Override
@@ -85,6 +87,7 @@ public class BaseRegisterable implements Registerable {
 
     /**
      * Base implementation, just return the name.
+     *
      * @return The name.
      */
     @Override

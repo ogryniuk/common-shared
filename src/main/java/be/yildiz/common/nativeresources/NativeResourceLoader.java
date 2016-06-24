@@ -25,29 +25,27 @@
 
 package be.yildiz.common.nativeresources;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.lang.reflect.Field;
-import java.security.InvalidParameterException;
-import java.util.*;
-
 import be.yildiz.common.collections.Lists;
 import be.yildiz.common.collections.Maps;
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.resource.ZipUtil;
 import be.yildiz.common.util.Util;
 
+import java.io.File;
+import java.lang.reflect.Field;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
 /**
  * Utility class to load the native library from the classpath or a jar.
+ *
  * @author Grégory Van den Borre
  */
 // FIXME delete
 public final class NativeResourceLoader {
-
-    /**
-     * Contains the found native libraries and their full path.
-     */
-    private static final Map < String, String > AVAILABLE_LIB = Maps.newMap();
 
     /**
      * Directory containing the native libraries, can be win32, win34, linux32,
@@ -55,16 +53,18 @@ public final class NativeResourceLoader {
      * architecture.
      */
     public static final String DIRECTORY;
-
     /**
      * Will contains the native librairies to be loaded.
      */
-    public static final File LIB_DIRECTORY = new File(System.getProperty("user.home") + File.separator + "app-root"  + File.separator + "data");
-
+    public static final File LIB_DIRECTORY = new File(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data");
     /**
      * Library file extension, can be .dll on windows, .so on linux.
      */
     public static final String LIBRARY_EXTENSION;
+    /**
+     * Contains the found native libraries and their full path.
+     */
+    private static final Map<String, String> AVAILABLE_LIB = Maps.newMap();
 
     static {
 
@@ -85,7 +85,7 @@ public final class NativeResourceLoader {
         }
         // register all available libs:
         String[] classPath = System.getProperty("java.class.path", "").split(File.pathSeparator);
-        List < String > jarList = Lists.newList();
+        List<String> jarList = Lists.newList();
         for (String s : classPath) {
             if (s.endsWith(".jar")) {
                 jarList.add(s);
@@ -100,9 +100,16 @@ public final class NativeResourceLoader {
     }
 
     /**
+     * Simple constructor, private to prevent use.
+     */
+    private NativeResourceLoader() {
+        super();
+    }
+
+    /**
      * Give the full path of a registered native library.
-     * @param lib
-     *            Library to check.
+     *
+     * @param lib Library to check.
      * @return The absolute path of the given library.
      */
     public static String getLibPath(final String lib) {
@@ -116,8 +123,8 @@ public final class NativeResourceLoader {
     /**
      * Load a native library, it will check if it is contained in a jar, if so,
      * the library will be extracted in a temporary place and loaded from there.
-     * @param libs
-     *            Native library name to load.
+     *
+     * @param libs Native library name to load.
      */
     public static void loadLibrary(final String... libs) {
         String nativePath = null;
@@ -141,12 +148,14 @@ public final class NativeResourceLoader {
 
     /**
      * Register the found libraries in a directory to be ready to be loaded.
-     * @param dir
-     *            Directory holding the libraries.
+     *
+     * @param dir Directory holding the libraries.
      */
     private static void registerLibInDir(final File dir) {
         if (dir.exists() && dir.isDirectory()) {
-            File[] contents = dir.listFiles(p -> {return p.isFile() && p.getName().endsWith(NativeResourceLoader.LIBRARY_EXTENSION);});
+            File[] contents = dir.listFiles(p -> {
+                return p.isFile() && p.getName().endsWith(NativeResourceLoader.LIBRARY_EXTENSION);
+            });
             for (File f : contents) {
                 NativeResourceLoader.AVAILABLE_LIB
                         .put(f.getName().replace(NativeResourceLoader.LIBRARY_EXTENSION, ""), f.getAbsolutePath());
@@ -159,17 +168,10 @@ public final class NativeResourceLoader {
     }
 
     /**
-     * Simple constructor, private to prevent use.
-     */
-    private NativeResourceLoader() {
-        super();
-    }
-
-    /**
      * To load the shared libraries, only used for windows, on linux, will not
      * load anything.
-     * @param libs
-     *            Libraries to be loaded only on windows.
+     *
+     * @param libs Libraries to be loaded only on windows.
      */
     public static void loadBaseLibrary(String... libs) {
         if (!Util.isLinux()) {

@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * The application should be closed when an UnrecoverableException occur.
+ *
  * @author Grégory Van den Borre
  */
 public final class UnrecoverableException extends RuntimeException {
@@ -39,8 +40,8 @@ public final class UnrecoverableException extends RuntimeException {
     /**
      * Constructor used when the exception is not caused by another exception,
      * logged.
-     * @param message
-     *            Exception message.
+     *
+     * @param message Exception message.
      */
     public UnrecoverableException(final String message) {
         super(message);
@@ -49,10 +50,9 @@ public final class UnrecoverableException extends RuntimeException {
     /**
      * Constructor used when the exception is caused by another exception,
      * logged.
-     * @param message
-     *            Exception message.
-     * @param exception
-     *            Base exception.
+     *
+     * @param message   Exception message.
+     * @param exception Base exception.
      */
     public UnrecoverableException(final String message, final Exception exception) {
         super(message, exception);

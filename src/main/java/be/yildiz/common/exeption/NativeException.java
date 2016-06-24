@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Exception to re throw from native code, not meant to be used in java code.
+ *
  * @author Grégory Van den Borre
  */
 public final class NativeException extends BaseException {
@@ -38,8 +39,8 @@ public final class NativeException extends BaseException {
 
     /**
      * Full constructor.
-     * @param message
-     *            Error message.
+     *
+     * @param message Error message.
      */
     public NativeException(final String message) {
         super(message);

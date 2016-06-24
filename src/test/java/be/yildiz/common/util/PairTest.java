@@ -38,7 +38,7 @@ public class PairTest {
      */
     @Test
     public final void testGetObject1() {
-        Pair < String, Integer > p = new Pair < String, Integer >("test", 5);
+        Pair<String, Integer> p = new Pair<String, Integer>("test", 5);
         Assert.assertNotNull(p.getObject1());
         Assert.assertEquals(p.getObject1(), "test");
     }
@@ -48,7 +48,7 @@ public class PairTest {
      */
     @Test
     public final void testGetObject2() {
-        Pair < String, Integer > p = new Pair < String, Integer >("test", 5);
+        Pair<String, Integer> p = new Pair<String, Integer>("test", 5);
         Assert.assertNotNull(p.getObject2());
         Assert.assertEquals(p.getObject2(), Integer.valueOf(5));
     }
@@ -59,7 +59,7 @@ public class PairTest {
      */
     @Test
     public final void testSetObject1() {
-        Pair < String, Integer > p = new Pair < String, Integer >("test", 5);
+        Pair<String, Integer> p = new Pair<String, Integer>("test", 5);
         p.setObject1("test2");
         Assert.assertNotNull(p.getObject1());
         Assert.assertEquals(p.getObject1(), "test2");
@@ -71,7 +71,7 @@ public class PairTest {
      */
     @Test
     public final void testSetObject2() {
-        Pair < String, Integer > p = new Pair < String, Integer >("test", 5);
+        Pair<String, Integer> p = new Pair<String, Integer>("test", 5);
         p.setObject2(10);
         Assert.assertNotNull(p.getObject2());
         Assert.assertEquals(p.getObject2(), Integer.valueOf(10));

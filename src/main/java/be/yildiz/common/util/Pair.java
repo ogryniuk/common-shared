@@ -25,22 +25,19 @@
 
 package be.yildiz.common.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * A simple container for 2 linked objects.
- * @author Grégory Van Den Borre
- * @param <R>
- *            First object type.
- * @param <T>
- *            Second object type.
+ *
+ * @param <R> First object type.
+ * @param <T> Second object type.
+ * @author Grégory Van den Borre
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public final class Pair < R, T > {
+public final class Pair<R, T> {
 
     /**
      * First object.
@@ -51,4 +48,9 @@ public final class Pair < R, T > {
      * Second object.
      */
     private T object2;
+
+    public Pair(R o1, T o2) {
+        this.object1 = o1;
+        this.object2 = o2;
+    }
 }

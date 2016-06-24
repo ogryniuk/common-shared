@@ -35,7 +35,7 @@ import java.util.logging.Level;
 
 /**
  * Simple wrapper class for the logger to provide easy use.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public final class Logger {
@@ -50,6 +50,13 @@ public final class Logger {
      */
     private static LogLevel logLevel = LogLevel.DEBUG;
 
+    /**
+     * Private constructor to prevent use.
+     */
+    private Logger() {
+        super();
+    }
+
     public static void setLevelInfo() {
         logLevel = LogLevel.INFO;
         WRAPPED_LOGGER.setLevel(Level.INFO);
@@ -57,9 +64,8 @@ public final class Logger {
 
     /**
      * Log an error message.
-     * 
-     * @param message
-     *            Message to log.
+     *
+     * @param message Message to log.
      */
     public static void error(final String message) {
         Logger.WRAPPED_LOGGER.log(Level.SEVERE, message);
@@ -67,11 +73,9 @@ public final class Logger {
 
     /**
      * Log an error message.
-     * 
-     * @param message
-     *            Base error message.
-     * @param exception
-     *            Exception to log.
+     *
+     * @param message   Base error message.
+     * @param exception Exception to log.
      */
     public static void error(final String message, final Throwable exception) {
         StringWriter sw = new StringWriter();
@@ -82,9 +86,8 @@ public final class Logger {
 
     /**
      * Log an error message.
-     * 
-     * @param exception
-     *            Exception to log.
+     *
+     * @param exception Exception to log.
      */
     public static void error(final Throwable exception) {
         StringWriter sw = new StringWriter();
@@ -95,9 +98,8 @@ public final class Logger {
 
     /**
      * Log an info message.
-     * 
-     * @param object
-     *            Message to log.
+     *
+     * @param object Message to log.
      */
     public static void info(final Object object) {
         Logger.WRAPPED_LOGGER.info(object.toString());
@@ -105,9 +107,8 @@ public final class Logger {
 
     /**
      * Log an info message.
-     * 
-     * @param message
-     *            Message to log.
+     *
+     * @param message Message to log.
      */
     public static void info(final String message) {
         Logger.WRAPPED_LOGGER.info(message);
@@ -115,13 +116,12 @@ public final class Logger {
 
     /**
      * Set the file to use.
-     * 
+     *
+     * @param name File name.
      * @Requires name != null
      * @Requires name to be an acceptable file name.
      * @Affects the wrapped logger.
      * @Ensures The wrapped logger will be using the name as file name.
-     * @param name
-     *            File name.
      */
     public static void setFile(final String name) {
         try {
@@ -139,10 +139,9 @@ public final class Logger {
 
     /**
      * Log a debug message.
-     * 
-     * @param message
-     *            Message to log.
-     * //FIXME use info
+     *
+     * @param message Message to log.
+     *                //FIXME use info
      */
     public static void debug(final String message) {
         Logger.WRAPPED_LOGGER.info(message);
@@ -151,18 +150,10 @@ public final class Logger {
     /**
      * Log a warning message.
      *
-     * @param message
-     *            Message to log.
+     * @param message Message to log.
      */
     public static void warning(final String message) {
         Logger.WRAPPED_LOGGER.warning(message);
-    }
-
-    /**
-     * Private constructor to prevent use.
-     */
-    private Logger() {
-        super();
     }
 
     public static LogLevel getLogLevel() {

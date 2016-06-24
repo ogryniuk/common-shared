@@ -25,6 +25,7 @@
 
 /**
  * Containes classes associated to file manipulation.
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common.resource;

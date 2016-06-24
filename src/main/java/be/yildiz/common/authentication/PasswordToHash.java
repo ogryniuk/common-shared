@@ -25,22 +25,32 @@
 
 package be.yildiz.common.authentication;
 
+import be.yildiz.common.resource.ResourceUtil;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import be.yildiz.common.resource.ResourceUtil;
 
 /**
  * Wrap a password, take a clear password as input and hash it. Once this object
  * is built, the password in clear is lost.
+ *
  * @author Grégory Van den Borre
  */
 public final class PasswordToHash extends Password {
 
     /**
+     * Build a hashed password from a clear password.
+     *
+     * @param clearPassword Clear password.
+     */
+    public PasswordToHash(final String clearPassword) {
+        super(PasswordToHash.hash(PasswordToHash.salt(clearPassword)));
+    }
+
+    /**
      * Add a salt to a password.
-     * @param clearPassword
-     *            Clear password.
+     *
+     * @param clearPassword Clear password.
      * @return The salted password.
      */
     private static String salt(final String clearPassword) {
@@ -50,8 +60,8 @@ public final class PasswordToHash extends Password {
 
     /**
      * Hash the password.
-     * @param clearPassword
-     *            Clear password.
+     *
+     * @param clearPassword Clear password.
      * @return the hashed password.
      */
     private static String hash(final String clearPassword) {
@@ -73,14 +83,5 @@ public final class PasswordToHash extends Password {
             }
         }
         return hashString.toString();
-    }
-
-    /**
-     * Build a hashed password from a clear password.
-     * @param clearPassword
-     *            Clear password.
-     */
-    public PasswordToHash(final String clearPassword) {
-        super(PasswordToHash.hash(PasswordToHash.salt(clearPassword)));
     }
 }

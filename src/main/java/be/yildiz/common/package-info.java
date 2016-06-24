@@ -25,6 +25,7 @@
 
 /**
  * Contains base common classes.
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common;

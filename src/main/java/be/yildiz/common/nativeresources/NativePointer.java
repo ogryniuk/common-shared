@@ -27,42 +27,41 @@ package be.yildiz.common.nativeresources;
 
 /**
  * Wrapper class for an address pointer in native code.
+ *
  * @author Grégory Van den Borre
  */
 public final class NativePointer {
-
-    /**
-     * Construction method, build a new NativePointer from an address.
-     * @param address
-     *            Pointer address.
-     * @return The built NativePointer.
-     */
-    public static NativePointer create(final long address) {
-        return new NativePointer(address);
-    }
-
 
     /**
      * Address to the native object pointer.
      */
     public final long address;
 
+
     /**
      * Full constructor, initialize The pointer address.
-     * @param pointerAddress
-     *            Address to the native object.
+     *
+     * @param pointerAddress Address to the native object.
      */
     private NativePointer(final long pointerAddress) {
         super();
         this.address = pointerAddress;
     }
 
+    /**
+     * Construction method, build a new NativePointer from an address.
+     *
+     * @param address Pointer address.
+     * @return The built NativePointer.
+     */
+    public static NativePointer create(final long address) {
+        return new NativePointer(address);
+    }
 
     /**
-     * @param other
-     *            Other object to test.
+     * @param other Other object to test.
      * @return True if the other object is not null, is a NativePointer and have
-     *         the same pointer address.
+     * the same pointer address.
      */
     @Override
     public boolean equals(final Object other) {

@@ -25,19 +25,18 @@
 
 package be.yildiz.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import be.yildiz.common.util.Checker;
 import be.yildiz.common.vector.Point2D;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represent a 2D rectangle and contains the 4 extremities data.
+ *
  * @author Grégory Van den Borre
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public final class Rectangle {
 
     /**
@@ -60,14 +59,20 @@ public final class Rectangle {
      */
     private int bottom;
 
+    public Rectangle(int left, int top, int right, int bottom) {
+        this.left = left;
+        this.right = right;
+        this.top = top;
+        this.bottom = bottom;
+    }
+
     /**
      * Check if a point is contained in this rectangle. i.e. a point with
      * coordinates(5,3) would be contained in a rectangle (x1=0, x2=10, y1=2,
      * y2=4).
-     * @param x
-     *            X coordinate for the point to check.
-     * @param y
-     *            Y coordinate for the point to check.
+     *
+     * @param x X coordinate for the point to check.
+     * @param y Y coordinate for the point to check.
      * @return true if the point is within this rectangle.
      */
     public boolean contain(final int x, final int y) {
@@ -96,8 +101,8 @@ public final class Rectangle {
      * Check if a point is contained in this rectangle. i.e. a point with
      * coordinates(5,3) would be contained in a rectangle (x1=0, x2=10, y1=2,
      * y2=4).
-     * @param point
-     *            Point to check.
+     *
+     * @param point Point to check.
      * @return true if the point is within this rectangle.
      */
     public boolean contain(final Point2D point) {
@@ -129,10 +134,9 @@ public final class Rectangle {
     /**
      * Update the rectangle coordinates by adding values to it, this behave the
      * same as if the rectangle was moving.
-     * @param x
-     *            Value to add to left and right.
-     * @param y
-     *            Value to add to top and bottom.
+     *
+     * @param x Value to add to left and right.
+     * @param y Value to add to top and bottom.
      */
     public void move(final int x, final int y) {
         this.setLeft(this.left + x);
@@ -171,13 +175,11 @@ public final class Rectangle {
 
     /**
      * Update the Rectangle values.
-     * @param leftValue
-     *            New value for left.
-     *            New value for top.
-     * @param rightValue
-     *            New value for right.
-     * @param bottomValue
-     *            New value for bottom.
+     *
+     * @param leftValue   New value for left.
+     *                    New value for top.
+     * @param rightValue  New value for right.
+     * @param bottomValue New value for bottom.
      */
     public void setValues(final int leftValue, final int topValue, final int rightValue, final int bottomValue) {
         this.left = leftValue;

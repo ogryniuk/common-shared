@@ -29,6 +29,7 @@ import java.util.Collection;
 
 /**
  * Utility class for manipulating String object and building toString method.
+ *
  * @author Grégory Van den Borre
  */
 public interface StringUtil {
@@ -36,8 +37,8 @@ public interface StringUtil {
     /**
      * Build a string from an array. Every object contained has its toString
      * result separated by |.
-     * @param array
-     *            Array to use.
+     *
+     * @param array Array to use.
      * @return A string containing all the array values.
      */
     static String arrayToString(final float[] array) {
@@ -52,8 +53,8 @@ public interface StringUtil {
     /**
      * Build a string from an array. Every object contained has its toString
      * result separated by |.
-     * @param array
-     *            Array to use.
+     *
+     * @param array Array to use.
      * @return A string containing all the array values.
      */
     static String arrayToString(final Object[] array) {
@@ -67,10 +68,10 @@ public interface StringUtil {
 
     /**
      * Build a random String from a base, useful for unique names,...
-     * @param base
-     *            Object to use as base.
+     *
+     * @param base Object to use as base.
      * @return the base Object.toString with random suffix(based on Math.random
-     *         and System.nanoTime).
+     * and System.nanoTime).
      */
     static String buildRandomString(final Object base) {
         return StringUtil.buildRandomString(base.toString());
@@ -78,10 +79,10 @@ public interface StringUtil {
 
     /**
      * Build a random String from a base, useful for unique names,...
-     * @param base
-     *            String to use as base.
+     *
+     * @param base String to use as base.
      * @return the base String with random suffix(based on Math.random and
-     *         System.nanoTime).
+     * System.nanoTime).
      */
     static String buildRandomString(final String base) {
         final StringBuilder sb = new StringBuilder(base);
@@ -94,8 +95,8 @@ public interface StringUtil {
 
     /**
      * Build a String from a list of objects.
-     * @param objects
-     *            Objects to use.
+     *
+     * @param objects Objects to use.
      * @return The string built from the parameters.
      */
     static String buildToString(final Object... objects) {
@@ -114,7 +115,7 @@ public interface StringUtil {
 
     static String fillVariable(String base, Object[] replacement) {
         StringBuilder result = new StringBuilder(base);
-        for(int i = 0; i < replacement.length; i++) {
+        for (int i = 0; i < replacement.length; i++) {
             String name = "${" + i + "}";
             int index = result.indexOf(name);
             while (index != -1) {
@@ -128,8 +129,8 @@ public interface StringUtil {
 
     /**
      * Convert a time(in milliseconds) into a formated time(h m s).
-     * @param time
-     *            Time value in millisecond to format.
+     *
+     * @param time Time value in millisecond to format.
      * @return A formated String with the parameter value displayed in h m s.
      */
     static String formatTime(final long time) {
@@ -151,8 +152,8 @@ public interface StringUtil {
 
     /**
      * Convert a time into a formated time(h m s).
-     * @param time
-     *            Time value to format.
+     *
+     * @param time Time value to format.
      * @return A formated String with the parameter value displayed in h m s.
      */
     static String formatTime(final Time time) {
@@ -161,12 +162,10 @@ public interface StringUtil {
 
     /**
      * Insert a character at a given position in a string.
-     * @param string
-     *            String to use.
-     * @param position
-     *            Position to insert the character.
-     * @param c
-     *            Character to insert.
+     *
+     * @param string   String to use.
+     * @param position Position to insert the character.
+     * @param c        Character to insert.
      * @return The modified string.
      */
     static String insertChar(final String string, final int position, final char c) {
@@ -175,10 +174,9 @@ public interface StringUtil {
 
     /**
      * Remove a char from a string at a given position.
-     * @param string
-     *            String to replace.
-     * @param position
-     *            Position of the char to remove, first index is 0.
+     *
+     * @param string   String to replace.
+     * @param position Position of the char to remove, first index is 0.
      * @return The modified string.
      */
     static String removeChar(final String string, final int position) {
@@ -190,8 +188,8 @@ public interface StringUtil {
 
     /**
      * Remove the first character in a string.
-     * @param string
-     *            String to use.
+     *
+     * @param string String to use.
      * @return The string without the first char.
      */
     static String removeFirstChar(final String string) {
@@ -200,8 +198,8 @@ public interface StringUtil {
 
     /**
      * Remove the last char for a given String.
-     * @param string
-     *            String to use.
+     *
+     * @param string String to use.
      * @return The given String without the last char.
      */
     static String removeLastChar(final String string) {
@@ -213,8 +211,8 @@ public interface StringUtil {
 
     /**
      * Remove the last char for a given StringBuilder.
-     * @param string
-     *            StringBuilder to use.
+     *
+     * @param string StringBuilder to use.
      * @return The given String without the last char.
      */
     static String removeLastChar(final StringBuilder string) {
@@ -227,14 +225,13 @@ public interface StringUtil {
     /**
      * Build a string from the collection. Every object contained has its
      * toString result separated by comma.
-     * @param <T>
-     *            Collection type.
-     * @param c
-     *            Collection to use.
+     *
+     * @param <T> Collection type.
+     * @param c   Collection to use.
      * @return A string containing all the collection values, or "null" if
-     *         parameter is <code>null</code>.
+     * parameter is <code>null</code>.
      */
-    static < T > String toString(final Collection < T > c) {
+    static <T> String toString(final Collection<T> c) {
         if (c == null) {
             return "null";
         } else if (c.isEmpty()) {
@@ -252,10 +249,10 @@ public interface StringUtil {
     /**
      * Call toString method of object and handle <code>null</code> cases by
      * returning "null".
-     * @param object
-     *            Object to get String value.
+     *
+     * @param object Object to get String value.
      * @return The object toString value or "null" if the parameter is
-     *         <code>null</code>.
+     * <code>null</code>.
      */
     static String toString(final Object object) {
         if (object == null) {
@@ -263,14 +260,14 @@ public interface StringUtil {
         }
         return object.toString();
     }
-    
+
     /**
      * Call toString method of object and handle <code>null</code> cases by
      * returning empty string.
-     * @param object
-     *            Object to get String value.
+     *
+     * @param object Object to get String value.
      * @return The object toString value or "" if the parameter is
-     *         <code>null</code>.
+     * <code>null</code>.
      */
     static String safe(final Object object) {
         if (object == null) {

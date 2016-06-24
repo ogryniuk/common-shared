@@ -27,6 +27,7 @@ package be.yildiz.common.vector;
 
 /**
  * Possible axis in a 3 dimensional context.
+ *
  * @author Grégory Van den Borre
  */
 public enum Axis {

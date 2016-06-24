@@ -29,6 +29,7 @@ package be.yildiz.common.vector;
  * Class representing a 2d coordinate, extends {@link Mutable} class to check if
  * mutability is allowed, that's why all logic that modify inner values must use
  * the setter to check the state.
+ *
  * @author Grégory Van den Borre
  */
 public final class Point2D {
@@ -57,23 +58,21 @@ public final class Point2D {
 
     /**
      * Full constructor.
-     * @param xValue
-     *            Initialize The point x value.
-     * @param yValue
-     *            Initialize The point y value.
+     *
+     * @param xValue Initialize The point x value.
+     * @param yValue Initialize The point y value.
      */
     public Point2D(final int xValue, final int yValue) {
         this();
         this.x = xValue;
         this.y = yValue;
     }
-    
+
     /**
      * Full constructor, convert double into int.
-     * @param xValue
-     *            Initialize The point x value.
-     * @param yValue
-     *            Initialize The point y value.
+     *
+     * @param xValue Initialize The point x value.
+     * @param yValue Initialize The point y value.
      */
     public Point2D(final double xValue, final double yValue) {
         this();
@@ -83,10 +82,9 @@ public final class Point2D {
 
     /**
      * Add this point values by the parameter x,y values.
-     * @param xValue
-     *            Values to add to this point X value.
-     * @param yValue
-     *            Values to add to this point Y value.
+     *
+     * @param xValue Values to add to this point X value.
+     * @param yValue Values to add to this point Y value.
      */
     public void add(final int xValue, final int yValue) {
         this.setX(this.x + xValue);
@@ -95,18 +93,17 @@ public final class Point2D {
 
     /**
      * Add this point values by the parameter point values.
-     * @param point
-     *            Values to use.
+     *
+     * @param point Values to use.
      */
     public void add(final Point2D point) {
         this.add(point.x, point.y);
     }
 
     /**
-     * @param obj
-     *            Other object to test for equality.
+     * @param obj Other object to test for equality.
      * @return <code>true</code> only if the other object is a not
-     *         <code>null</code> Point2D with the same coordinates.
+     * <code>null</code> Point2D with the same coordinates.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -122,6 +119,7 @@ public final class Point2D {
 
     /**
      * Compute the angle formed by this point.
+     *
      * @return The computed angle.
      */
     public float getAngle() {
@@ -136,10 +134,28 @@ public final class Point2D {
     }
 
     /**
+     * Update the Point x value.
+     *
+     * @param xValue New value for the point x value.
+     */
+    public void setX(final int xValue) {
+        this.x = xValue;
+    }
+
+    /**
      * @return The y value.
      */
     public int getY() {
         return this.y;
+    }
+
+    /**
+     * Update the Point y value.
+     *
+     * @param yValue New value for the point y value.
+     */
+    public void setY(final int yValue) {
+        this.y = yValue;
     }
 
     /**
@@ -156,8 +172,8 @@ public final class Point2D {
 
     /**
      * Multiply the point x and y by the scalar value.
-     * @param scalar
-     *            Value to multiply.
+     *
+     * @param scalar Value to multiply.
      */
     public void multiplyByScalar(final int scalar) {
         this.setX(this.x * scalar);
@@ -166,10 +182,9 @@ public final class Point2D {
 
     /**
      * Set new values.
-     * @param xValue
-     *            x new value to set.
-     * @param yValue
-     *            y new value to set.
+     *
+     * @param xValue x new value to set.
+     * @param yValue y new value to set.
      */
     public void setValues(final int xValue, final int yValue) {
         this.setX(xValue);
@@ -178,37 +193,18 @@ public final class Point2D {
 
     /**
      * Set the values from an other YzPoint.
-     * @param value
-     *            Point to copy.
+     *
+     * @param value Point to copy.
      */
     public void setValues(final Point2D value) {
         this.setValues(value.x, value.y);
     }
 
     /**
-     * Update the Point x value.
-     * @param xValue
-     *            New value for the point x value.
-     */
-    public void setX(final int xValue) {
-        this.x = xValue;
-    }
-
-    /**
-     * Update the Point y value.
-     * @param yValue
-     *            New value for the point y value.
-     */
-    public void setY(final int yValue) {
-        this.y = yValue;
-    }
-
-    /**
      * Subtract this point values by the parameter x,y values.
-     * @param xValue
-     *            Values to remove from this point X value.
-     * @param yValue
-     *            Values to remove from this point Y value.
+     *
+     * @param xValue Values to remove from this point X value.
+     * @param yValue Values to remove from this point Y value.
      */
     public void substract(final int xValue, final int yValue) {
         this.setX(this.x - xValue);
@@ -217,8 +213,8 @@ public final class Point2D {
 
     /**
      * Subtract this point values by the parameter point values.
-     * @param point
-     *            Values to use.
+     *
+     * @param point Values to use.
      */
     public void substract(final Point2D point) {
         this.substract(point.x, point.y);

@@ -29,14 +29,15 @@ import java.security.InvalidParameterException;
 
 /**
  * Simple data class to wrap width and height coordinates.
+ *
  * @author Grégory Van den Borre
  */
 public final class Size extends BaseCoordinate {
 
     /**
      * Full constructor.
-     * @param coordinate
-     *            Coordination to extract size, left and top are set to 0.
+     *
+     * @param coordinate Coordination to extract size, left and top are set to 0.
      */
     public Size(final BaseCoordinate coordinate) {
         super(coordinate.width, coordinate.height, 0, 0);
@@ -44,10 +45,9 @@ public final class Size extends BaseCoordinate {
 
     /**
      * Full constructor.
-     * @param size
-     *            Width and height size.
-     * @throws InvalidParameterException
-     *             if a value is negative.
+     *
+     * @param size Width and height size.
+     * @throws InvalidParameterException if a value is negative.
      */
     public Size(final int size) {
         this(size, size);
@@ -55,12 +55,10 @@ public final class Size extends BaseCoordinate {
 
     /**
      * Full constructor.
-     * @param width
-     *            Width size.
-     * @param height
-     *            Height size.
-     * @throws InvalidParameterException
-     *             if a value is negative.
+     *
+     * @param width  Width size.
+     * @param height Height size.
+     * @throws InvalidParameterException if a value is negative.
      */
     public Size(final int width, final int height) {
         super(width, height, 0, 0);

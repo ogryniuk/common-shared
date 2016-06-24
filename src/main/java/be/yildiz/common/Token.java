@@ -25,18 +25,14 @@
 
 package be.yildiz.common;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import be.yildiz.common.id.PlayerId;
+import lombok.Getter;
 
 /**
  * A token contains information about a user authentication status.
- * 
- * @author Grégory Van den Borre
  *
+ * @author Grégory Van den Borre
  */
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public final class Token {
 
@@ -60,15 +56,19 @@ public final class Token {
      */
     private final Status status;
 
+    public Token(PlayerId id, long authenticationTime, int key, Status status) {
+        this.id = id;
+        this.authenticationTime = authenticationTime;
+        this.key = key;
+        this.status = status;
+    }
+
     /**
      * Create a new token for a successfully authenticated user.
-     * 
-     * @param id
-     *            User authenticated.
-     * @param authenticationTime
-     *            Time when the authentication occurred.
-     * @param key
-     *            Unique associated key.
+     *
+     * @param id                 User authenticated.
+     * @param authenticationTime Time when the authentication occurred.
+     * @param key                Unique associated key.
      * @return A token with the user information, the authentication time, the authentication key and an authenticated status.
      */
     public static Token authenticated(final PlayerId id, final long authenticationTime, final int key) {
@@ -77,7 +77,7 @@ public final class Token {
 
     /**
      * Create a new token for a not authenticated user.
-     * 
+     *
      * @return A token with no user information, no authentication time, no authentication key and a not authenticated status.
      */
     public static Token authenticationFailed() {
@@ -86,7 +86,7 @@ public final class Token {
 
     /**
      * Create a new token for a banned user.
-     * 
+     *
      * @return A token with no user information, no authentication time, no authentication key and a banned status.
      */
     public static Token banned() {
@@ -95,7 +95,7 @@ public final class Token {
 
     /**
      * Create a new token for a not found user.
-     * 
+     *
      * @return A token with no user information, no authentication time, no authentication key and a not found status.
      */
     public static Token notFound() {
@@ -112,9 +112,8 @@ public final class Token {
 
     /**
      * Possible authentications status.
-     * 
-     * @author Van den Borre Grégory
      *
+     * @author Van den Borre Grégory
      */
     public enum Status {
 

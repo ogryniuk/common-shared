@@ -25,15 +25,15 @@
 
 package be.yildiz.common.id;
 
+import be.yildiz.common.collections.Maps;
+
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.Map;
 
-import be.yildiz.common.collections.Maps;
-
 /**
  * An id represent an unique instance of a class of object. The same id can be shared between different class but two objects of the same class cannot have the same id.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public final class WorldId implements Serializable {
@@ -42,15 +42,15 @@ public final class WorldId implements Serializable {
     private static final long serialVersionUID = -1300879297702695817L;
 
     /**
-     * Constant value for the world.
-     */
-    private static final int WORLD_VALUE = 0;
-
-    /**
      * List of all registered id with their value as key.
      */
     private static final Map<Integer, WorldId> LIST = Maps.newMap();
 
+    /**
+     * Constant value for the world.
+     */
+    private static final int WORLD_VALUE = 0;
+    
     /**
      * Constant id for the world.
      */
@@ -68,9 +68,8 @@ public final class WorldId implements Serializable {
 
     /**
      * Full constructor, private to prevent use, to create an id, retrieve it from Id.get.
-     * 
-     * @param idValue
-     *            Initialize the wrapped value.
+     *
+     * @param idValue Initialize the wrapped value.
      */
     private WorldId(final int idValue) {
         super();
@@ -81,9 +80,8 @@ public final class WorldId implements Serializable {
 
     /**
      * Retrieve an Id from a value.
-     * 
-     * @param value
-     *            Id value to get, positive and negative values are allowed, -1 is WORLD.
+     *
+     * @param value Id value to get, positive and negative values are allowed, -1 is WORLD.
      * @return The Id with the internal value correspond to the parameter.
      */
     public static WorldId get(final int value) {
@@ -95,9 +93,8 @@ public final class WorldId implements Serializable {
 
     /**
      * Check if an id is world.
-     * 
-     * @param id
-     *            Id to check.
+     *
+     * @param id Id to check.
      * @return <code>true</code> if Id matches world Id.
      */
     public static boolean isWorld(final WorldId id) {
@@ -106,9 +103,8 @@ public final class WorldId implements Serializable {
 
     /**
      * Check if an id is world.
-     * 
-     * @param id
-     *            Internal value to check.
+     *
+     * @param id Internal value to check.
      * @return <code>true</code> if the internal value matches world internal value.
      */
     public static boolean isWorld(final long id) {
@@ -124,7 +120,7 @@ public final class WorldId implements Serializable {
 
     /**
      * Check if this is world.
-     * 
+     *
      * @return <code>true</code> if this id is world.
      */
     public boolean isWorld() {

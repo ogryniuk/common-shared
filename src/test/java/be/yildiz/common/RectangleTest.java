@@ -25,11 +25,10 @@
 
 package be.yildiz.common;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import be.yildiz.common.util.Util;
 import be.yildiz.common.vector.Point2D;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Grégory Van den Borre
@@ -37,19 +36,15 @@ import be.yildiz.common.vector.Point2D;
 public final class RectangleTest {
 
     /***/
-    private Rectangle r;
-
-    /***/
     private final int x1 = 5;
-
     /***/
     private final int x2 = 15;
-
     /***/
     private final int y1 = 12;
-
     /***/
     private final int y2 = 28;
+    /***/
+    private Rectangle r;
 
     /***/
     @Test

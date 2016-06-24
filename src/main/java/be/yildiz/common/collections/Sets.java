@@ -25,15 +25,11 @@
 
 package be.yildiz.common.collections;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Utility class to build and manipulate set implementations.
+ *
  * @author Grégory Van den Borre
  */
 public interface Sets {
@@ -41,53 +37,52 @@ public interface Sets {
     /**
      * Build a new Set with LinkedHashSet implementation, order insertion is
      * preserved.
-     * @param <T>
-     *            Contained objects type.
+     *
+     * @param <T> Contained objects type.
      * @return The new set.
      */
-    static < T > Set < T > newInsertionOrderedSet() {
-        return new LinkedHashSet < T >();
+    static <T> Set<T> newInsertionOrderedSet() {
+        return new LinkedHashSet<T>();
     }
 
     /**
      * Build a new Set with TreeSet implementation, order is following the
      * natural objects order. For insertion ordered, see newInsertionOrderedSet.
-     * @param <T>
-     *            Contained objects type.
+     *
+     * @param <T> Contained objects type.
      * @return The new set.
      */
-    static < T > Set < T > newOrderedSet() {
-        return new TreeSet < T >();
+    static <T> Set<T> newOrderedSet() {
+        return new TreeSet<T>();
     }
 
     /**
      * Build a new Set with HashSet implementation, order insertion is not
      * garanteed, use newOrderSet or newInsersionOrderedSet for that case.
-     * @param <T>
-     *            Contained objects type.
+     *
+     * @param <T> Contained objects type.
      * @return The new set.
      */
-    static < T > Set < T > newSet() {
-        return new HashSet < T >();
+    static <T> Set<T> newSet() {
+        return new HashSet<T>();
     }
 
     /**
      * Build a new Set with HashSet implementation from an existing array of
      * objects.
-     * @param <T>
-     *            Contained objects type.
-     * @param values
-     *            Objects to store in the created Set.
+     *
+     * @param <T>    Contained objects type.
+     * @param values Objects to store in the created Set.
      * @return The new set.
      */
     @SuppressWarnings("unchecked")
-    static < T > Set < T > newSet(final T... values) {
-        Set < T > set = new HashSet<>(values.length);
+    static <T> Set<T> newSet(final T... values) {
+        Set<T> set = new HashSet<>(values.length);
         Collections.addAll(set, values);
         return set;
     }
-    
-    static < T > Set < T > newSet(final Collection<T> values) {
+
+    static <T> Set<T> newSet(final Collection<T> values) {
         return new HashSet<>(values);
     }
 }

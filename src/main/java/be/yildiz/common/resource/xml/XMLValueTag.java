@@ -39,10 +39,9 @@ public final class XMLValueTag extends XMLTag {
 
     /**
      * Build a new value tag from a long.
-     * @param name
-     *            Tag name.
-     * @param value
-     *            Long value.
+     *
+     * @param name  Tag name.
+     * @param value Long value.
      */
     public XMLValueTag(final String name, final long value) {
         this(name, String.valueOf(value));
@@ -50,10 +49,9 @@ public final class XMLValueTag extends XMLTag {
 
     /**
      * Build a new value tag from an object.
-     * @param name
-     *            Tag name.
-     * @param value
-     *            Object value.
+     *
+     * @param name  Tag name.
+     * @param value Object value.
      */
     public XMLValueTag(final String name, final Object value) {
         this(name, value.toString());
@@ -61,10 +59,9 @@ public final class XMLValueTag extends XMLTag {
 
     /**
      * Build a new value tag.
-     * @param name
-     *            Tag name.
-     * @param value
-     *            Value.
+     *
+     * @param name  Tag name.
+     * @param value Value.
      */
     public XMLValueTag(final String name, final String value) {
         super(name);

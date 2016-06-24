@@ -26,19 +26,15 @@
 package be.yildiz.common.authentication;
 
 import org.junit.Assert;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * 
- *
  * @author Grégory Van den Borre
- *
  */
 public final class CredentialsTest {
-    
+
     @Rule
     public final ExpectedException rule = ExpectedException.none();
 
@@ -67,7 +63,7 @@ public final class CredentialsTest {
     public void testCredentials() {
         new Credentials("test", new PasswordToHash("test"));
     }
-    
+
     /**
      * Test method for {@link be.yildiz.common.authentication.Credentials#Credentials(String, Password)}.
      */
@@ -76,7 +72,7 @@ public final class CredentialsTest {
         this.rule.expect(NullPointerException.class);
         new Credentials(null, new PasswordToHash("test"));
     }
-    
+
     /**
      * Test method for {@link be.yildiz.common.authentication.Credentials#Credentials(String, Password)}.
      */

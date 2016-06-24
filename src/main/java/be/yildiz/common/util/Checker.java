@@ -29,16 +29,16 @@ package be.yildiz.common.util;
 /**
  * Check various conditions, return <code>true</code> if the check is
  * successful, <code>false</code> otherwise.
+ *
  * @author Grégory Van den Borre
  */
 public interface Checker {
 
     /**
      * Check if 2 arrays have the same length.
-     * @param array1
-     *            First array.
-     * @param array2
-     *            Second array.
+     *
+     * @param array1 First array.
+     * @param array2 Second array.
      * @return <code>true</code> if both have same length.
      */
     static boolean arraysSameSize(final float[] array1, final float[] array2) {
@@ -47,12 +47,11 @@ public interface Checker {
 
     /**
      * Check if a value is in an array range.
-     * @param index
-     *            Value to check.
-     * @param array
-     *            Array to use.
+     *
+     * @param index Value to check.
+     * @param array Array to use.
      * @return <code>true</code> if the value is > 0 and smaller than array
-     *         length.
+     * length.
      */
     static boolean inArrayRange(final int index, final Object[] array) {
         return index >= 0 && index < array.length;
@@ -60,12 +59,10 @@ public interface Checker {
 
     /**
      * check if a float value is between 2 other float values.
-     * @param value
-     *            Value to check.
-     * @param lowLimit
-     *            Lower limit.
-     * @param highLimit
-     *            Upper limit.
+     *
+     * @param value     Value to check.
+     * @param lowLimit  Lower limit.
+     * @param highLimit Upper limit.
      * @return true if value is higher than lowLimit and lower than highLimit.
      */
     static boolean inRange(final float value, final float lowLimit, final float highLimit) {
@@ -74,12 +71,10 @@ public interface Checker {
 
     /**
      * check if an int value is between 2 other int values.
-     * @param value
-     *            Value to check.
-     * @param lowLimit
-     *            Lower limit.
-     * @param highLimit
-     *            Upper limit.
+     *
+     * @param value     Value to check.
+     * @param lowLimit  Lower limit.
+     * @param highLimit Upper limit.
      * @return true if value is higher than lowLimit and lower than highLimit.
      */
     static boolean inRange(final int value, final int lowLimit, final int highLimit) {
@@ -88,8 +83,8 @@ public interface Checker {
 
     /**
      * Check if a double value is positive.
-     * @param toCheck
-     *            Double value to check.
+     *
+     * @param toCheck Double value to check.
      * @return <code>true</code> if the value is greater or equal to 0.
      */
     static boolean isPositive(final double toCheck) {
@@ -98,8 +93,8 @@ public interface Checker {
 
     /**
      * Check if a float value is positive.
-     * @param toCheck
-     *            Float value to check.
+     *
+     * @param toCheck Float value to check.
      * @return <code>true</code> if the value is greater or equal to 0.
      */
     static boolean isPositive(final float toCheck) {
@@ -108,8 +103,8 @@ public interface Checker {
 
     /**
      * Check if an int value is positive.
-     * @param toCheck
-     *            Int value to check.
+     *
+     * @param toCheck Int value to check.
      * @return <code>true</code> if the value is greater or equal to 0.
      */
     static boolean isPositive(final int toCheck) {
@@ -118,8 +113,8 @@ public interface Checker {
 
     /**
      * Check if a long value is positive.
-     * @param toCheck
-     *            Long value to check.
+     *
+     * @param toCheck Long value to check.
      * @return <code>true</code> if the value is greater or equal to 0.
      */
     static boolean isPositive(final long toCheck) {
@@ -128,8 +123,8 @@ public interface Checker {
 
     /**
      * Check if an object is not null.
-     * @param toCheck
-     *            Object to check.
+     *
+     * @param toCheck Object to check.
      * @return <code>true</code> if the object is not null.
      */
     static boolean notNull(final Object toCheck) {
@@ -138,8 +133,8 @@ public interface Checker {
 
     /**
      * Throw an exception if the parameter is not greater or equal to 0.
-     * @param value
-     *            Parameter to check.
+     *
+     * @param value Parameter to check.
      */
     static void exceptionNotPositive(final long value) {
         if (!isPositive(value)) {
@@ -149,8 +144,8 @@ public interface Checker {
 
     /**
      * Throw an exception if the parameter is not greater or equal to 0.
-     * @param value
-     *            Parameter to check.
+     *
+     * @param value Parameter to check.
      */
     static void exceptionNotPositive(final float value) {
         if (!isPositive(value)) {
@@ -160,10 +155,9 @@ public interface Checker {
 
     /**
      * Check if the provided value is greater than 0.
-     * @param value
-     *            Value to check.
-     * @throws IllegalArgumentException
-     *             If the value is 0 or lower.
+     *
+     * @param value Value to check.
+     * @throws IllegalArgumentException If the value is 0 or lower.
      */
     static void exceptionNotGreaterThanZero(final int value) {
         if (value <= 0) {
@@ -173,10 +167,9 @@ public interface Checker {
 
     /**
      * Check if the provided value is greater than 0.
-     * @param value
-     *            Value to check.
-     * @throws IllegalArgumentException
-     *             If the value is 0 or lower.
+     *
+     * @param value Value to check.
+     * @throws IllegalArgumentException If the value is 0 or lower.
      */
     static void exceptionNotGreaterThanZero(final float value) {
         if (value <= 0.0f) {

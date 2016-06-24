@@ -30,6 +30,7 @@ import lombok.Getter;
 
 /**
  * Wrap the current version, immutable.
+ *
  * @author Grégory Van den Borre
  */
 @EqualsAndHashCode
@@ -63,16 +64,12 @@ public final class Version {
 
     /**
      * Full constructor.
-     * @param type
-     *            Version type.
-     * @param majorNumber
-     *            Version major number.
-     * @param minorVersion
-     *            Version minor number.
-     * @param subVersion
-     *            Version sub number.
-     * @param rev
-     *            Revision number.
+     *
+     * @param type         Version type.
+     * @param majorNumber  Version major number.
+     * @param minorVersion Version minor number.
+     * @param subVersion   Version sub number.
+     * @param rev          Revision number.
      */
     public Version(final VersionType type, final int majorNumber, final int minorVersion, final int subVersion, final int rev) {
         super();
@@ -89,7 +86,7 @@ public final class Version {
 
     /**
      * @return The major, minor and sub values separated with '.' and '_' for
-     *         the revision.
+     * the revision.
      */
     @Override
     public String toString() {
@@ -98,6 +95,7 @@ public final class Version {
 
     /**
      * Possible versions type.
+     *
      * @author Van den Borre Grégory
      */
     public enum VersionType {

@@ -29,6 +29,7 @@ import java.io.Serializable;
 
 /**
  * Utility class to compute a time between 2 calls.
+ *
  * @author Grégory Van den Borre
  */
 public final class Timer implements Serializable {
@@ -50,8 +51,9 @@ public final class Timer implements Serializable {
 
     /**
      * Compute the time since the last call.
+     *
      * @return The time in millisecond between now and the last use of this
-     *         method.
+     * method.
      */
     public long getActionTime() {
         final long now = System.currentTimeMillis();

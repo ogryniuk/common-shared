@@ -25,12 +25,12 @@
 
 package be.yildiz.common.resource.xml;
 
-import java.security.InvalidParameterException;
-
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.security.InvalidParameterException;
 
 /**
  * @author Grégory Van den Borre

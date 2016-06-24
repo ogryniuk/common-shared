@@ -25,6 +25,5 @@
 
 /**
  * @author Grégory Van den Borre
- *
  */
 package be.yildiz.common.collections;

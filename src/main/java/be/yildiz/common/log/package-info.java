@@ -25,6 +25,7 @@
 
 /**
  * Provide classes for an easy log usage.
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common.log;

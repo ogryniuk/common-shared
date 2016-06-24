@@ -29,6 +29,7 @@ import lombok.Getter;
 
 /**
  * Convert millisec in sec min hour.
+ *
  * @author Grégory Van den Borre
  */
 public final class TimeConverter {
@@ -65,8 +66,8 @@ public final class TimeConverter {
     /**
      * Set the time in millisecond to be converted in a number of seconds,
      * minutes, hours.
-     * @param time
-     *            Time to use.
+     *
+     * @param time Time to use.
      */
     public void setTime(final long time) {
         int total = Float.valueOf(time * TimeConverter.MS_TO_SEC).intValue();

@@ -25,21 +25,12 @@
 
 package be.yildiz.common.resource;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.Charset;
 
 /**
  * Provide streams with a platform independent encoding.
+ *
  * @author Grégory Van den Borre
  */
 public final class ResourceUtil {
@@ -50,9 +41,16 @@ public final class ResourceUtil {
     private static final Charset ENCODING = Charset.forName("UTF-8");
 
     /**
+     * Private constructor to prevent use.
+     */
+    private ResourceUtil() {
+        super();
+    }
+
+    /**
      * Get a byte array from a string.
-     * @param string
-     *            String to use.
+     *
+     * @param string String to use.
      * @return A byte array built from the string.
      */
     public static byte[] getByteArray(final String string) {
@@ -61,11 +59,10 @@ public final class ResourceUtil {
 
     /**
      * Get a file reader.
-     * @param path
-     *            Path of the file to read.
+     *
+     * @param path Path of the file to read.
      * @return An input stream reader to read the file.
-     * @throws FileNotFoundException
-     *             If the file is not found.
+     * @throws FileNotFoundException If the file is not found.
      */
     public static Reader getFileReader(final File path) throws FileNotFoundException {
         return new BufferedReader(new InputStreamReader(new FileInputStream(path), ResourceUtil.ENCODING));
@@ -73,11 +70,10 @@ public final class ResourceUtil {
 
     /**
      * Get a file writer.
-     * @param path
-     *            Path of the file to write.
+     *
+     * @param path Path of the file to write.
      * @return An output stream writer to write the file.
-     * @throws FileNotFoundException
-     *             If the file is not found.
+     * @throws FileNotFoundException If the file is not found.
      */
     public static Writer getFileWriter(final File path) throws FileNotFoundException {
         return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), ResourceUtil.ENCODING));
@@ -85,8 +81,8 @@ public final class ResourceUtil {
 
     /**
      * Get a string from a byte array.
-     * @param array
-     *            Byte array.
+     *
+     * @param array Byte array.
      * @return A string build from the byte array.
      */
     public static String getString(final byte[] array) {
@@ -95,18 +91,11 @@ public final class ResourceUtil {
 
     /**
      * Get a string from a ByteArrayOutputStream.
-     * @param array
-     *            Byte array.
+     *
+     * @param array Byte array.
      * @return A string build from the byte array.
      */
     public static String getString(final ByteArrayOutputStream bos) {
         return ResourceUtil.getString(bos.toByteArray());
-    }
-
-    /**
-     * Private constructor to prevent use.
-     */
-    private ResourceUtil() {
-        super();
     }
 }

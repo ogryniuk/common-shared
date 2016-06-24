@@ -34,7 +34,7 @@ import org.junit.rules.ExpectedException;
  * @author Grégory Van den Borre
  */
 public class CoordinatesTest {
-    
+
     @Rule
     public final ExpectedException rule = ExpectedException.none();
 
@@ -101,7 +101,7 @@ public class CoordinatesTest {
      */
     @Test
     public void testGetSize() {
-        Coordinates c = new Coordinates(10, 15,14, 16);
+        Coordinates c = new Coordinates(10, 15, 14, 16);
         Size s = c.getSize();
         Assert.assertEquals(10, s.width);
         Assert.assertEquals(15, s.height);

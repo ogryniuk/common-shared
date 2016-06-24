@@ -25,16 +25,13 @@
 
 package be.yildiz.common.shape;
 
-import java.security.InvalidParameterException;
-
 import be.yildiz.common.util.Checker;
 import lombok.EqualsAndHashCode;
 
 /**
  * Contains a plane coordinates.
- * 
+ *
  * @author Grégory Van den Borre
- * 
  */
 @EqualsAndHashCode
 public final class Plane {
@@ -51,11 +48,9 @@ public final class Plane {
 
     /**
      * Full constructor.
-     * 
-     * @param widthSize
-     *            Width size of the box.
-     * @param depthSize
-     *            Depth size of the box.
+     *
+     * @param widthSize Width size of the box.
+     * @param depthSize Depth size of the box.
      */
     public Plane(final int widthSize, final int depthSize) {
         super();
@@ -67,9 +62,8 @@ public final class Plane {
 
     /**
      * Full constructor, create a square.
-     * 
-     * @param size
-     *            Size for the width and depth
+     *
+     * @param size Size for the width and depth
      */
     public Plane(final int size) {
         this(size, size);

@@ -25,14 +25,14 @@
 
 package be.yildiz.common.vector;
 
-import java.security.InvalidParameterException;
-
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.util.Literals;
 
+import java.security.InvalidParameterException;
+
 /**
  * Simple class to hold 3d coordinates, immutable.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public final class Point3D {
@@ -91,9 +91,8 @@ public final class Point3D {
 
     /**
      * Full constructor.
-     * 
-     * @param values
-     *            Value to set to X, Y and Z.
+     *
+     * @param values Value to set to X, Y and Z.
      */
     public Point3D(final float values) {
         this(values, values, values);
@@ -101,13 +100,10 @@ public final class Point3D {
 
     /**
      * Full constructor.
-     * 
-     * @param xValue
-     *            Value for the x axis.
-     * @param yValue
-     *            Value for the y axis.
-     * @param zValue
-     *            Value for the z axis.
+     *
+     * @param xValue Value for the x axis.
+     * @param yValue Value for the y axis.
+     * @param zValue Value for the z axis.
      */
     private Point3D(final float xValue, final float yValue, final float zValue) {
         super();
@@ -118,9 +114,8 @@ public final class Point3D {
 
     /**
      * Full constructor, parse a String to build the point. Throws InvalidParameterException if parsing fails.
-     * 
-     * @param toParse
-     *            String to parse.
+     *
+     * @param toParse String to parse.
      */
     public Point3D(final String toParse) {
         try {
@@ -145,7 +140,7 @@ public final class Point3D {
     public static Point3D xyz(final float x, final float y, final float z) {
         return new Point3D(x, y, z);
     }
-    
+
     public static Point3D xyz(final float[] array) {
         return xyz(array[0], array[1], array[2]);
     }
@@ -157,7 +152,7 @@ public final class Point3D {
     public static Point3D x(final float x) {
         return new Point3D(x, 0, 0);
     }
-    
+
     public static Point3D z(final float z) {
         return new Point3D(0, 0, z);
     }
@@ -165,7 +160,7 @@ public final class Point3D {
     public static Point3D xz(final float x, final float z) {
         return xyz(x, 0, z);
     }
-    
+
     public static Point3D xy(final float x, final float y) {
         return new Point3D(x, y, 0);
     }
@@ -173,7 +168,7 @@ public final class Point3D {
     public static Point3D xz(final float xz) {
         return xz(xz, xz);
     }
-    
+
     public static Point3D yz(final float y, final float z) {
         return new Point3D(0, y, z);
     }
@@ -184,9 +179,8 @@ public final class Point3D {
 
     /**
      * Create a new point from the addition of other points.
-     * 
-     * @param points
-     *            Point3D to add to compute the result.
+     *
+     * @param points Point3D to add to compute the result.
      * @return A Point3D resulting from the addition of the given points.
      */
     public static Point3D addPoints(final Point3D... points) {
@@ -203,9 +197,8 @@ public final class Point3D {
 
     /**
      * Normalize a point.
-     * 
-     * @param p
-     *            Point to normalize.
+     *
+     * @param p Point to normalize.
      * @return A new normalized point.
      */
     public static Point3D normalize(final Point3D p) {
@@ -214,11 +207,9 @@ public final class Point3D {
 
     /**
      * Normalize a point and multiply the values.
-     * 
-     * @param p
-     *            Point to normalize.
-     * @param scalar
-     *            Value to multiply.
+     *
+     * @param p      Point to normalize.
+     * @param scalar Value to multiply.
      * @return A new point normalized and multiplied.
      */
     public static Point3D normalizeAndMultiply(final Point3D p, final float scalar) {
@@ -231,11 +222,9 @@ public final class Point3D {
 
     /**
      * Compute squared distance between 2 points.
-     * 
-     * @param p1
-     *            First point.
-     * @param p2
-     *            Second point.
+     *
+     * @param p1 First point.
+     * @param p2 Second point.
      * @return The squared distance between the 2 points.
      */
     public static float squaredDistance(final Point3D p1, final Point3D p2) {
@@ -247,13 +236,10 @@ public final class Point3D {
 
     /**
      * Add values to the values of this point.
-     * 
-     * @param x
-     *            Value to add to this point X value.
-     * @param y
-     *            Value to add to this point Y value.
-     * @param z
-     *            Value to add to this point Z value.
+     *
+     * @param x Value to add to this point X value.
+     * @param y Value to add to this point Y value.
+     * @param z Value to add to this point Z value.
      * @return A new point with added values.
      */
     public Point3D add(final float x, final float y, final float z) {
@@ -262,9 +248,8 @@ public final class Point3D {
 
     /**
      * Add a point to this one.
-     * 
-     * @param point
-     *            Point to add.
+     *
+     * @param point Point to add.
      * @return A new point with added values.
      */
     public Point3D add(final Point3D point) {
@@ -273,9 +258,8 @@ public final class Point3D {
 
     /**
      * Add a value to the X value of this point.
-     * 
-     * @param value
-     *            Value to add to this point X value.
+     *
+     * @param value Value to add to this point X value.
      * @return A new point with added value.
      */
     public Point3D addX(final float value) {
@@ -284,9 +268,8 @@ public final class Point3D {
 
     /**
      * Subtract a value to the X value of this point.
-     * 
-     * @param value
-     *            Value to subtract to this point X value.
+     *
+     * @param value Value to subtract to this point X value.
      * @return A new point with subtracted value.
      */
     public Point3D subtractX(final float value) {
@@ -295,9 +278,8 @@ public final class Point3D {
 
     /**
      * Add a value to the Y value of this point.
-     * 
-     * @param value
-     *            value to add to this point Y value.
+     *
+     * @param value value to add to this point Y value.
      * @return A new point with added value.
      */
     public Point3D addY(final float value) {
@@ -306,9 +288,8 @@ public final class Point3D {
 
     /**
      * Add a value to the Z value of this point.
-     * 
-     * @param value
-     *            value to add to this point Z value.
+     *
+     * @param value value to add to this point Z value.
      * @return A new point with added value.
      */
     public Point3D addZ(final float value) {
@@ -335,21 +316,20 @@ public final class Point3D {
 
     /**
      * Get this point angle.
-     * 
-     * @param axis
-     *            Axis to use.
+     *
+     * @param axis Axis to use.
      * @return The point angle.
      */
     public float getAngle(final Axis axis) {
         switch (axis) {
-        case XY:
-            return (float) Math.atan2(this.y, this.x);
-        case XZ:
-            return (float) Math.atan2(this.z, this.x);
-        case ZY:
-            return (float) Math.atan2(this.z, this.y);
-        default:
-            throw new InvalidParameterException("value not implemented.");
+            case XY:
+                return (float) Math.atan2(this.y, this.x);
+            case XZ:
+                return (float) Math.atan2(this.z, this.x);
+            case ZY:
+                return (float) Math.atan2(this.z, this.y);
+            default:
+                throw new InvalidParameterException("value not implemented.");
         }
     }
 
@@ -372,9 +352,8 @@ public final class Point3D {
 
     /**
      * Multiply this point values by a given value.
-     * 
-     * @param scalar
-     *            Value to multiply.
+     *
+     * @param scalar Value to multiply.
      * @return A new point with the multiplied values.
      */
     public Point3D multiply(final float scalar) {
@@ -390,9 +369,8 @@ public final class Point3D {
 
     /**
      * Subtract this point values by the other point values.
-     * 
-     * @param point
-     *            Other point to use.
+     *
+     * @param point Other point to use.
      * @return A new Point3D with the computed values.
      */
     public Point3D subtract(final Point3D point) {

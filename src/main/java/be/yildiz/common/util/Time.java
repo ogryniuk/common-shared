@@ -29,10 +29,9 @@ import lombok.EqualsAndHashCode;
 
 /**
  * Class to represent a time period, must be sub classed to create different types of periods.
- * 
- * @immutable
- * 
+ *
  * @author Grégory Van den Borre
+ * @immutable
  */
 @EqualsAndHashCode
 public final class Time {
@@ -45,13 +44,10 @@ public final class Time {
 
     /**
      * Full constructor, only to be called from children.
-     * 
+     *
+     * @param time Time in milliseconds.
+     * @throws IllegalArgumentException if the time is negative.
      * @ensures time <= Long.MAX_VALUE
-     * 
-     * @param time
-     *            Time in milliseconds.
-     * @throws IllegalArgumentException
-     *             if the time is negative.
      */
     private Time(final long time) {
         super();
@@ -61,14 +57,11 @@ public final class Time {
 
     /**
      * Create a new Time from milliseconds value.
-     * 
-     * @ensures ms <= Long.MAX_VALUE
-     * 
-     * @param ms
-     *            Time value.
+     *
+     * @param ms Time value.
      * @return The created time.
-     * @throws IllegalArgumentException
-     *             if the time is negative.
+     * @throws IllegalArgumentException if the time is negative.
+     * @ensures ms <= Long.MAX_VALUE
      */
     public static Time milliSeconds(final long ms) {
         return new Time(ms);
@@ -76,21 +69,18 @@ public final class Time {
 
     /**
      * Create a new Time from seconds value.
-     * 
-     * @ensures second <= (Long.MAX_VALUE / 1000)
-     * 
-     * @param second
-     *            Time value.
+     *
+     * @param second Time value.
      * @return The created time.
-     * @throws IllegalArgumentException
-     *             if the time is negative.
+     * @throws IllegalArgumentException if the time is negative.
+     * @ensures second <= (Long.MAX_VALUE / 1000)
      */
     public static Time seconds(final long second) {
         return milliSeconds(second * 1000);
     }
 
     public static Time minutes(final int minute) {
-        return seconds(minute * 60);
+        return seconds(minute * 60L);
     }
 
     public static Time hours(final int hour) {
@@ -99,7 +89,7 @@ public final class Time {
 
     /**
      * Create a new Time with the current time value + this object time.
-     * 
+     *
      * @return The created time.
      */
     public Time addNow() {
@@ -108,9 +98,8 @@ public final class Time {
 
     /**
      * Subtract a time millisecond value from this millisecond value.
-     * 
-     * @param value
-     *            Value to subtract.
+     *
+     * @param value Value to subtract.
      * @return This time - the given time.
      */
     public long subtractMs(final long value) {
@@ -128,7 +117,7 @@ public final class Time {
     public boolean isNotElapsed() {
         return this.timeInMs > System.currentTimeMillis();
     }
-    
+
     public Time subtract(final Time other) {
         return new Time(this.timeInMs - other.timeInMs);
     }

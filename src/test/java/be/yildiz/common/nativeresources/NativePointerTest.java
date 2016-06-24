@@ -30,6 +30,7 @@ import org.junit.Test;
 
 /**
  * Test class for NativePointer.
+ *
  * @author Grégory Van den Borre
  */
 public final class NativePointerTest {

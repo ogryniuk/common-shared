@@ -30,7 +30,7 @@ import be.yildiz.common.vector.Point3D;
 
 /**
  * Common part for the ClientGameEntity and the ServerGameEntity, this interface is not meant to be used but to be extended by usable client and server interfaces.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public interface GameMaterialization extends Movable {
@@ -42,23 +42,18 @@ public interface GameMaterialization extends Movable {
 
     /**
      * Rotate the object.
-     * 
-     * @param x
-     *            Rotation quaternion x value.
-     * @param y
-     *            Rotation quaternion y value.
-     * @param z
-     *            Rotation quaternion z value.
-     * @param w
-     *            Rotation quaternion w value.
+     *
+     * @param x Rotation quaternion x value.
+     * @param y Rotation quaternion y value.
+     * @param z Rotation quaternion z value.
+     * @param w Rotation quaternion w value.
      */
     void rotate(float x, float y, float z, float w);
 
     /**
      * Scale the object.
-     * 
-     * @param scale
-     *            Scale factor, i e to scale 10% bigger, set 1.1.
+     *
+     * @param scale Scale factor, i e to scale 10% bigger, set 1.1.
      */
     default void scale(final float scale) {
         this.scale(scale, scale, scale);
@@ -70,7 +65,6 @@ public interface GameMaterialization extends Movable {
     }
 
     /**
-     * 
      * @return The current object scaling.
      */
     Point3D getScaleSize();
@@ -78,13 +72,10 @@ public interface GameMaterialization extends Movable {
     /**
      * Scale the object, scale is relative to latest size(scale to 0.5f to remove 50% of the size, then 0.5f again to remove 50 additional percent to the 50% of the original, size will then be 25% of
      * the original size).
-     * 
-     * @param x
-     *            Scale X factor, i e to scale 10% bigger, set 1.1.
-     * @param y
-     *            Scale Y factor.
-     * @param z
-     *            Scale Z factor.
+     *
+     * @param x Scale X factor, i e to scale 10% bigger, set 1.1.
+     * @param y Scale Y factor.
+     * @param z Scale Z factor.
      */
     void scale(float x, float y, float z);
 

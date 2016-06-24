@@ -32,6 +32,7 @@ import java.util.logging.LogRecord;
 
 /**
  * Simple formatter for a logger.
+ *
  * @author Grégory Van den Borre
  */
 public final class SimpleFormatter extends Formatter {
@@ -48,8 +49,8 @@ public final class SimpleFormatter extends Formatter {
 
     /**
      * Format the log with the following pattern: date : message.
-     * @param record
-     *            Contains log message data.
+     *
+     * @param record Contains log message data.
      * @return The formatted log entry.
      */
     @Override

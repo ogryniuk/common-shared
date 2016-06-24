@@ -29,7 +29,7 @@ import lombok.Getter;
 
 /**
  * Possible different system with different files.
- * 
+ *
  * @author Grégory Van den Borre
  */
 public enum OperatingSystem {

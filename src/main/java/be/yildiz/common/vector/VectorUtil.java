@@ -25,9 +25,9 @@
 
 package be.yildiz.common.vector;
 
-import java.security.InvalidParameterException;
-
 import be.yildiz.common.util.Checker;
+
+import java.security.InvalidParameterException;
 
 /**
  * @author Gregory Van den Borre
@@ -36,16 +36,13 @@ public interface VectorUtil {
 
     /**
      * Compute position for point on a circle.
-     * @param number
-     *            Number of points to set on the circle.
-     * @param radius
-     *            Circle ray size.
+     *
+     * @param number Number of points to set on the circle.
+     * @param radius Circle ray size.
      * @return An array (with size of parameter number) containing the position
-     *         of every points, assuming the circle is at 0,0.
-     * @throws InvalidParameterException
-     *             if number is <= 0.
-     * @throws InvalidParameterException
-     *             if radius is <= 0.
+     * of every points, assuming the circle is at 0,0.
+     * @throws InvalidParameterException if number is <= 0.
+     * @throws InvalidParameterException if radius is <= 0.
      */
     static Point2D[] getPointOnCircle(final int number, final int radius) {
         Checker.exceptionNotGreaterThanZero(number);

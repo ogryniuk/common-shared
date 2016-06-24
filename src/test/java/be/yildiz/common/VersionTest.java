@@ -25,12 +25,11 @@
 
 package be.yildiz.common;
 
+import be.yildiz.common.Version.VersionType;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import be.yildiz.common.Version.VersionType;
 
 public final class VersionTest {
 

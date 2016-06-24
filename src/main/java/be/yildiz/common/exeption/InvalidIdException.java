@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Throw when an id is used but not associated with an object.
+ *
  * @author Grégory Van den Borre
  */
 public final class InvalidIdException extends BaseException {
@@ -38,8 +39,8 @@ public final class InvalidIdException extends BaseException {
 
     /**
      * Full constructor.
-     * @param id
-     *            Id value causing the exception.
+     *
+     * @param id Id value causing the exception.
      */
     public InvalidIdException(final long id) {
         super("Id " + id + " is not associated with an object.");

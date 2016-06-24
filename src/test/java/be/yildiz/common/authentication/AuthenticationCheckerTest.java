@@ -25,12 +25,11 @@
 
 package be.yildiz.common.authentication;
 
+import be.yildiz.common.authentication.AuthenticationChecker.AuthenticationError;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import be.yildiz.common.authentication.AuthenticationChecker.AuthenticationError;
 
 /**
  * @author Grégory Van den Borre
@@ -53,6 +52,7 @@ public final class AuthenticationCheckerTest {
      * Test method for
      * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
      * .
+     *
      * @throws CredentialException
      */
     @Test
@@ -65,6 +65,7 @@ public final class AuthenticationCheckerTest {
      * Test method for
      * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
      * .
+     *
      * @throws CredentialException
      */
     @Test
@@ -78,6 +79,7 @@ public final class AuthenticationCheckerTest {
      * Test method for
      * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
      * .
+     *
      * @throws CredentialException
      */
     @Test
@@ -101,6 +103,7 @@ public final class AuthenticationCheckerTest {
      * Test method for
      * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
      * .
+     *
      * @throws CredentialException
      */
     @Test
@@ -126,6 +129,7 @@ public final class AuthenticationCheckerTest {
      * Test method for
      * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
      * .
+     *
      * @throws CredentialException
      */
     @Test

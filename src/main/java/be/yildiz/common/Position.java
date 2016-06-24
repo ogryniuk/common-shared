@@ -27,6 +27,7 @@ package be.yildiz.common;
 
 /**
  * Simple data class to wrap horizontal and vertical coordinates.
+ *
  * @author Grégory Van den Borre
  */
 public final class Position extends BaseCoordinate {
@@ -38,8 +39,8 @@ public final class Position extends BaseCoordinate {
 
     /**
      * Copy constructor.
-     * @param coordinates
-     *            Coordinates used to get the position.
+     *
+     * @param coordinates Coordinates used to get the position.
      */
     public Position(final BaseCoordinate coordinates) {
         this(coordinates.left, coordinates.top);
@@ -47,8 +48,8 @@ public final class Position extends BaseCoordinate {
 
     /**
      * Full constructor.
-     * @param leftAndTop
-     *            Left and top positions.
+     *
+     * @param leftAndTop Left and top positions.
      */
     public Position(final int leftAndTop) {
         this(leftAndTop, leftAndTop);
@@ -56,10 +57,9 @@ public final class Position extends BaseCoordinate {
 
     /**
      * Full constructor.
-     * @param left
-     *            Left position.
-     * @param top
-     *            Top position.
+     *
+     * @param left Left position.
+     * @param top  Top position.
      */
     public Position(final int left, final int top) {
         super(0, 0, left, top);

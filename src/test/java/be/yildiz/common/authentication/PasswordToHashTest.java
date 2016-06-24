@@ -34,7 +34,7 @@ import org.junit.rules.ExpectedException;
  * @author Grégory Van den Borre
  */
 public final class PasswordToHashTest {
-    
+
     @Rule
     public final ExpectedException rule = ExpectedException.none();
 
@@ -48,7 +48,7 @@ public final class PasswordToHashTest {
         p = new PasswordToHash("test");
         Assert.assertEquals("098f6bcd4621d373cade4e832627b4f6", p.getHashedPassword());
     }
-    
+
     @Test
     public void testPasswordToHashNull() {
         this.rule.expect(NullPointerException.class);

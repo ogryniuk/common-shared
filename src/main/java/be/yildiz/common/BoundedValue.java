@@ -29,6 +29,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * A value is composed of a value and a max value, it cannot be lower than 0.
+ *
  * @author Grégory Van den Borre
  */
 @NoArgsConstructor
@@ -44,7 +45,7 @@ public final class BoundedValue {
      * Max value, this is the maximum for the value field.
      */
     private float max;
-    
+
     public BoundedValue(float value, float max) {
         super();
         this.value = value;
@@ -59,17 +60,10 @@ public final class BoundedValue {
     }
 
     /**
-     * @return The maximum.
-     */
-    public int getMax() {
-        return Float.valueOf(this.max).intValue();
-    }
-
-    /**
      * Update the value, if parameter is smaller than 0, 0 will be used, if
      * parameter is higher than this max field, max will be used.
-     * @param value
-     *            New value to set.
+     *
+     * @param value New value to set.
      */
     public void setValue(final float value) {
         if (value < 0) {
@@ -82,11 +76,18 @@ public final class BoundedValue {
     }
 
     /**
+     * @return The maximum.
+     */
+    public int getMax() {
+        return Float.valueOf(this.max).intValue();
+    }
+
+    /**
      * Update max value, if parameter is smaller than 0, 0 will be set. If new
      * max is lower than the value field, the value field will be updated to fit
      * it.
-     * @param max
-     *            New value for max.
+     *
+     * @param max New value for max.
      */
     public void setMax(final float max) {
         if (max < 0) {
@@ -99,8 +100,8 @@ public final class BoundedValue {
 
     /**
      * Add to this value.
-     * @param toAdd
-     *            Value to add.
+     *
+     * @param toAdd Value to add.
      */
     public void add(final float toAdd) {
         this.setValue(this.value + toAdd);
@@ -108,7 +109,7 @@ public final class BoundedValue {
 
     /**
      * @return <code>true</code> if this value is zero, <code>false</code>
-     *         otherwise.
+     * otherwise.
      */
     public boolean isZero() {
         return this.getValue() == 0;

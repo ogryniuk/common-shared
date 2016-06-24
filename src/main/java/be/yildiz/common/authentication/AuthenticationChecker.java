@@ -25,40 +25,40 @@
 
 package be.yildiz.common.authentication;
 
+import be.yildiz.common.collections.Lists;
+import lombok.NonNull;
+
 import java.util.List;
 import java.util.regex.Pattern;
-
-import be.yildiz.common.collections.Lists;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
 
 /**
  * Check a login and a password following the requirement in the parameter
  * object.
+ *
  * @author Grégory Van den Borre
  */
-@AllArgsConstructor
 public final class AuthenticationChecker {
 
     /**
      * Parameter rules.
      */
-    @NonNull
     private final AuthenticationRules parameters;
+
+    public AuthenticationChecker(@NonNull AuthenticationRules parameters) {
+        this.parameters = parameters;
+    }
 
     /**
      * Check if provided login are valid against the given rules.
-     * @param login
-     *            Login to check.
-     * @param password
-     *            The password is assumed to be already hashed so it will not be
-     *            checked.
+     *
+     * @param login    Login to check.
+     * @param password The password is assumed to be already hashed so it will not be
+     *                 checked.
      * @return The credentials created from the login and the password.
-     * @throws CredentialException
-     *             If the check fails.
+     * @throws CredentialException If the check fails.
      */
     public Credentials check(final String login, final Password password) throws CredentialException {
-        List < AuthenticationError > errors = Lists.newList();
+        List<AuthenticationError> errors = Lists.newList();
         this.checkLogin(login, errors);
         if (errors.isEmpty()) {
             return new Credentials(login, password);
@@ -68,17 +68,15 @@ public final class AuthenticationChecker {
 
     /**
      * Check if provided login and password are valid against the given rules.
-     * @param login
-     *            Login to check.
-     * @param password
-     *            Password to check, provided in clear.
+     *
+     * @param login    Login to check.
+     * @param password Password to check, provided in clear.
      * @return The credentials created from the login and the password, password
-     *         returned is hashed.
-     * @throws CredentialException
-     *             If the check fails.
+     * returned is hashed.
+     * @throws CredentialException If the check fails.
      */
     public Credentials check(final String login, final String password) throws CredentialException {
-        List < AuthenticationError > errors = Lists.newList();
+        List<AuthenticationError> errors = Lists.newList();
         this.checkLogin(login, errors);
         this.checkPassword(password, errors);
         if (errors.isEmpty()) {
@@ -89,12 +87,11 @@ public final class AuthenticationChecker {
 
     /**
      * Check the login against the given rules.
-     * @param login
-     *            Login to check.
-     * @param errors
-     *            List to store the errors.
+     *
+     * @param login  Login to check.
+     * @param errors List to store the errors.
      */
-    private void checkLogin(final String login, final List < AuthenticationError > errors) {
+    private void checkLogin(final String login, final List<AuthenticationError> errors) {
         if (login.length() < this.parameters.loginMinLength) {
             errors.add(AuthenticationError.LOGIN_TOO_SHORT);
         } else if (login.length() > this.parameters.passMaxLength) {
@@ -107,12 +104,11 @@ public final class AuthenticationChecker {
 
     /**
      * Check the password against the given rules.
-     * @param password
-     *            Password to check.
-     * @param errors
-     *            List to store the errors.
+     *
+     * @param password Password to check.
+     * @param errors   List to store the errors.
      */
-    private void checkPassword(final String password, final List < AuthenticationError > errors) {
+    private void checkPassword(final String password, final List<AuthenticationError> errors) {
         if (password.length() < this.parameters.passMinLength) {
             errors.add(AuthenticationError.PASS_TOO_SHORT);
         } else if (password.length() > this.parameters.passMaxLength) {
@@ -125,6 +121,7 @@ public final class AuthenticationChecker {
 
     /**
      * Type or errors for credential values.
+     *
      * @author Grégory Van den Borre
      */
     public enum AuthenticationError {
@@ -166,8 +163,9 @@ public final class AuthenticationChecker {
 
         /**
          * Initialize the enum value.
-         * @Requires messageKey != null.
+         *
          * @param messageKey Translation key associated to the error message.
+         * @Requires messageKey != null.
          */
         AuthenticationError(final String messageKey) {
             this.messageKey = messageKey;

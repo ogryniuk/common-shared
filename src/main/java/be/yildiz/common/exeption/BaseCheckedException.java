@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Basic checked Exception.
+ *
  * @author Grégory Van den Borre
  */
 public class BaseCheckedException extends Exception {
@@ -45,8 +46,8 @@ public class BaseCheckedException extends Exception {
 
     /**
      * Simple constructor.
-     * @param message
-     *            Message to print to the user.
+     *
+     * @param message Message to print to the user.
      */
     protected BaseCheckedException(final String message) {
         super(message);
@@ -54,10 +55,9 @@ public class BaseCheckedException extends Exception {
 
     /**
      * Full constructor.
-     * @param message
-     *            Message to print to the user.
-     * @param exception
-     *            Original exception stack.
+     *
+     * @param message   Message to print to the user.
+     * @param exception Original exception stack.
      */
     protected BaseCheckedException(final String message, final Throwable exception) {
         super(message, exception);

@@ -30,6 +30,7 @@ import java.util.Map;
 
 /**
  * Utility class to build and manipulate map implementations.
+ *
  * @author Grégory Van den Borre
  */
 public interface Maps {
@@ -37,20 +38,22 @@ public interface Maps {
     /**
      * Create a new map, as for every components of this collection, it does not
      * accept any <code>null</code> value.
+     *
      * @return The new map.
      */
-    static < K, V > Map < K, V > newMap() {
-        return new HashMap <>();
+    static <K, V> Map<K, V> newMap() {
+        return new HashMap<>();
     }
 
 
     /**
      * Create a new bidirectional map, as for every components of this
      * collection, it does not accept any <code>null</code> value.
+     *
      * @return The new bidirectional map.
      */
-    static < K, V > BidirectionalMap < K, V > newBidirectionalMap() {
-        return new BidirectionalMap < K, V >();
+    static <K, V> BidirectionalMap<K, V> newBidirectionalMap() {
+        return new BidirectionalMap<K, V>();
     }
 
 }

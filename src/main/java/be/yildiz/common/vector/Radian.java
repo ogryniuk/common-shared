@@ -27,6 +27,7 @@ package be.yildiz.common.vector;
 
 /**
  * This class represent a radian angle.
+ *
  * @author Grégory Van den Borre
  */
 public final class Radian {
@@ -45,8 +46,8 @@ public final class Radian {
 
     /**
      * Full constructor.
-     * @param radian
-     *            initialize the radiant value.
+     *
+     * @param radian initialize the radiant value.
      */
     public Radian(final float radian) {
         super();

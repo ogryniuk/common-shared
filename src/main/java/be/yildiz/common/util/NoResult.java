@@ -27,15 +27,16 @@ package be.yildiz.common.util;
 
 /**
  * Behavior to use when a Register does not find a result.
+ *
  * @author Grégory Van den Borre
  */
 @FunctionalInterface
-public interface NoResult < T >{
+public interface NoResult<T> {
 
     /**
      * Behavior to implements.
-     * @param name
-     *            Name of the Registerable not found.
+     *
+     * @param name Name of the Registerable not found.
      */
     T resultNotFound(final String name);
 

@@ -25,30 +25,27 @@
 
 package be.yildiz.common.vector;
 
+import be.yildiz.common.Rectangle;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import be.yildiz.common.Rectangle;
-
 /**
  * Class test for Point2D.
+ *
  * @author Grégory Van den Borre
  */
 public class PointTest {
 
-    @Rule
-    public ExpectedException rule = ExpectedException.none();
-
-    /***/
-    private Point2D point;
-
     /***/
     private static final int X = 10;
-
     /***/
     private static final int Y = 5;
+    @Rule
+    public ExpectedException rule = ExpectedException.none();
+    /***/
+    private Point2D point;
 
     /***/
     @Test

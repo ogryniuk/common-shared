@@ -25,12 +25,12 @@
 
 package be.yildiz.common.shape;
 
-import lombok.EqualsAndHashCode;
 import be.yildiz.common.util.Checker;
+import lombok.EqualsAndHashCode;
 
 /**
  * Data to create a box.
- * 
+ *
  * @author Grégory Van den Borre
  */
 @EqualsAndHashCode
@@ -53,13 +53,10 @@ public final class Box {
 
     /**
      * Full constructor.
-     * 
-     * @param widthSize
-     *            Width size of the box.
-     * @param heightSize
-     *            Height size of the box.
-     * @param depthSize
-     *            Depth size of the box.
+     *
+     * @param widthSize  Width size of the box.
+     * @param heightSize Height size of the box.
+     * @param depthSize  Depth size of the box.
      */
     public Box(final int widthSize, final int heightSize, final int depthSize) {
         super();
@@ -73,9 +70,8 @@ public final class Box {
 
     /**
      * Full constructor, create a cube.
-     * 
-     * @param size
-     *            Size for the width, height and depth
+     *
+     * @param size Size for the width, height and depth
      */
     public Box(final int size) {
         this(size, size, size);

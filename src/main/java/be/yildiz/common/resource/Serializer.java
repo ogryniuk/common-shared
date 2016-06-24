@@ -27,22 +27,23 @@ package be.yildiz.common.resource;
 
 /**
  * Serialize and deserialize objects from files.
+ *
+ * @param <T> Object type to use.
  * @author Grégory Van den Borre
- * @param <T>
- *            Object type to use.
  */
-public interface Serializer < T > {
+public interface Serializer<T> {
 
     /**
      * Read an object from a file.
+     *
      * @return The deserialized object.
      */
     T readFromFile();
 
     /**
      * Serialize an object an persist it in the file.
-     * @param o
-     *            Object to serialize.
+     *
+     * @param o Object to serialize.
      */
     void writeToFile(final T o);
 

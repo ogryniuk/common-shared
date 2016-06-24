@@ -35,6 +35,7 @@ import java.util.Set;
 
 /**
  * Test class for EntityId.
+ *
  * @author Grégory Van den Borre
  */
 public final class EntityIdTest {
@@ -48,7 +49,7 @@ public final class EntityIdTest {
         final long value = 5;
         Assert.assertEquals(EntityId.get(value), EntityId.get(value));
         Assert.assertNotEquals(EntityId.get(value), EntityId.get(value + 1));
-        Set< EntityId > set = Sets.newSet();
+        Set<EntityId> set = Sets.newSet();
         Assert.assertTrue(set.add(EntityId.get(value)));
         Assert.assertFalse(set.add(EntityId.get(value)));
         Assert.assertTrue(set.remove(EntityId.get(value)));

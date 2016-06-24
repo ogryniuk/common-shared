@@ -25,6 +25,8 @@
 
 package be.yildiz.common.util;
 
+import be.yildiz.common.collections.Lists;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -34,10 +36,9 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
-import be.yildiz.common.collections.Lists;
-
 /**
  * Utility class to provide basic services.
+ *
  * @author Grégory Van den Borre
  */
 public interface Util {
@@ -50,16 +51,14 @@ public interface Util {
     /**
      * Compare 2 set, and return a list with the elements contained in the first
      * set but not in the second.
-     * @param <T>
-     *            Contained objects type.
-     * @param first
-     *            Set to compare.
-     * @param second
-     *            Other set to compare.
+     *
+     * @param <T>    Contained objects type.
+     * @param first  Set to compare.
+     * @param second Other set to compare.
      * @return a List with the difference between the first and second set.
      */
-    static < T > List < T > compareSet(final Set < T > first, final Set < T > second) {
-        List < T > onlyInFirstSet = Lists.newList();
+    static <T> List<T> compareSet(final Set<T> first, final Set<T> second) {
+        List<T> onlyInFirstSet = Lists.newList();
         for (T o : first) {
             if (!second.contains(o)) {
                 onlyInFirstSet.add(o);
@@ -70,8 +69,8 @@ public interface Util {
 
     /**
      * Delete a folder and its content.
-     * @param folder
-     *            Folder to delete.
+     *
+     * @param folder Folder to delete.
      */
     static void deleteFolder(final File folder) {
         File[] files = folder.listFiles();
@@ -88,10 +87,9 @@ public interface Util {
     /**
      * Test equality on two float, the method use {@link float#compare(float,
      * float)}.
-     * @param d1
-     *            float to test.
-     * @param d2
-     *            Other float to test.
+     *
+     * @param d1 float to test.
+     * @param d2 Other float to test.
      * @return True is f1 and f2 are considered equals.
      */
     static boolean equalFloat(final float d1, final float d2) {
@@ -100,22 +98,20 @@ public interface Util {
 
     /**
      * Run an external application from a given directory.
-     * @param applicationName
-     *            Full application name, with its extension.
-     * @param workingDirectory
-     *            Root is considered as calling application working directory.
-     * @throws IOException
-     *             Exception thrown from the runtime exec method.
+     *
+     * @param applicationName  Full application name, with its extension.
+     * @param workingDirectory Root is considered as calling application working directory.
+     * @throws IOException Exception thrown from the runtime exec method.
      */
     static void execute(final String applicationName, final String workingDirectory) throws IOException {
-        Runtime.getRuntime().exec(new String[] {new File(workingDirectory + File.separator + applicationName).getAbsolutePath()}, null,
+        Runtime.getRuntime().exec(new String[]{new File(workingDirectory + File.separator + applicationName).getAbsolutePath()}, null,
                 new File(workingDirectory).getAbsoluteFile());
     }
 
     /**
      * Convert a float to an integer by removing values after comma.
-     * @param value
-     *            Original float value.
+     *
+     * @param value Original float value.
      * @return The integer value.
      */
     static int floatToInt(final float value) {
@@ -124,6 +120,7 @@ public interface Util {
 
     /**
      * Compute a random number.
+     *
      * @return A random number.
      */
     static int getRandom() {
@@ -132,8 +129,8 @@ public interface Util {
 
     /**
      * Compute a random number with max value.
-     * @param maxIncluded
-     *            Max value to use(included in result).
+     *
+     * @param maxIncluded Max value to use(included in result).
      * @return A random number.
      */
     static int getRandom(final int maxIncluded) {
@@ -143,8 +140,8 @@ public interface Util {
     /**
      * Check if a parameter is > 0, if not, an InvalidParameterException is
      * thrown.
-     * @param param
-     *            Parameter to check
+     *
+     * @param param Parameter to check
      */
     static void greaterThanZero(final float param) {
         if (param <= 0) {
@@ -168,12 +165,11 @@ public interface Util {
 
     /**
      * Check if a value is not bigger than its allowed limit.
-     * @param value
-     *            Value to check.
-     * @param maxValue
-     *            Maximum value.
+     *
+     * @param value    Value to check.
+     * @param maxValue Maximum value.
      * @return The value if it is smaller than the maximum, else return the
-     *         maximum.
+     * maximum.
      */
     static float setLimitedValue(final float value, final float maxValue) {
         if (value < maxValue) {
@@ -184,8 +180,8 @@ public interface Util {
 
     /**
      * Return a value or 0 if negative.
-     * @param value
-     *            Value to check.
+     *
+     * @param value Value to check.
      * @return The value.
      */
     static float setPositiveValue(final float value) {
@@ -197,12 +193,10 @@ public interface Util {
 
     /**
      * Return a value in a range.
-     * @param value
-     *            Value to check.
-     * @param min
-     *            Minimum value.
-     * @param max
-     *            Maximum value.
+     *
+     * @param value Value to check.
+     * @param min   Minimum value.
+     * @param max   Maximum value.
      * @return The value.
      */
     static float setValue(final float value, final float min, final float max) {
@@ -216,12 +210,10 @@ public interface Util {
 
     /**
      * Return a value in a range.
-     * @param value
-     *            Value to check.
-     * @param min
-     *            Minimum value.
-     * @param max
-     *            Maximum value.
+     *
+     * @param value Value to check.
+     * @param min   Minimum value.
+     * @param max   Maximum value.
      * @return The value.
      */
     static int setValue(final int value, final int min, final int max) {

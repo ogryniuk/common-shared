@@ -27,6 +27,7 @@ package be.yildiz.common.exeption;
 
 /**
  * Exception to throw when a default switch case receive an unhandled value.
+ *
  * @author Grégory Van den Borre
  */
 public final class UnhandledSwitchCaseException extends BaseException {
@@ -36,8 +37,8 @@ public final class UnhandledSwitchCaseException extends BaseException {
 
     /**
      * Constructor.
-     * @param o
-     *            Unexpected value received in a default switch case.
+     *
+     * @param o Unexpected value received in a default switch case.
      */
     public UnhandledSwitchCaseException(final Object o) {
         super("Received: " + o.toString());

@@ -25,42 +25,37 @@
 
 package be.yildiz.common.collections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
  * Wrap 2 Maps to easily get a value from a key and key a key from a value. The
  * mapping must be 1 - 1, only one value for a key.
- * @param <K>
- *            Type for the keys.
- * @param <V>
- *            Type for the values.
+ *
+ * @param <K> Type for the keys.
+ * @param <V> Type for the values.
  * @author Grégory Van den Borre
  */
-public final class BidirectionalMap < K, V > implements Iterable < Entry < K, V > > {
+public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
 
     /**
      * Base map.
      */
-    private final Map < K, V > map = new HashMap<>();
+    private final Map<K, V> map = new HashMap<>();
 
     /**
      * Revert map, to get a key from its value.
      */
-    private final Map < V, K > inverseMap = new HashMap <>();
+    private final Map<V, K> inverseMap = new HashMap<>();
 
     /**
      * Retrieve a key from a value.
-     * @param value
-     *            Stored value.
+     *
+     * @param value Stored value.
      * @return Associated key.
      */
     public K getKey(final Object value) {
-        if(value == null) {
+        if (value == null) {
             throw new IllegalArgumentException("null value not allowed.");
         }
         return this.inverseMap.get(value);
@@ -68,17 +63,16 @@ public final class BidirectionalMap < K, V > implements Iterable < Entry < K, V 
 
     /**
      * Get a key from a value, or return the given one.
-     * @param value
-     *            Value matching the key.
-     * @param replacementValue
-     *            Value to return in case if the given does not match the key.
+     *
+     * @param value            Value matching the key.
+     * @param replacementValue Value to return in case if the given does not match the key.
      * @return The matching key, or the replacement value.
      */
     public K getKeyOr(final V value, final K replacementValue) {
-        if(value == null) {
+        if (value == null) {
             throw new IllegalArgumentException("null value not allowed.");
         }
-        if(replacementValue == null) {
+        if (replacementValue == null) {
             throw new IllegalArgumentException("null value not allowed.");
         }
         return this.inverseMap.getOrDefault(value, replacementValue);
@@ -86,8 +80,8 @@ public final class BidirectionalMap < K, V > implements Iterable < Entry < K, V 
 
     /**
      * Retrieve the value from the key.
-     * @param key
-     *            Stored key.
+     *
+     * @param key Stored key.
      * @return Associated value.
      */
     public V getValue(final K key) {
@@ -95,16 +89,15 @@ public final class BidirectionalMap < K, V > implements Iterable < Entry < K, V 
     }
 
     @Override
-    public Iterator < Entry < K, V >> iterator() {
+    public Iterator<Entry<K, V>> iterator() {
         return this.map.entrySet().iterator();
     }
 
     /**
      * Add a key and its value to the map.
-     * @param key
-     *            The map key.
-     * @param value
-     *            The value associated to the key.
+     *
+     * @param key   The map key.
+     * @param value The value associated to the key.
      */
     public void put(final K key, final V value) {
         this.map.put(key, value);
@@ -113,18 +106,18 @@ public final class BidirectionalMap < K, V > implements Iterable < Entry < K, V 
 
     /**
      * Remove a key and its values from the containers.
-     * @param key
-     *            Object to remove.
+     *
+     * @param key Object to remove.
      */
     public void remove(final K key) {
         this.inverseMap.remove(this.map.remove(key));
     }
 
-    public List < V > getValues() {
+    public List<V> getValues() {
         return new ArrayList<V>(this.map.values());
     }
 
-    public List < K > getKeys() {
+    public List<K> getKeys() {
         return new ArrayList<K>(this.inverseMap.values());
     }
 }

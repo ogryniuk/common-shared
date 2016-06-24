@@ -27,7 +27,9 @@ package be.yildiz.common;
 
 /**
  * 2D coordinates values, contains the size(width, height) and the position(x
- * and y), immutable.
+ * and y).
+ * Immutable class.
+ *
  * @author Grégory Van den Borre
  */
 public final class Coordinates extends BaseCoordinate implements Cloneable {
@@ -39,14 +41,11 @@ public final class Coordinates extends BaseCoordinate implements Cloneable {
 
     /**
      * Full constructor.
-     * @param widthValue
-     *            Width coordinate.
-     * @param heightValue
-     *            Height coordinate.
-     * @param leftValue
-     *            Left coordinate.
-     * @param topValue
-     *            Top coordinate.
+     *
+     * @param widthValue  Width coordinate.
+     * @param heightValue Height coordinate.
+     * @param leftValue   Left coordinate.
+     * @param topValue    Top coordinate.
      */
     public Coordinates(final int widthValue, final int heightValue, final int leftValue, final int topValue) {
         super(widthValue, heightValue, leftValue, topValue);
@@ -54,12 +53,10 @@ public final class Coordinates extends BaseCoordinate implements Cloneable {
 
     /**
      * Full constructor.
-     * @param size
-     *            Width and height coordinates.
-     * @param leftValue
-     *            Left coordinate.
-     * @param topValue
-     *            Top coordinate.
+     *
+     * @param size      Width and height coordinates.
+     * @param leftValue Left coordinate.
+     * @param topValue  Top coordinate.
      */
     public Coordinates(final Size size, final int leftValue, final int topValue) {
         this(size.width, size.height, leftValue, topValue);
@@ -67,10 +64,9 @@ public final class Coordinates extends BaseCoordinate implements Cloneable {
 
     /**
      * Full constructor.
-     * @param size
-     *            Width and height coordinates.
-     * @param position
-     *            Left and top coordinates.
+     *
+     * @param size     Width and height coordinates.
+     * @param position Left and top coordinates.
      */
     public Coordinates(final Size size, final Position position) {
         this(size.width, size.height, position.left, position.top);
@@ -84,7 +80,7 @@ public final class Coordinates extends BaseCoordinate implements Cloneable {
     public Coordinates clone() {
         return new Coordinates(this.width, this.height, this.left, this.top);
     }
-    
+
     /**
      * @return The size;
      */

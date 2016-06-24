@@ -26,6 +26,7 @@
 /**
  * Contains util classes to manipulate Strings, Collections,
  * Timers, to register objects...
+ *
  * @author Grégory Van den Borre
  */
 package be.yildiz.common.util;

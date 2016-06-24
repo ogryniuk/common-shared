@@ -25,23 +25,17 @@
 
 package be.yildiz.common.util;
 
-import java.lang.reflect.Constructor;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
+import be.yildiz.common.collections.CollectionUtil;
+import be.yildiz.common.collections.Lists;
+import be.yildiz.common.collections.Sets;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import be.yildiz.common.collections.CollectionUtil;
-import be.yildiz.common.collections.Lists;
-import be.yildiz.common.collections.Sets;
+import java.security.InvalidParameterException;
+import java.util.*;
 
 /**
  * @author Grégory Van Den Borre
@@ -140,14 +134,14 @@ public final class UtilTest {
      */
     @Test
     public void testNewInsertionOrderSet() {
-        Set < Integer > list = Sets.newInsertionOrderedSet();
-        Assert.assertTrue(list instanceof LinkedHashSet < ? >);
+        Set<Integer> list = Sets.newInsertionOrderedSet();
+        Assert.assertTrue(list instanceof LinkedHashSet<?>);
         Integer[] a = new Integer[50];
         for (int i = 0; i < a.length; i++) {
             a[i] = Util.getRandom();
             list.add(a[i]);
         }
-        Iterator < Integer > it = list.iterator();
+        Iterator<Integer> it = list.iterator();
         for (Integer element : a) {
             Assert.assertEquals(element, it.next());
         }
@@ -156,10 +150,10 @@ public final class UtilTest {
     /***/
     @Test
     public void testNewList() {
-        List < Integer > list = Lists.newList();
-        Assert.assertTrue(list instanceof ArrayList < ? >);
+        List<Integer> list = Lists.newList();
+        Assert.assertTrue(list instanceof ArrayList<?>);
         list = Lists.newList(43);
-        Assert.assertTrue(list instanceof ArrayList < ? >);
+        Assert.assertTrue(list instanceof ArrayList<?>);
         Integer[] a = new Integer[50];
         for (int i = 0; i < a.length; i++) {
             a[i] = Util.getRandom();
