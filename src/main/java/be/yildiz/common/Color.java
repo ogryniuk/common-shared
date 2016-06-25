@@ -187,7 +187,7 @@ public final class Color implements Serializable {
         return new Color(this.red + value, this.green + value, this.blue + value, this.alpha);
     }
 
-    public Color add(int red, int green, int blue) {
+    public Color add(final int red, final int green, final int blue) {
         return new Color(this.red + red, this.green + green, this.blue + blue, this.alpha);
     }
 
