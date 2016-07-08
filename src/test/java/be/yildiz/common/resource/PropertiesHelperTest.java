@@ -25,6 +25,7 @@
 
 package be.yildiz.common.resource;
 
+import be.yildiz.common.exeption.ResourceMissingException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -44,6 +45,11 @@ public class PropertiesHelperTest {
         Assert.assertEquals(p.getProperty("key3"), "value3");
     }
 
+    @Test(expected = ResourceMissingException.class)
+    public void testGetPropertiesFromFileNotExist() {
+        PropertiesHelper.getPropertiesFromFile(new File("idonotexists.properties"));
+    }
+
     @Test
     public void testGetPropertiesFromFileWithArgs() {
         String[] args = {"key2=value123456"};
@@ -51,6 +57,20 @@ public class PropertiesHelperTest {
         Assert.assertEquals(p.getProperty("key1"), "value1");
         Assert.assertEquals(p.getProperty("key2"), "value123456");
         Assert.assertEquals(p.getProperty("key3"), "value3");
+    }
+
+    @Test
+    public void testGetPropertiesFromFileWithArgsNull() {
+        String[] args = {"key1=value1234567", null};
+        Properties p = PropertiesHelper.getPropertiesFromFile(new File("src/test/resources/test.properties"), args);
+        Assert.assertEquals(p.getProperty("key1"), "value1234567");
+    }
+
+    @Test
+    public void testGetPropertiesFromFileWithArgsInvalid() {
+        String[] args = {"key1:value1234567", null};
+        Properties p = PropertiesHelper.getPropertiesFromFile(new File("src/test/resources/test.properties"), args);
+        Assert.assertEquals(p.getProperty("key1"), "value1");
     }
 
 }
