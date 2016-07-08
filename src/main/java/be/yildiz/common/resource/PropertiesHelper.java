@@ -123,6 +123,32 @@ public interface PropertiesHelper {
     }
 
     /**
+     * Get a property object from a file, and override the values retrieved with the one from args parameter.
+     * This is typically to be used with the main method.
+     *
+     * @param file Physical file containing the properties.
+     * @param args Array of key=values to override the content retrieved from the file.
+     * @return The properties from the file.
+     * @throws ResourceMissingException if the file does not exists.
+     * @Requires (file != null)
+     * @Requires (args != null)
+     * @Effect Create a new properties object from a file.
+     * @Ensures (result != null)
+     */
+    static Properties getPropertiesFromFile(final File file, final String... args) {
+        final Properties properties = getPropertiesFromFile(file);
+        for(String pair : args) {
+            if(pair != null && pair.contains("=")) {
+                String[] values = pair.split("=");
+                if(properties.containsKey(values[0])) {
+                    properties.setProperty(values[0], values[1]);
+                }
+            }
+        }
+        return properties;
+    }
+
+    /**
      * Save the content of a properties in a file.
      *
      * @param p Properties to save.
