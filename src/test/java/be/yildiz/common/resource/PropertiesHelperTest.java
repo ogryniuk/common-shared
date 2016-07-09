@@ -68,9 +68,16 @@ public class PropertiesHelperTest {
 
     @Test
     public void testGetPropertiesFromFileWithArgsInvalid() {
-        String[] args = {"key1:value1234567", null};
+        String[] args = {"key1:value1234567"};
         Properties p = PropertiesHelper.getPropertiesFromFile(new File("src/test/resources/test.properties"), args);
         Assert.assertEquals(p.getProperty("key1"), "value1");
+    }
+
+    @Test
+    public void testGetBooleanDefault() {
+        Properties p = PropertiesHelper.getPropertiesFromFile(new File("src/test/resources/test.properties"));
+        Assert.assertFalse(PropertiesHelper.getBooleanValue(p, "notExistingKey", false));
+        Assert.assertTrue(PropertiesHelper.getBooleanValue(p, "notExistingKey", true));
     }
 
 }

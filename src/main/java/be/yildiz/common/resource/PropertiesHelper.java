@@ -63,6 +63,28 @@ public interface PropertiesHelper {
     }
 
     /**
+     * Get a boolean value from a properties.
+     *
+     * @param properties Properties to extract the value.
+     * @param key        Key associated to the value.
+     * @param defaultValue Default value if it does not exists in the properties.
+     * @return The boolean value found.
+     * @throws IllegalArgumentException If the key is not found.
+     * @throws IllegalArgumentException If the value cannot be parsed into a boolean.
+     * @Requires("properties != null"). @Requires("key != null").
+     */
+    static boolean getBooleanValue(final Properties properties, final String key, final boolean defaultValue) {
+        String value = properties.getProperty(key);
+        if (value == null) {
+            return defaultValue;
+        }
+        if ("true".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value)) {
+            return Boolean.valueOf(value);
+        }
+        throw new IllegalArgumentException("Only true or false value allowed, found " + value);
+    }
+
+    /**
      * Get a int value from a properties.
      *
      * @param properties Properties to extract the value.
@@ -103,26 +125,6 @@ public interface PropertiesHelper {
     }
 
     /**
-     * Get a property object from a file.
-     *
-     * @param file Physical file containing the properties.
-     * @return The properties from the file.
-     * @throws ResourceMissingException if the file does not exists.
-     * @Requires (file != null)
-     * @Effect Create a new properties object from a file.
-     * @Ensures (result != null)
-     */
-    static Properties getPropertiesFromFile(final File file) {
-        final Properties properties = new Properties();
-        try (Reader reader = ResourceUtil.getFileReader(file)) {
-            properties.load(reader);
-            return properties;
-        } catch (IOException ioe) {
-            throw new ResourceMissingException("Error while reading property file: " + file.getAbsolutePath(), ioe);
-        }
-    }
-
-    /**
      * Get a property object from a file, and override the values retrieved with the one from args parameter.
      * This is typically to be used with the main method.
      *
@@ -131,12 +133,19 @@ public interface PropertiesHelper {
      * @return The properties from the file.
      * @throws ResourceMissingException if the file does not exists.
      * @Requires (file != null)
-     * @Requires (args != null)
      * @Effect Create a new properties object from a file.
      * @Ensures (result != null)
      */
     static Properties getPropertiesFromFile(final File file, final String... args) {
-        final Properties properties = getPropertiesFromFile(file);
+        final Properties properties = new Properties();
+        try (Reader reader = ResourceUtil.getFileReader(file)) {
+            properties.load(reader);
+        } catch (IOException ioe) {
+            throw new ResourceMissingException("Error while reading property file: " + file.getAbsolutePath(), ioe);
+        }
+        if(args == null) {
+            return properties;
+        }
         for(String pair : args) {
             if(pair != null && pair.contains("=")) {
                 String[] values = pair.split("=");
