@@ -62,6 +62,12 @@ public final class Logger {
         WRAPPED_LOGGER.setLevel(Level.INFO);
     }
 
+    public static void setLevelDebug() {
+        logLevel = LogLevel.DEBUG;
+        WRAPPED_LOGGER.setLevel(Level.FINE);
+    }
+
+
     /**
      * Log an error message.
      *
@@ -141,10 +147,9 @@ public final class Logger {
      * Log a debug message.
      *
      * @param message Message to log.
-     *                //FIXME use info
      */
     public static void debug(final String message) {
-        Logger.WRAPPED_LOGGER.info(message);
+        Logger.WRAPPED_LOGGER.fine(message);
     }
 
     /**
