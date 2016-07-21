@@ -28,10 +28,7 @@ package be.yildiz.common.log;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Handler;
-import java.util.logging.Level;
+import java.util.logging.*;
 
 /**
  * Simple wrapper class for the logger to provide easy use.
@@ -45,6 +42,13 @@ public final class Logger {
      */
     private static final java.util.logging.Logger WRAPPED_LOGGER = java.util.logging.Logger.getLogger("yz");
 
+    static {
+        WRAPPED_LOGGER.setUseParentHandlers(false);
+        WRAPPED_LOGGER.addHandler(new ConsoleHandler());
+        for (Handler h : WRAPPED_LOGGER.getHandlers()) {
+            h.setLevel(Level.INFO);
+        }
+    }
     /**
      * Current log level.
      */
@@ -59,12 +63,18 @@ public final class Logger {
 
     public static void setLevelInfo() {
         logLevel = LogLevel.INFO;
-        WRAPPED_LOGGER.setLevel(Level.INFO);
+        WRAPPED_LOGGER.setLevel(Level.ALL);
+        for (Handler h : Logger.WRAPPED_LOGGER.getHandlers()) {
+            h.setLevel(Level.INFO);
+        }
     }
 
     public static void setLevelDebug() {
         logLevel = LogLevel.DEBUG;
-        WRAPPED_LOGGER.setLevel(Level.FINE);
+        WRAPPED_LOGGER.setLevel(Level.ALL);
+        for (Handler h : Logger.WRAPPED_LOGGER.getHandlers()) {
+            h.setLevel(Level.FINE);
+        }
     }
 
 
@@ -165,7 +175,7 @@ public final class Logger {
         return logLevel;
     }
 
-    public static enum LogLevel {
+    public enum LogLevel {
         DEBUG, INFO, WARNING, ERROR;
     }
 }

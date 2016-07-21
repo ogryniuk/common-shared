@@ -57,6 +57,14 @@ public final class SimpleFormatter extends Formatter {
     public String format(final LogRecord record) {
         StringBuilder builder = new StringBuilder();
         this.date.setTime(record.getMillis());
+        String level = record.getLevel().toString().toUpperCase();
+        if ("FINE".equals(level)) {
+            level = "DEBUG";
+        } else if ("INFO".equals(level)) {
+            level = "INFOS";
+        }
+        builder.append(level);
+        builder.append(": ");
         builder.append(this.format.format(this.date));
         builder.append(": ");
         builder.append(record.getMessage());
