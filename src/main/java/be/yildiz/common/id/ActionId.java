@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @author Grégory Van den Borre
  */
-public final class ActionId implements Serializable {
+public class ActionId implements Serializable {
 
     /***/
     private static final long serialVersionUID = -1300879297702695817L;
@@ -69,7 +69,7 @@ public final class ActionId implements Serializable {
      *
      * @param idValue Initialize the wrapped value.
      */
-    private ActionId(final int idValue) {
+    protected ActionId(final int idValue) {
         super();
         this.value = idValue;
         ActionId.LIST.putIfAbsent(this.value, this);
