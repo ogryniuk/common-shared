@@ -69,5 +69,9 @@
       <name>OSS repository snapshot</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
+    <repository>
+      <id>maven-cofoja-repo</id>
+      <url>http://maven-cofoja.github.io/maven</url>
+    </repository>
   </repositories>
 </project>
