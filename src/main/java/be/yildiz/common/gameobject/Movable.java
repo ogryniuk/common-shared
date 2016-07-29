@@ -33,7 +33,7 @@ import be.yildiz.common.vector.Point3D;
  * @author Grégory Van den Borre
  * @mutable
  */
-public interface Movable {
+public interface Movable extends Deletable{
 
     /**
      * Attach this object to another, this object will always follow the other moves and rotations.
@@ -117,10 +117,4 @@ public interface Movable {
     default void setDirection(float dirX, float dirY, float dirZ) {
         this.setDirection(Point3D.xyz(dirX, dirY, dirZ));
     }
-
-    /**
-     * Delete the object.
-     */
-    void delete();
-
 }

@@ -26,11 +26,15 @@
 package be.yildiz.common.gameobject;
 
 /**
+ * This object must be manually deleted.
  * @author Grégory Van den Borre
  */
 @FunctionalInterface
 public interface Deletable {
 
+    /**
+     * Delete this object.
+     */
     void delete();
 
 }
