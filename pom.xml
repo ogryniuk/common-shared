@@ -17,7 +17,7 @@
   <parent>
     <groupId>be.yildiz-games</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </parent>
 
   <properties>
@@ -84,11 +84,6 @@
   </build>
 
   <repositories>
-    <repository>
-      <id>ossrh</id>
-      <name>OSS repository snapshot</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
     <repository>
       <id>maven-cofoja-repo</id>
       <url>http://maven-cofoja.github.io/maven</url>
