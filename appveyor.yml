@@ -16,7 +16,7 @@ install:
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=1g -Xmx2g
   - cmd: mvn --version
   - cmd: java -version
-test_script:
+build_script:
   - mvn verify -B
 cache:
   - C:\maven
