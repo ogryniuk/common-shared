@@ -49,8 +49,9 @@ public interface PropertiesHelper {
      * @return The boolean value found.
      * @throws IllegalArgumentException If the key is not found.
      * @throws IllegalArgumentException If the value cannot be parsed into a boolean.
-     * @Requires("properties != null"). @Requires("key != null").
      */
+    //@Requires("properties != null")
+    //@Requires("key != null")
     static boolean getBooleanValue(final Properties properties, final String key) {
         String value = properties.getProperty(key);
         if (value == null) {
@@ -65,14 +66,15 @@ public interface PropertiesHelper {
     /**
      * Get a boolean value from a properties.
      *
-     * @param properties Properties to extract the value.
-     * @param key        Key associated to the value.
+     * @param properties   Properties to extract the value.
+     * @param key          Key associated to the value.
      * @param defaultValue Default value if it does not exists in the properties.
      * @return The boolean value found.
      * @throws IllegalArgumentException If the key is not found.
      * @throws IllegalArgumentException If the value cannot be parsed into a boolean.
-     * @Requires("properties != null"). @Requires("key != null").
      */
+    //@Requires("properties != null")
+    //@Requires("key != null")
     static boolean getBooleanValue(final Properties properties, final String key, final boolean defaultValue) {
         String value = properties.getProperty(key);
         if (value == null) {
@@ -92,8 +94,9 @@ public interface PropertiesHelper {
      * @return The integer value found.
      * @throws IllegalArgumentException If the key is not found.
      * @throws IllegalArgumentException If the value cannot be parsed into a int.
-     * @Requires("properties != null") @Requires("key != null")
      */
+    //@Requires("properties != null")
+    //@Requires("key != null")
     static int getIntValue(final Properties properties, final String key) {
         String value = properties.getProperty(key);
         if (value == null) {
@@ -113,9 +116,10 @@ public interface PropertiesHelper {
      * @param key        Key associated to the value.
      * @return The value found.
      * @throws IllegalArgumentException If the key is not found.
-     * @Requires("properties != null") @Requires("key != null")
-     * @Ensures (result != null)
      */
+    //@Requires("properties != null")
+    // @Requires("key != null")
+    //@Ensures ("result != null")
     static String getValue(final Properties properties, final String key) {
         String value = properties.getProperty(key);
         if (value == null) {
@@ -132,10 +136,9 @@ public interface PropertiesHelper {
      * @param args Array of key=values to override the content retrieved from the file.
      * @return The properties from the file.
      * @throws ResourceMissingException if the file does not exists.
-     * @Requires (file != null)
-     * @Effect Create a new properties object from a file.
-     * @Ensures (result != null)
      */
+    //@Requires ("file != null")
+    //@Ensures ("result != null")
     static Properties getPropertiesFromFile(final File file, final String... args) {
         final Properties properties = new Properties();
         try (Reader reader = ResourceUtil.getFileReader(file)) {
@@ -143,13 +146,13 @@ public interface PropertiesHelper {
         } catch (IOException ioe) {
             throw new ResourceMissingException("Error while reading property file: " + file.getAbsolutePath(), ioe);
         }
-        if(args == null) {
+        if (args == null) {
             return properties;
         }
-        for(String pair : args) {
-            if(pair != null && pair.contains("=")) {
+        for (String pair : args) {
+            if (pair != null && pair.contains("=")) {
                 String[] values = pair.split("=");
-                if(properties.containsKey(values[0])) {
+                if (properties.containsKey(values[0])) {
                     properties.setProperty(values[0], values[1]);
                 }
             }
@@ -163,11 +166,10 @@ public interface PropertiesHelper {
      * @param p Properties to save.
      * @param f File to use.
      * @throws ResourceException If the file cannot be written.
-     * @Requires (p != null)
-     * @Requires (f != null)
-     * @Requires (f.exists() == true)
-     * @Effect Replace the content of the File f with the Properties p values.
      */
+    //@Requires ("p != null")
+    //@Requires ("f != null")
+    //@Requires ("f.exists() == true")
     static void save(final Properties p, final File f) {
         try {
             if (f.getParentFile() != null && !f.getParentFile().exists()) {

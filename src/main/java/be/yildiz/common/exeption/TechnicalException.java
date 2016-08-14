@@ -31,9 +31,9 @@ import be.yildiz.common.log.Logger;
  * High level exception meant to be sent to the user, this is the exception
  * dealing with all technical issues occuring during the application runtime. It
  * will log the cause exception.
+ * Immutable class.
  *
  * @author Grégory Van den Borre
- * @immutable
  */
 public final class TechnicalException extends RuntimeException {
 
@@ -55,8 +55,8 @@ public final class TechnicalException extends RuntimeException {
      * Create a new instance with a cause and an empty message.
      *
      * @param cause Root exception.
-     * @Requires cause != null
      */
+    //@Requires("cause != null")
     public TechnicalException(final Exception cause) {
         this(cause, "");
     }

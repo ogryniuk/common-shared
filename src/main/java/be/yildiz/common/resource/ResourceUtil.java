@@ -92,7 +92,7 @@ public final class ResourceUtil {
     /**
      * Get a string from a ByteArrayOutputStream.
      *
-     * @param array Byte array.
+     * @param bos Byte array.
      * @return A string build from the byte array.
      */
     public static String getString(final ByteArrayOutputStream bos) {
