@@ -73,6 +73,7 @@ public final class ZipUtil {
      *
      * @param zipFile     Zip file to extract the data from.
      * @param destination Path where the directory will be extracted.
+     * @param keepRootDir Keep the root directory or extract all its content.
      */
     public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
         try (ZipFile file = new ZipFile(zipFile)) {

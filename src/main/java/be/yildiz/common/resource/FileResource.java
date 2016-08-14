@@ -91,6 +91,7 @@ public final class FileResource {
      * exist, it is created. Retrieve the size, and compute the CRC32.
      *
      * @param fileName Path and name of the resource.
+     * @param type     Directory or file.
      */
     public FileResource(final String fileName, final FileType type) {
         super();
