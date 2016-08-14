@@ -41,6 +41,10 @@ public final class Logger {
      * Wrapped logger.
      */
     private static final java.util.logging.Logger WRAPPED_LOGGER = java.util.logging.Logger.getLogger("yz");
+    /**
+     * Current log level.
+     */
+    private static LogLevel logLevel = LogLevel.DEBUG;
 
     static {
         WRAPPED_LOGGER.setUseParentHandlers(false);
@@ -49,10 +53,6 @@ public final class Logger {
             h.setLevel(Level.INFO);
         }
     }
-    /**
-     * Current log level.
-     */
-    private static LogLevel logLevel = LogLevel.DEBUG;
 
     /**
      * Private constructor to prevent use.
@@ -134,11 +134,8 @@ public final class Logger {
      * Set the file to use.
      *
      * @param name File name.
-     * @Requires name != null
-     * @Requires name to be an acceptable file name.
-     * @Affects the wrapped logger.
-     * @Ensures The wrapped logger will be using the name as file name.
      */
+    //@Requires("name != null")
     public static void setFile(final String name) {
         try {
             Handler file = new FileHandler(name, true);

@@ -29,9 +29,9 @@ import be.yildiz.common.vector.Point3D;
 
 /**
  * Common interface for all movable objects.
+ * Mutable class.
  *
  * @author Grégory Van den Borre
- * @mutable
  */
 public interface Movable extends Deletable{
 
@@ -39,16 +39,16 @@ public interface Movable extends Deletable{
      * Attach this object to another, this object will always follow the other moves and rotations.
      *
      * @param other Object to follow.
-     * @Requires other != null.
      */
+    //@Requires("other != null")
     void attachTo(Movable other);
 
     /**
      * Detach this object from another one.
      *
      * @param other Object to be detached from.
-     * @Requires other != null.
      */
+    //@Requires("other != null")
     void detach(Movable other);
 
     void addChild(Movable other);
@@ -58,6 +58,7 @@ public interface Movable extends Deletable{
      *
      * @param other Object to follow.
      */
+    //@Requires("other != null")
     void attachToOptional(Movable other);
 
     /**

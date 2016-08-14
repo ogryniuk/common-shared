@@ -177,7 +177,7 @@ public final class Rectangle {
      * Update the Rectangle values.
      *
      * @param leftValue   New value for left.
-     *                    New value for top.
+     * @param topValue    New value for top.
      * @param rightValue  New value for right.
      * @param bottomValue New value for bottom.
      */

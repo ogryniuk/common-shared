@@ -39,6 +39,8 @@ public interface Maps {
      * Create a new map, as for every components of this collection, it does not
      * accept any <code>null</code> value.
      *
+     * @param <K> Type of the key map.
+     * @param <V> Type of the value map.
      * @return The new map.
      */
     static <K, V> Map<K, V> newMap() {
@@ -50,6 +52,8 @@ public interface Maps {
      * Create a new bidirectional map, as for every components of this
      * collection, it does not accept any <code>null</code> value.
      *
+     * @param <K> Type of the key map.
+     * @param <V> Type of the value map.
      * @return The new bidirectional map.
      */
     static <K, V> BidirectionalMap<K, V> newBidirectionalMap() {

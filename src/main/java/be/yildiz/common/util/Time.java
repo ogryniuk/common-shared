@@ -29,9 +29,9 @@ import lombok.EqualsAndHashCode;
 
 /**
  * Class to represent a time period, must be sub classed to create different types of periods.
+ * Immutable class.
  *
  * @author Grégory Van den Borre
- * @immutable
  */
 @EqualsAndHashCode
 public final class Time {
@@ -47,8 +47,8 @@ public final class Time {
      *
      * @param time Time in milliseconds.
      * @throws IllegalArgumentException if the time is negative.
-     * @ensures time <= Long.MAX_VALUE
      */
+    //@Ensures("time <= Long.MAX_VALUE")
     private Time(final long time) {
         super();
         Checker.exceptionNotPositive(time);
@@ -60,9 +60,9 @@ public final class Time {
      *
      * @param ms Time value.
      * @return The created time.
-     * @throws IllegalArgumentException if the time is negative.
-     * @ensures ms <= Long.MAX_VALUE
+     * @throws IllegalArgumentException if the time is negative
      */
+    //@ensures("ms <= Long.MAX_VALUE")
     public static Time milliSeconds(final long ms) {
         return new Time(ms);
     }
@@ -73,8 +73,8 @@ public final class Time {
      * @param second Time value.
      * @return The created time.
      * @throws IllegalArgumentException if the time is negative.
-     * @ensures second <= (Long.MAX_VALUE / 1000)
      */
+    //@Ensures("second <= (Long.MAX_VALUE / 1000)")
     public static Time seconds(final long second) {
         return milliSeconds(second * 1000);
     }

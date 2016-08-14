@@ -50,7 +50,7 @@ public interface Checker {
      *
      * @param index Value to check.
      * @param array Array to use.
-     * @return <code>true</code> if the value is > 0 and smaller than array
+     * @return true if the value is greater than 0 and smaller than array
      * length.
      */
     static boolean inArrayRange(final int index, final Object[] array) {

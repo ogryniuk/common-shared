@@ -111,6 +111,7 @@ public interface Lists {
      * reflected in the copy.
      *
      * @param list List to copy.
+     * @param <T>  Type contained in the list.
      * @return The copy of the given list.
      */
     static <T> List<T> copy(List<T> list) {
