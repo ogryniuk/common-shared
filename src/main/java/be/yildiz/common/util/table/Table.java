@@ -51,8 +51,8 @@ public class Table <T> {
 
     /**
      * Build a table from
-     * @param header
-     * @param objects
+     * @param header Table header.
+     * @param objects Table content.
      */
     public Table(@NonNull final TableHeader header, @NonNull final List<TableRow> objects) {
         super();

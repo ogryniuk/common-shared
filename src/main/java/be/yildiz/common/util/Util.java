@@ -85,8 +85,7 @@ public interface Util {
     }
 
     /**
-     * Test equality on two float, the method use {@link float#compare(float,
-     * float)}.
+     * Test equality on two float.
      *
      * @param d1 float to test.
      * @param d2 Other float to test.
@@ -138,7 +137,7 @@ public interface Util {
     }
 
     /**
-     * Check if a parameter is > 0, if not, an InvalidParameterException is
+     * Check if a parameter is greater than 0, if not, an InvalidParameterException is
      * thrown.
      *
      * @param param Parameter to check
@@ -157,7 +156,7 @@ public interface Util {
     }
 
     /**
-     * @return <code>true</code> If the platform is X86.
+     * @return true If the platform is X86.
      */
     static boolean isX86() {
         return "x86".equals(System.getProperty("os.arch"));

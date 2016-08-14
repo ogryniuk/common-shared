@@ -41,8 +41,8 @@ public interface VectorUtil {
      * @param radius Circle ray size.
      * @return An array (with size of parameter number) containing the position
      * of every points, assuming the circle is at 0,0.
-     * @throws InvalidParameterException if number is <= 0.
-     * @throws InvalidParameterException if radius is <= 0.
+     * @throws InvalidParameterException if number is not greater than 0.
+     * @throws InvalidParameterException if radius is not greater than 0.
      */
     static Point2D[] getPointOnCircle(final int number, final int radius) {
         Checker.exceptionNotGreaterThanZero(number);

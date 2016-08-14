@@ -53,16 +53,16 @@ public class TableHeader {
 
     /**
      * @return The number of columns.
-     * @Ensures size >=0
      */
+    //@Ensures("size >=0")
     public int size() {
         return this.columns.size();
     }
 
     /**
      * @return The list of column titles.
-     * @Ensures result != null
      */
+    //@Ensures("result != null")
     public List<String> getColums() {
         return this.columns;
     }

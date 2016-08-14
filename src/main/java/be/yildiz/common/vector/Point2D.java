@@ -26,9 +26,7 @@
 package be.yildiz.common.vector;
 
 /**
- * Class representing a 2d coordinate, extends {@link Mutable} class to check if
- * mutability is allowed, that's why all logic that modify inner values must use
- * the setter to check the state.
+ * Class representing a 2d coordinate.
  *
  * @author Grégory Van den Borre
  */
