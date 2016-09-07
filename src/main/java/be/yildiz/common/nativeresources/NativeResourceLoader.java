@@ -140,7 +140,6 @@ public final class NativeResourceLoader {
                 }
 
             }
-            Logger.info(new File("test").getAbsolutePath());
             System.load(nativePath);
             Logger.info(nativePath + " loaded.");
         }
