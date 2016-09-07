@@ -182,7 +182,7 @@ public final class NativeResourceLoader {
         try {
             Field lib = ClassLoader.class.getDeclaredField("loadedLibraryNames");
             lib.setAccessible(true);
-            return new ArrayList<String>((Vector<String>) lib.get(ClassLoader.getSystemClassLoader()));
+            return new ArrayList<String>(Vector.class.cast(lib.get(ClassLoader.getSystemClassLoader())));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new IllegalArgumentException(e);
         }
