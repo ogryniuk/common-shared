@@ -28,6 +28,7 @@ package be.yildiz.common.resource;
 import be.yildiz.common.exeption.ResourceCorruptedException;
 import be.yildiz.common.exeption.ResourceMissingException;
 import be.yildiz.common.util.Literals;
+import be.yildiz.common.util.Util;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -99,5 +100,31 @@ public final class FileResourceTest {
         } catch (IOException e) {
             Assert.fail(e.getMessage());
         }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void constructorFileNull() {
+        new FileResource(null, FileResource.FileType.FILE);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void constructorFileEmpty() {
+        new FileResource("", FileResource.FileType.FILE);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void constructorTypeNull() {
+        new FileResource("file.txt", null);
+    }
+
+    @Test(expected = ResourceMissingException.class)
+    public void constructorFileNotExistFailCreate() {
+        String path;
+        if(Util.isLinux()) {
+            path = "/dev/null/f.txt";
+        } else {
+            path = "V:\f.txt";
+        }
+        new FileResource(path, FileResource.FileType.FILE);
     }
 }

@@ -31,6 +31,7 @@ import be.yildiz.common.exeption.ResourceMissingException;
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.util.Literals;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -92,8 +93,10 @@ public final class FileResource {
      *
      * @param fileName Path and name of the resource.
      * @param type     Directory or file.
+     * @throws ResourceMissingException If the file cannot be created.
+     * @throws NullPointerException If fileName is null or empty or if type is null.
      */
-    public FileResource(final String fileName, final FileType type) {
+    public FileResource(@NonNull final String fileName, @NonNull final FileType type) {
         super();
         this.file = new File(fileName);
         this.name = fileName;
@@ -103,7 +106,9 @@ public final class FileResource {
                 if (type == FileType.DIRECTORY) {
                     this.file.mkdir();
                 } else if (type == FileType.FILE) {
-                    this.file.createNewFile();
+                    if(!this.file.createNewFile()) {
+                        throw new ResourceMissingException(fileName + " could not be created");
+                    }
                 }
             } catch (IOException | SecurityException e) {
                 throw new ResourceMissingException("The file " + this.file.getAbsolutePath() + " could not be created due to an exception.", e);
