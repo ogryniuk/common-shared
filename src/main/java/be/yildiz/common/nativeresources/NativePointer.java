@@ -35,7 +35,12 @@ public final class NativePointer {
     /**
      * Address to the native object pointer.
      */
-    public final long address;
+    private final long address;
+
+    /**
+     * Flag to check if the pointer is deleted.
+     */
+    private boolean deleted;
 
 
     /**
@@ -56,6 +61,25 @@ public final class NativePointer {
      */
     public static NativePointer create(final long address) {
         return new NativePointer(address);
+    }
+
+    /**
+     * Ensure to call this when the pointer is deleted native side.
+     */
+    public void delete() {
+        this.deleted = true;
+    }
+
+    /**
+     * Provide the address.
+     * @return The address value.
+     * @throws IllegalArgumentException if the pointer is deleted.
+     */
+    public long getPointerAddress() {
+        if(this.deleted) {
+            throw new IllegalArgumentException("The pointer is deleted.");
+        }
+        return this.address;
     }
 
     /**

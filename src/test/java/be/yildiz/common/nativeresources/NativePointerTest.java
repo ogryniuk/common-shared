@@ -60,7 +60,7 @@ public final class NativePointerTest {
     public void testNewPointer() {
         long value = 458L;
         NativePointer p = NativePointer.create(value);
-        Assert.assertEquals(value, p.address);
+        Assert.assertEquals(value, p.getPointerAddress());
     }
 
     /***/
@@ -69,6 +69,13 @@ public final class NativePointerTest {
         int value = 456;
         NativePointer p1 = NativePointer.create(value);
         Assert.assertEquals(String.valueOf(value), p1.toString());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDelete() {
+        NativePointer p = NativePointer.create(10L);
+        p.delete();
+        p.getPointerAddress();
     }
 
 }
