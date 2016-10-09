@@ -136,7 +136,7 @@ public final class NativeResourceLoader {
             } else {
                 nativePath = NativeResourceLoader.AVAILABLE_LIB.get(lib);
                 if (nativePath == null) {
-                    nativePath = "/usr/lib/x86_64-linux-gnu/lib" + lib + ".so";
+                    nativePath = "/usr/lib/x86_64-linux-gnu/" + lib + ".so";
                     if(!new File(nativePath).exists()) {
                         throw new InvalidParameterException(lib + " has not been found in path.");
                     }
