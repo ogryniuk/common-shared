@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import java.util.regex.Pattern;
 
-public class AuthenticatonRuleTest {
+public class AuthenticationRuleTest {
 
     @Test
     public void testAuthenticationRulesDefault() {
@@ -53,4 +53,33 @@ public class AuthenticatonRuleTest {
         Assert.assertEquals("[a-z]*", r.passPattern.pattern());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testLoginMinSmallerZero() {
+        new AuthenticationRules(-1, 15, 3, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPassMinSmallerZero() {
+        new AuthenticationRules(10, 15, -1, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLoginMaxSmallerMin() {
+        new AuthenticationRules(2, 15, 3, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPassMaxSmallerMin() {
+        new AuthenticationRules(10, 2, 3, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullLoginPattern() {
+        new AuthenticationRules(10, 15, 3, 5, null, Pattern.compile("[a-z]*"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullPassPattern() {
+        new AuthenticationRules(10, 15, 3, 5, Pattern.compile("[a-z]*"), null);
+    }
 }

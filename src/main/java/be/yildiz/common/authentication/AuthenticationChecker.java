@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 /**
  * Check a login and a password following the requirement in the parameter
  * object.
- *
+ * Immutable class.
  * @author Grégory Van den Borre
  */
 public final class AuthenticationChecker {
@@ -44,6 +44,10 @@ public final class AuthenticationChecker {
      */
     private final AuthenticationRules parameters;
 
+    /**
+     * Create a new AuthenticationChecker from rules.
+     * @param parameters List of rules to apply when authenticating, cannot be null.
+     */
     public AuthenticationChecker(@NonNull AuthenticationRules parameters) {
         this.parameters = parameters;
     }
@@ -74,6 +78,7 @@ public final class AuthenticationChecker {
      * @return The credentials created from the login and the password, password
      * returned is hashed.
      * @throws CredentialException If the check fails.
+     * @throws NullPointerException If login or password is null.
      */
     public Credentials check(final String login, final String password) throws CredentialException {
         List<AuthenticationError> errors = Lists.newList();
@@ -90,6 +95,7 @@ public final class AuthenticationChecker {
      *
      * @param login  Login to check.
      * @param errors List to store the errors.
+     * @throws NullPointerException If login or errors is null.
      */
     private void checkLogin(final String login, final List<AuthenticationError> errors) {
         if (login.length() < this.parameters.loginMinLength) {
@@ -107,6 +113,7 @@ public final class AuthenticationChecker {
      *
      * @param password Password to check.
      * @param errors   List to store the errors.
+     * @throws NullPointerException If password or errors is null.
      */
     private void checkPassword(final String password, final List<AuthenticationError> errors) {
         if (password.length() < this.parameters.passMinLength) {

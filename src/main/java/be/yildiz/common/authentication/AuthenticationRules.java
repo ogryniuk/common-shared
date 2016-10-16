@@ -25,10 +25,14 @@
 
 package be.yildiz.common.authentication;
 
+import lombok.NonNull;
+
 import java.util.regex.Pattern;
 
 /**
  * List of rules for the authentication.
+ * The different rules contains the minimum and maximum size for the login and password and the patterns to match for the login and the password.
+ * Immutable class.
  *
  * @author Grégory Van den Borre
  */
@@ -71,7 +75,35 @@ public final class AuthenticationRules {
      */
     public final Pattern passPattern;
 
-    public AuthenticationRules(int loginMaxLength, int passMaxLength, int loginMinLength, int passMinLength, Pattern loginPattern, Pattern passPattern) {
+    /**
+     * Create a new rule.
+     * @param loginMaxLength Maximum size allowed for the login.
+     * @param passMaxLength Maximum size allowed for the password.
+     * @param loginMinLength Minimum size allowed for the login.
+     * @param passMinLength Minimum size allowed for the password.
+     * @param loginPattern Pattern to match for the login.
+     * @param passPattern Pattern to match for the password.
+     * @throws IllegalArgumentException <ul>
+     *     <li>If loginMinLength is greater than loginMaxLength.</li>
+     *     <li>If passMinLength is greater than passMaxLength.</li>
+     *     <li>If loginMinLength or passMinLength is small than 0.</li>
+     * </ul>
+     * @throws NullPointerException If loginPattern or passPattern is null.
+     *
+     */
+    public AuthenticationRules(int loginMaxLength, int passMaxLength, int loginMinLength, int passMinLength, @NonNull Pattern loginPattern, @NonNull Pattern passPattern) {
+        if(loginMaxLength < loginMinLength) {
+            throw new IllegalArgumentException("Login max value must be greater or equals to login min value.");
+        }
+        if(passMaxLength < passMinLength) {
+            throw new IllegalArgumentException("Password max value must be greater or equals to password min value.");
+        }
+        if(loginMinLength < 0) {
+            throw new IllegalArgumentException("Login min value must be greater or equals to 0.");
+        }
+        if(passMinLength < 0) {
+            throw new IllegalArgumentException("Password min value must be greater or equals to 0.");
+        }
         this.loginMaxLength = loginMaxLength;
         this.passMaxLength = passMaxLength;
         this.loginMinLength = loginMinLength;

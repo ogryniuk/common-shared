@@ -26,13 +26,16 @@
 package be.yildiz.common.authentication;
 
 import be.yildiz.common.authentication.AuthenticationChecker.AuthenticationError;
+import be.yildiz.common.collections.Lists;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Exception thrown if a login or a password does not match some criteria(min or
- * max size, no invalid characters...)
+ * max size, no invalid characters...).
+ * Immutable class.
  *
  * @author Grégory Van den Borre
  */
@@ -42,12 +45,16 @@ public final class CredentialException extends Exception {
     private static final long serialVersionUID = 2998747641247283686L;
 
     /**
-     * List of errors.
+     * List of errors, immutable.
      */
     @Getter
     private final List<AuthenticationError> errors;
 
+    /**
+     * Create a new credential exception.
+     * @param errors Errors to put in the exception, the list is copied and set immutable.
+     */
     public CredentialException(List<AuthenticationError> errors) {
-        this.errors = errors;
+        this.errors = Collections.unmodifiableList(Lists.newList(errors));
     }
 }

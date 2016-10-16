@@ -29,7 +29,6 @@ import be.yildiz.common.collections.CollectionUtil;
 import be.yildiz.common.collections.Lists;
 import be.yildiz.common.collections.Sets;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -118,15 +117,6 @@ public final class UtilTest {
         } catch (InvalidParameterException e) {
             Assert.fail("Should not have thrown invalid parameter exception.");
         }
-    }
-
-    /**
-     * Test method for {@link be.yildiz.common.util.Util#isLinux()}.
-     */
-    @Test
-    @Ignore
-    public void testIsLinux() {
-        Assert.assertFalse(Util.isLinux());
     }
 
     /**

@@ -29,51 +29,64 @@ import be.yildiz.common.authentication.AuthenticationChecker.AuthenticationError
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 
 /**
  * @author Grégory Van den Borre
  */
+@RunWith(Enclosed.class)
 public final class AuthenticationCheckerTest {
 
     @Rule
     public final ExpectedException rule = ExpectedException.none();
 
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, be.yildiz.common.authentication.Password)}
-     * .
-     */
-    @Test
-    public void testCheckStringPassword() {
+    public static class Constructor {
+
+        @Test
+        public void happyFlow() {
+            new AuthenticationChecker(AuthenticationRules.DEFAULT);
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void withNull() {
+            new AuthenticationChecker(null);
+        }
     }
 
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
-     * .
-     *
-     * @throws CredentialException
-     */
-    @Test
-    public void testCheckStringString() throws CredentialException {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        c.check("test", "abcde");
+    public static class CheckStringString {
+
+        @Test
+        public void happyFlow() throws CredentialException {
+            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            c.check("testOk", "testOk");
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void stringNull() throws CredentialException {
+            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            c.check(null, "testOk");
+        }
+
     }
 
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
-     * .
-     *
-     * @throws CredentialException
-     */
-    @Test
-    public void testCheckStringStringNull() throws CredentialException {
-        this.rule.expect(NullPointerException.class);
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        c.check(null, "abcde");
+    public static class CheckStringPassword {
+
+        @Test
+        public void happyFlow() throws CredentialException{
+            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            c.check("testOk", new HashedPassword("testOk"));
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void stringNull() throws CredentialException {
+            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            c.check(null, new HashedPassword("testOk"));
+        }
+
     }
+
 
     /**
      * Test method for
@@ -183,17 +196,6 @@ public final class AuthenticationCheckerTest {
             Assert.assertEquals(1, e.getErrors().size());
             Assert.assertEquals(AuthenticationError.INVALID_PASS_CHAR, e.getErrors().get(0));
         }
-    }
-
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#AuthenticationChecker(AuthenticationRules)}
-     * .
-     */
-    @Test
-    public void testAuthenticationCheckerNull() {
-        this.rule.expect(NullPointerException.class);
-        new AuthenticationChecker(null);
     }
 
 }
