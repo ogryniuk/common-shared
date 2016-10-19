@@ -27,11 +27,11 @@ package be.yildiz.common.authentication;
 
 import be.yildiz.common.authentication.AuthenticationChecker.AuthenticationError;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+
+import static be.yildiz.common.authentication.AuthenticationTestHelper.*;
 
 /**
  * @author Grégory Van den Borre
@@ -39,14 +39,11 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public final class AuthenticationCheckerTest {
 
-    @Rule
-    public final ExpectedException rule = ExpectedException.none();
-
     public static class Constructor {
 
         @Test
         public void happyFlow() {
-            new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
         }
 
         @Test(expected = NullPointerException.class)
@@ -59,143 +56,159 @@ public final class AuthenticationCheckerTest {
 
         @Test
         public void happyFlow() throws CredentialException {
-            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-            c.check("testOk", "testOk");
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            c.check(LOGIN_OK, PASSWORD_OK);
         }
 
         @Test(expected = NullPointerException.class)
         public void stringNull() throws CredentialException {
-            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-            c.check(null, "testOk");
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            c.check(null, PASSWORD_OK);
         }
 
+        @Test
+        public void loginTooShort() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_TOO_SHORT, PASSWORD_OK);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
+            }
+        }
+
+        @Test
+        public void loginTooLong() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_TOO_LONG, PASSWORD_OK);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.LOGIN_TOO_LONG);
+            }
+        }
+
+        @Test
+        public void passwordTooLong() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_OK, PASSWORD_TOO_LONG);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.PASS_TOO_LONG);
+            }
+        }
+
+        @Test
+        public void passwordTooShort() throws CredentialException {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_OK, PASSWORD_TOO_SHORT);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.PASS_TOO_SHORT);
+            }
+        }
+
+        @Test
+        public void loginInvalid() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_INVALID, PASSWORD_OK);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.INVALID_LOGIN_CHAR);
+            }
+        }
+
+        @Test
+        public void passwordInvalid() {
+            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            try {
+                c.check(LOGIN_OK, HASHED_PASSWORD_INVALID);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.INVALID_PASS_CHAR);
+            }
+        }
     }
 
     public static class CheckStringPassword {
 
         @Test
         public void happyFlow() throws CredentialException{
-            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-            c.check("testOk", new HashedPassword("testOk"));
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            c.check(LOGIN_OK, HASHED_PASSWORD_OK);
         }
 
         @Test(expected = NullPointerException.class)
         public void stringNull() throws CredentialException {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            c.check(null, HASHED_PASSWORD_OK);
+        }
+
+        @Test
+        public void loginTooShort() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_TOO_SHORT, HASHED_PASSWORD_OK);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
+            }
+        }
+
+        @Test
+        public void loginTooLong() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_TOO_LONG, HASHED_PASSWORD_OK);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.LOGIN_TOO_LONG);
+            }
+        }
+
+        @Test
+        public void passwordTooLong() throws CredentialException {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            // Hashed size is not computed.
+            c.check(LOGIN_OK, HASHED_PASSWORD_TOO_LONG);
+        }
+
+        @Test
+        public void passwordTooShort() throws CredentialException {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            // Hashed size is not computed.
+            c.check(LOGIN_OK, HASHED_PASSWORD_TOO_SHORT);
+        }
+
+        @Test
+        public void loginInvalid() {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_INVALID, PASSWORD_OK);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.INVALID_LOGIN_CHAR);
+            }
+        }
+
+        @Test
+        public void passwordInvalid() {
             AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-            c.check(null, new HashedPassword("testOk"));
-        }
-
-    }
-
-
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
-     * .
-     *
-     * @throws CredentialException
-     */
-    @Test
-    public void testCheckStringStringLoginTooShort() {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        try {
-            c.check("", "abcde");
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(AuthenticationError.LOGIN_TOO_SHORT, e.getErrors().get(0));
-        }
-        try {
-            c.check("", new HashedPassword("abcde"));
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(AuthenticationError.LOGIN_TOO_SHORT, e.getErrors().get(0));
+            try {
+                c.check(LOGIN_OK, PASSWORD_INVALID);
+                Assert.fail();
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.INVALID_PASS_CHAR);
+            }
         }
     }
 
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
-     * .
-     *
-     * @throws CredentialException
-     */
-    @Test
-    public void testCheckStringStringLoginTooLong() throws CredentialException {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        try {
-            c.check("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "abcde");
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(1, e.getErrors().size());
-            Assert.assertEquals(AuthenticationError.LOGIN_TOO_LONG, e.getErrors().get(0));
-        }
-        try {
-            c.check("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", new HashedPassword("abcde"));
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(1, e.getErrors().size());
-            Assert.assertEquals(AuthenticationError.LOGIN_TOO_LONG, e.getErrors().get(0));
-        }
-    }
-
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.AuthenticationChecker#check(java.lang.String, java.lang.String)}
-     * .
-     *
-     * @throws CredentialException
-     */
-    @Test
-    public void testCheckStringStringPasswordTooLong() throws CredentialException {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        try {
-            c.check("aaaa", "abcdeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(1, e.getErrors().size());
-            Assert.assertEquals(AuthenticationError.PASS_TOO_LONG, e.getErrors().get(0));
-        }
-        // Hashed size is not computed.
-        c.check("aaaa", new HashedPassword("abcdeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-    }
-
-    @Test
-    public void testCheckStringStringPasswordTooShort() throws CredentialException {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        try {
-            c.check("aaaa", "abc");
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(1, e.getErrors().size());
-            Assert.assertEquals(AuthenticationError.PASS_TOO_SHORT, e.getErrors().get(0));
-        }
-        // Hashed size is not computed.
-        c.check("aaaa", new HashedPassword("a"));
-    }
-
-    @Test
-    public void testCheckLoginMatcher() {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        try {
-            c.check("&&&&&", "aaaaa");
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(1, e.getErrors().size());
-            Assert.assertEquals(AuthenticationError.INVALID_LOGIN_CHAR, e.getErrors().get(0));
-        }
-    }
-
-    @Test
-    public void testCheckPasswordMatcher() {
-        AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
-        try {
-            // FIXME check every invalid char
-            c.check("aaaaa", "&&&&&&");
-            Assert.fail();
-        } catch (CredentialException e) {
-            Assert.assertEquals(1, e.getErrors().size());
-            Assert.assertEquals(AuthenticationError.INVALID_PASS_CHAR, e.getErrors().get(0));
-        }
+    private static void checkCredentialError(CredentialException e, AuthenticationError expected) {
+        Assert.assertEquals(1, e.getErrors().size());
+        Assert.assertEquals(expected, e.getErrors().get(0));
     }
 
 }
