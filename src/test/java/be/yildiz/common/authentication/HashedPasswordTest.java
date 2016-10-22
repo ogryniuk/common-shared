@@ -26,51 +26,34 @@
 package be.yildiz.common.authentication;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  * @author Grégory Van den Borre
  */
 public final class HashedPasswordTest {
 
-    @Rule
-    public final ExpectedException rule = ExpectedException.none();
-
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.HashedPassword#HashedPassword(java.lang.String)}
-     * .
-     */
     @Test
     public void testHashedPassword() {
-        HashedPassword p = new HashedPassword("test");
-        Assert.assertEquals("test", p.getHashedPassword());
+        Assert.assertEquals(AuthenticationTestHelper.PASSWORD_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK.getHashedPassword());
     }
 
-    /**
-     * Test method for
-     * {@link be.yildiz.common.authentication.HashedPassword#HashedPassword(java.lang.String)}
-     * .
-     */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testHashedPasswordNull() {
-        rule.expect(NullPointerException.class);
         new HashedPassword(null);
     }
 
     @Test
     public void testHashedPasswordHashCodeEquals() {
-        Password p = new HashedPassword("098f6bcd4621d373cade4e832627b4f6");
-        Password p1 = new PasswordToHash("test");
+        Password p = new HashedPassword(AuthenticationTestHelper.MD5_ENCODED);
+        Password p1 = new PasswordToHash(AuthenticationTestHelper.PASSWORD_OK);
         Assert.assertEquals(p.hashCode(), p1.hashCode());
         Assert.assertEquals(p, p);
         Assert.assertEquals(p1, p1);
         Assert.assertEquals(p, p1);
         Assert.assertNotEquals(p, null);
-        Assert.assertNotEquals(p, "098f6bcd4621d373cade4e832627b4f6");
-        Assert.assertNotEquals(p, new HashedPassword("098f6bcd4621d373cade4e832627b4f7"));
+        Assert.assertNotEquals(p, AuthenticationTestHelper.MD5_ENCODED);
+        Assert.assertNotEquals(p, new HashedPassword(AuthenticationTestHelper.MD5_ENCODED + "a"));
     }
 
 }

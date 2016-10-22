@@ -38,20 +38,17 @@ public final class PasswordToHashTest {
     @Rule
     public final ExpectedException rule = ExpectedException.none();
 
-    /**
-     * Test method for {@link be.yildiz.common.authentication.PasswordToHash#PasswordToHash(java.lang.String)}.
-     */
+
     @Test
     public void testPasswordToHash() {
         PasswordToHash p = new PasswordToHash("");
         Assert.assertEquals("d41d8cd98f00b204e9800998ecf8427e", p.getHashedPassword());
-        p = new PasswordToHash("test");
-        Assert.assertEquals("098f6bcd4621d373cade4e832627b4f6", p.getHashedPassword());
+        p = new PasswordToHash(AuthenticationTestHelper.PASSWORD_OK);
+        Assert.assertEquals(AuthenticationTestHelper.MD5_ENCODED, p.getHashedPassword());
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testPasswordToHashNull() {
-        this.rule.expect(NullPointerException.class);
         new PasswordToHash(null);
     }
 

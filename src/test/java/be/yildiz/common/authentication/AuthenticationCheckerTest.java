@@ -71,7 +71,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_TOO_SHORT, PASSWORD_OK);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
             }
@@ -82,7 +82,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_TOO_LONG, PASSWORD_OK);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.LOGIN_TOO_LONG);
             }
@@ -93,7 +93,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_OK, PASSWORD_TOO_LONG);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.PASS_TOO_LONG);
             }
@@ -104,7 +104,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_OK, PASSWORD_TOO_SHORT);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.PASS_TOO_SHORT);
             }
@@ -115,7 +115,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_INVALID, PASSWORD_OK);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.INVALID_LOGIN_CHAR);
             }
@@ -123,10 +123,10 @@ public final class AuthenticationCheckerTest {
 
         @Test
         public void passwordInvalid() {
-            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
-                c.check(LOGIN_OK, HASHED_PASSWORD_INVALID);
-                Assert.fail();
+                c.check(LOGIN_OK, PASSWORD_INVALID);
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.INVALID_PASS_CHAR);
             }
@@ -152,7 +152,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_TOO_SHORT, HASHED_PASSWORD_OK);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
             }
@@ -163,7 +163,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_TOO_LONG, HASHED_PASSWORD_OK);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.LOGIN_TOO_LONG);
             }
@@ -188,7 +188,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
                 c.check(LOGIN_INVALID, PASSWORD_OK);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.INVALID_LOGIN_CHAR);
             }
@@ -199,7 +199,7 @@ public final class AuthenticationCheckerTest {
             AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
             try {
                 c.check(LOGIN_OK, PASSWORD_INVALID);
-                Assert.fail();
+                Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.INVALID_PASS_CHAR);
             }

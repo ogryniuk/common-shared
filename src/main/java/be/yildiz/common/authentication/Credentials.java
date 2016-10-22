@@ -31,6 +31,7 @@ import lombok.NonNull;
 /**
  * Store a login and a password. Use the {@link AuthenticationChecker} to create
  * an instance of this class.
+ * Immutable class.
  *
  * @author Grégory Van den Borre
  */

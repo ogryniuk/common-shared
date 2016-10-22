@@ -53,6 +53,7 @@ public final class CredentialException extends Exception {
     /**
      * Create a new credential exception.
      * @param errors Errors to put in the exception, the list is copied and set immutable.
+     * @throws NullPointerException if errors is null.
      */
     public CredentialException(List<AuthenticationError> errors) {
         this.errors = Collections.unmodifiableList(Lists.newList(errors));

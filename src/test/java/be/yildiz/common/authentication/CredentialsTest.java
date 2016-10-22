@@ -38,47 +38,34 @@ public final class CredentialsTest {
     @Rule
     public final ExpectedException rule = ExpectedException.none();
 
-    /**
-     * Test method for {@link be.yildiz.common.authentication.Credentials#getHashedPassword()}.
-     */
+
     @Test
     public void testGetHashedPassword() {
-        Credentials c = new Credentials("test", new PasswordToHash("test"));
-        Assert.assertEquals(new PasswordToHash("test").getHashedPassword(), c.getHashedPassword());
+        Credentials c = new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK);
+        Assert.assertEquals(new HashedPassword(AuthenticationTestHelper.PASSWORD_OK).getHashedPassword(), c.getHashedPassword());
     }
 
-    /**
-     * Test method for {@link be.yildiz.common.authentication.Credentials#getLogin()}.
-     */
+
     @Test
     public void testGetLogin() {
-        Credentials c = new Credentials("test", new PasswordToHash("test"));
-        Assert.assertEquals("test", c.getLogin());
+        Credentials c = new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK);
+        Assert.assertEquals(AuthenticationTestHelper.LOGIN_OK, c.getLogin());
     }
 
-    /**
-     * Test method for {@link be.yildiz.common.authentication.Credentials#Credentials(String, Password)}.
-     */
+
     @Test
     public void testCredentials() {
-        new Credentials("test", new PasswordToHash("test"));
+        new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK);
     }
 
-    /**
-     * Test method for {@link be.yildiz.common.authentication.Credentials#Credentials(String, Password)}.
-     */
-    @Test
+
+    @Test(expected = NullPointerException.class)
     public void testCredentialsLoginNull() {
-        this.rule.expect(NullPointerException.class);
         new Credentials(null, new PasswordToHash("test"));
     }
 
-    /**
-     * Test method for {@link be.yildiz.common.authentication.Credentials#Credentials(String, Password)}.
-     */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCredentialsPasswordNull() {
-        this.rule.expect(NullPointerException.class);
         new Credentials("test", null);
     }
 
