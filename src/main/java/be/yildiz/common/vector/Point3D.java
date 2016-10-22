@@ -214,7 +214,7 @@ public final class Point3D {
      */
     public static Point3D normalizeAndMultiply(final Point3D p, final float scalar) {
         float length = (float) Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
-        if (length != 0) {
+        if (Math.abs(length) > 0.000001f){
             return new Point3D(scalar * (p.x / length), scalar * (p.y / length), scalar * (p.z / length));
         }
         return p;

@@ -105,10 +105,8 @@ public final class FileResource {
                 this.file.getParentFile().mkdirs();
                 if (type == FileType.DIRECTORY) {
                     this.file.mkdir();
-                } else if (type == FileType.FILE) {
-                    if(!this.file.createNewFile()) {
-                        throw new ResourceMissingException(fileName + " could not be created");
-                    }
+                } else if (type == FileType.FILE && !this.file.createNewFile()) {
+                    throw new ResourceMissingException(fileName + " could not be created");
                 }
             } catch (IOException | SecurityException e) {
                 throw new ResourceMissingException("The file " + this.file.getAbsolutePath() + " could not be created due to an exception.", e);
@@ -285,7 +283,7 @@ public final class FileResource {
             }
         })) {
             for (Path p : directory) {
-                if (Files.isDirectory(p)) {
+                if (p.toFile().isDirectory()) {
                     new FileResource(p.toString()).listFile(files);
                 } else {
                     files.add(new FileResource(p.toString()));
