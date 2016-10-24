@@ -25,10 +25,7 @@
 
 package be.yildiz.common.collections;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Utility class to build and manipulate list implementations.
@@ -116,5 +113,9 @@ public interface Lists {
      */
     static <T> List<T> copy(List<T> list) {
         return Lists.newList(list);
+    }
+
+    static <T> List<T> newSingleElementList(T o) {
+        return Collections.singletonList(o);
     }
 }
