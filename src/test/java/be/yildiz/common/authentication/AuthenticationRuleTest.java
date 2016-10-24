@@ -54,13 +54,18 @@ public class AuthenticationRuleTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testLoginMinSmallerZero() {
+    public void testLoginMaxSmallerZero() {
         new AuthenticationRules(-1, 15, 3, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testPassMinSmallerZero() {
+    public void testLoginMinSmallerZero() {
         new AuthenticationRules(10, 15, -1, 5, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPassMinSmallerZero() {
+        new AuthenticationRules(10, 15, 8, -1, Pattern.compile("[0-9]*"), Pattern.compile("[a-z]*"));
     }
 
     @Test(expected = IllegalArgumentException.class)
