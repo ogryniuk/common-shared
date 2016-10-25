@@ -78,7 +78,7 @@ public final class ZipUtil {
     public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
         try (ZipFile file = new ZipFile(zipFile)) {
             String rootDir = "";
-            new File(destination).mkdirs();
+            ResourceUtil.createDirectoryTree(destination);
             Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipentry = entries.nextElement();
@@ -86,7 +86,7 @@ public final class ZipUtil {
                     if (!keepRootDir && rootDir.isEmpty()) {
                         rootDir = zipentry.getName();
                     } else {
-                        new File(destination + File.separator + zipentry.getName().replace(rootDir, "")).mkdirs();
+                        ResourceUtil.createDirectoryTree(destination + File.separator + zipentry.getName().replace(rootDir, ""));
                     }
                 } else {
                     File current;
@@ -114,13 +114,13 @@ public final class ZipUtil {
      */
     public static void extractFilesFromDirectory(final File zipFile, final String directory, final String destination) {
         try (ZipFile file = new ZipFile(zipFile)) {
-            new File(destination + File.separator + directory).mkdirs();
+            ResourceUtil.createDirectoryTree(destination + File.separator + directory);
             Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipentry = entries.nextElement();
                 if (zipentry.getName().startsWith(directory + File.separator)) {
                     if (zipentry.isDirectory()) {
-                        new File(zipentry.getName()).mkdir();
+                        ResourceUtil.createDirectory(zipentry.getName());
                     } else {
                         File current = new File(destination + File.separator + zipentry.getName());
                         try(InputStream in = file.getInputStream(zipentry); OutputStream out = new FileOutputStream(current)) {
@@ -133,5 +133,4 @@ public final class ZipUtil {
             Logger.error(ioe);
         }
     }
-
 }

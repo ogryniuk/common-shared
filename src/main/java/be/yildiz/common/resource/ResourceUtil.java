@@ -25,6 +25,8 @@
 
 package be.yildiz.common.resource;
 
+import be.yildiz.common.log.Logger;
+
 import java.io.*;
 import java.nio.charset.Charset;
 
@@ -97,5 +99,17 @@ public final class ResourceUtil {
      */
     public static String getString(final ByteArrayOutputStream bos) {
         return ResourceUtil.getString(bos.toByteArray());
+    }
+
+    public static void createDirectoryTree(final String path) {
+        if(!new File(path).mkdirs()) {
+            Logger.warning("Directories were not created successfully for " + path);
+        }
+    }
+
+    public static void createDirectory(final String path) {
+        if(!new File(path).mkdir()) {
+            Logger.warning("Directory was not created successfully for " + path);
+        }
     }
 }
