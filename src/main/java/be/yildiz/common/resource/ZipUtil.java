@@ -95,7 +95,9 @@ public final class ZipUtil {
                     } else {
                         current = new File(destination + File.separator + zipentry.getName().replace(rootDir, ""));
                     }
-                    ZipUtil.extractFile(file.getInputStream(zipentry), new FileOutputStream(current));
+                    try(InputStream in = file.getInputStream(zipentry); OutputStream out = new FileOutputStream(current)) {
+                        ZipUtil.extractFile(in, out);
+                    }
                 }
             }
         } catch (IOException ioe) {
@@ -116,12 +118,14 @@ public final class ZipUtil {
             Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipentry = entries.nextElement();
-                if (zipentry.getName().startsWith(directory + "/")) {
+                if (zipentry.getName().startsWith(directory + File.separator)) {
                     if (zipentry.isDirectory()) {
                         new File(zipentry.getName()).mkdir();
                     } else {
                         File current = new File(destination + File.separator + zipentry.getName());
-                        ZipUtil.extractFile(file.getInputStream(zipentry), new FileOutputStream(current));
+                        try(InputStream in = file.getInputStream(zipentry); OutputStream out = new FileOutputStream(current)) {
+                            ZipUtil.extractFile(in, out);
+                        }
                     }
                 }
             }
