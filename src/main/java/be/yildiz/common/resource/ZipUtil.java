@@ -74,6 +74,7 @@ public final class ZipUtil {
      * @param zipFile     Zip file to extract the data from.
      * @param destination Path where the directory will be extracted.
      * @param keepRootDir Keep the root directory or extract all its content.
+     * @throws IllegalArgumentException If the zip file does not exists.
      */
     public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
         try (ZipFile file = new ZipFile(zipFile)) {
@@ -102,6 +103,7 @@ public final class ZipUtil {
             }
         } catch (IOException ioe) {
             Logger.error(ioe);
+            throw new IllegalArgumentException(ioe);
         }
     }
 
@@ -111,6 +113,7 @@ public final class ZipUtil {
      * @param zipFile     Zip file to extract the data from.
      * @param directory   Directory to extract.
      * @param destination Path where the directory will be extracted.
+     * @throws IllegalArgumentException If the zip file does not exists.
      */
     public static void extractFilesFromDirectory(final File zipFile, final String directory, final String destination) {
         try (ZipFile file = new ZipFile(zipFile)) {
@@ -131,6 +134,7 @@ public final class ZipUtil {
             }
         } catch (IOException ioe) {
             Logger.error(ioe);
+            throw new IllegalArgumentException(ioe);
         }
     }
 }
