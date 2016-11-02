@@ -25,10 +25,13 @@
 
 package be.yildiz.common.resource;
 
+import be.yildiz.common.collections.Lists;
 import be.yildiz.common.log.Logger;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Provide streams with a platform independent encoding.
@@ -111,5 +114,13 @@ public final class ResourceUtil {
         if(!new File(path).mkdir()) {
             Logger.warning("Directory was not created successfully for " + path);
         }
+    }
+
+    public static List<File> listFile(final File file) {
+        File[] files = file.listFiles();
+        if(files == null) {
+            return Lists.newList();
+        }
+        return Arrays.asList(files);
     }
 }
