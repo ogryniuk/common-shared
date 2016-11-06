@@ -21,7 +21,7 @@
   </parent>
 
   <properties>
-    <version.bom-lombok>1.0.2</version.bom-lombok>
+    <version.bom-lombok>1.0.3-SNAPSHOT</version.bom-lombok>
     <version.bom-junit>1.0.3</version.bom-junit>
   </properties>
 
@@ -57,15 +57,9 @@
       <artifactId>mockito-all</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.java.contract</groupId>
+      <groupId>org.huoc</groupId>
       <artifactId>cofoja</artifactId>
     </dependency>
   </dependencies>
 
-  <repositories>
-    <repository>
-      <id>maven-cofoja-repo</id>
-      <url>http://maven-cofoja.github.io/maven</url>
-    </repository>
-  </repositories>
 </project>
