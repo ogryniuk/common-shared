@@ -25,9 +25,11 @@
 
 package be.yildiz.common.log;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Optional;
 import java.util.logging.*;
 
 /**
@@ -138,6 +140,8 @@ public final class Logger {
     //@Requires("name != null")
     public static void setFile(final String name) {
         try {
+            Optional.ofNullable(new File(name).getParentFile())
+                    .ifPresent(File::mkdirs);
             Handler file = new FileHandler(name, true);
             Logger.WRAPPED_LOGGER.addHandler(file);
         } catch (SecurityException | IOException e) {
