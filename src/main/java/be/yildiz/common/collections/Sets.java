@@ -42,7 +42,7 @@ public interface Sets {
      * @return The new set.
      */
     static <T> Set<T> newInsertionOrderedSet() {
-        return new LinkedHashSet<T>();
+        return new LinkedHashSet<>();
     }
 
     /**
@@ -53,7 +53,7 @@ public interface Sets {
      * @return The new set.
      */
     static <T> Set<T> newOrderedSet() {
-        return new TreeSet<T>();
+        return new TreeSet<>();
     }
 
     /**
@@ -64,7 +64,7 @@ public interface Sets {
      * @return The new set.
      */
     static <T> Set<T> newSet() {
-        return new HashSet<T>();
+        return new HashSet<>();
     }
 
     /**

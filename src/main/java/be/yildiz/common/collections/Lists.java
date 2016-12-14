@@ -42,7 +42,7 @@ public interface Lists {
      * @return The new list.
      */
     static List<Float> fromFloat(final float... values) {
-        List<Float> list = new ArrayList<Float>(values.length);
+        List<Float> list = new ArrayList<>(values.length);
         for (float f : values) {
             list.add(Float.valueOf(f));
         }
@@ -56,7 +56,7 @@ public interface Lists {
      * @return The new list.
      */
     static <T> List<T> newList() {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**
@@ -67,7 +67,7 @@ public interface Lists {
      * @return The new list.
      */
     static List<Integer> newList(final int... values) {
-        List<Integer> list = new ArrayList<Integer>(values.length);
+        List<Integer> list = new ArrayList<>(values.length);
         for (int f : values) {
             list.add(Integer.valueOf(f));
         }
@@ -82,7 +82,7 @@ public interface Lists {
      * @return The new list.
      */
     static <T> List<T> newList(final int size) {
-        return new ArrayList<T>(size);
+        return new ArrayList<>(size);
     }
 
     /**
@@ -95,11 +95,11 @@ public interface Lists {
      */
     @SuppressWarnings("unchecked")
     static <T> List<T> newList(final T... t) {
-        return new ArrayList<T>(Arrays.asList(t));
+        return new ArrayList<>(Arrays.asList(t));
     }
 
     static <T> List<T> newList(final Collection<T> c) {
-        return new ArrayList<T>(c);
+        return new ArrayList<>(c);
     }
 
     /**

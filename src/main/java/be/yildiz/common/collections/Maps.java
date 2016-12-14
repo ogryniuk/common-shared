@@ -57,7 +57,7 @@ public interface Maps {
      * @return The new bidirectional map.
      */
     static <K, V> BidirectionalMap<K, V> newBidirectionalMap() {
-        return new BidirectionalMap<K, V>();
+        return new BidirectionalMap<>();
     }
 
 }
