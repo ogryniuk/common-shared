@@ -138,20 +138,20 @@ public final class AuthenticationCheckerTest {
         @Test
         public void happyFlow() throws CredentialException{
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            c.check(LOGIN_OK, HASHED_PASSWORD_OK);
+            c.check(LOGIN_OK, PASSWORD_OK);
         }
 
         @Test(expected = NullPointerException.class)
         public void stringNull() throws CredentialException {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            c.check(null, HASHED_PASSWORD_OK);
+            c.check(null, PASSWORD_OK);
         }
 
         @Test
         public void loginTooShort() {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
-                c.check(LOGIN_TOO_SHORT, HASHED_PASSWORD_OK);
+                c.check(LOGIN_TOO_SHORT, PASSWORD_OK);
                 Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
@@ -162,25 +162,11 @@ public final class AuthenticationCheckerTest {
         public void loginTooLong() {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
             try {
-                c.check(LOGIN_TOO_LONG, HASHED_PASSWORD_OK);
+                c.check(LOGIN_TOO_LONG, PASSWORD_OK);
                 Assert.fail("Should have thrown exception");
             } catch (CredentialException e) {
                 checkCredentialError(e, AuthenticationError.LOGIN_TOO_LONG);
             }
-        }
-
-        @Test
-        public void passwordTooLong() throws CredentialException {
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            // Hashed size is not computed.
-            c.check(LOGIN_OK, HASHED_PASSWORD_TOO_LONG);
-        }
-
-        @Test
-        public void passwordTooShort() throws CredentialException {
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            // Hashed size is not computed.
-            c.check(LOGIN_OK, HASHED_PASSWORD_TOO_SHORT);
         }
 
         @Test

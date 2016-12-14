@@ -46,14 +46,6 @@ class AuthenticationTestHelper {
 
     static final String PASSWORD_INVALID = "&&&&&";
 
-    static final Password HASHED_PASSWORD_OK = new HashedPassword(PASSWORD_OK);
-
-    static final Password HASHED_PASSWORD_TOO_LONG = new HashedPassword(PASSWORD_TOO_LONG);
-
-    static final Password HASHED_PASSWORD_TOO_SHORT = new HashedPassword(PASSWORD_TOO_SHORT);
-
-    static final Password HASHED_PASSWORD_INVALID = new HashedPassword(PASSWORD_INVALID);
-
     static final String BLOWFISH_ENCODED = "4c44c99c6edf7120bbf1c9f1dffb7f89";
 
     static AuthenticationChecker givenADefaultAuthenticationChecker() {

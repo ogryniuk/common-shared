@@ -53,24 +53,6 @@ public final class AuthenticationChecker {
     }
 
     /**
-     * Check if provided login are valid against the given rules.
-     *
-     * @param login    Login to check.
-     * @param password The password is assumed to be already hashed so it will not be
-     *                 checked.
-     * @return The credentials created from the login and the password.
-     * @throws CredentialException If the check fails.
-     */
-    public Credentials check(final String login, final Password password) throws CredentialException {
-        List<AuthenticationError> errors = Lists.newList();
-        this.checkLogin(login, errors);
-        if (errors.isEmpty()) {
-            return new Credentials(login, password);
-        }
-        throw new CredentialException(errors);
-    }
-
-    /**
      * Check if provided login and password are valid against the given rules.
      *
      * @param login    Login to check.
@@ -85,7 +67,7 @@ public final class AuthenticationChecker {
         this.checkLogin(login, errors);
         this.checkPassword(password, errors);
         if (errors.isEmpty()) {
-            return new Credentials(login, new PasswordToHash(password));
+            return new Credentials(login, password);
         }
         throw new CredentialException(errors);
     }

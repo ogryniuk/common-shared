@@ -41,32 +41,26 @@ public final class CredentialsTest {
 
     @Test
     public void testGetHashedPassword() {
-        Credentials c = new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK);
-        Assert.assertEquals(new HashedPassword(AuthenticationTestHelper.PASSWORD_OK).getHashedPassword(), c.getHashedPassword());
+        Credentials c = new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.PASSWORD_OK);
+        Assert.assertEquals(AuthenticationTestHelper.PASSWORD_OK, c.getPassword());
     }
 
 
     @Test
     public void testGetLogin() {
-        Credentials c = new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK);
+        Credentials c = new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.PASSWORD_OK);
         Assert.assertEquals(AuthenticationTestHelper.LOGIN_OK, c.getLogin());
-    }
-
-
-    @Test
-    public void testCredentials() {
-        new Credentials(AuthenticationTestHelper.LOGIN_OK, AuthenticationTestHelper.HASHED_PASSWORD_OK);
     }
 
 
     @Test(expected = NullPointerException.class)
     public void testCredentialsLoginNull() {
-        new Credentials(null, new PasswordToHash("test"));
+        new Credentials(null, AuthenticationTestHelper.PASSWORD_OK);
     }
 
     @Test(expected = NullPointerException.class)
     public void testCredentialsPasswordNull() {
-        new Credentials("test", null);
+        new Credentials(AuthenticationTestHelper.LOGIN_OK, null);
     }
 
 }

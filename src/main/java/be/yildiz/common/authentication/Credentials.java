@@ -44,19 +44,15 @@ public final class Credentials {
     private final String login;
 
     /**
-     * User hashed password.
+     * User password.
      */
-    private final Password hashedPassword;
+    @Getter
+    private final String password;
 
-    Credentials(@NonNull String login, @NonNull Password hashedPassword) {
+    Credentials(@NonNull String login, @NonNull String password) {
         this.login = login;
-        this.hashedPassword = hashedPassword;
+        this.password = password;
     }
 
-    /**
-     * @return The hashed password value.
-     */
-    public String getHashedPassword() {
-        return this.hashedPassword.getHashedPassword();
-    }
+
 }
