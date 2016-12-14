@@ -45,6 +45,11 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
+      <groupId>de.svenkubiak</groupId>
+      <artifactId>jBCrypt</artifactId>
+      <version>0.4.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>

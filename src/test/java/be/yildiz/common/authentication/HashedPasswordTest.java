@@ -45,15 +45,15 @@ public final class HashedPasswordTest {
 
     @Test
     public void testHashedPasswordHashCodeEquals() {
-        Password p = new HashedPassword(AuthenticationTestHelper.MD5_ENCODED);
+        Password p = new HashedPassword(AuthenticationTestHelper.BLOWFISH_ENCODED);
         Password p1 = new PasswordToHash(AuthenticationTestHelper.PASSWORD_OK);
         Assert.assertEquals(p.hashCode(), p1.hashCode());
         Assert.assertEquals(p, p);
         Assert.assertEquals(p1, p1);
         Assert.assertEquals(p, p1);
         Assert.assertNotEquals(p, null);
-        Assert.assertNotEquals(p, AuthenticationTestHelper.MD5_ENCODED);
-        Assert.assertNotEquals(p, new HashedPassword(AuthenticationTestHelper.MD5_ENCODED + "a"));
+        Assert.assertNotEquals(p, AuthenticationTestHelper.BLOWFISH_ENCODED);
+        Assert.assertNotEquals(p, new HashedPassword(AuthenticationTestHelper.BLOWFISH_ENCODED + "a"));
     }
 
 }

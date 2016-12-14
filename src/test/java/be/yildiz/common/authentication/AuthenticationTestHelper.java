@@ -54,7 +54,7 @@ class AuthenticationTestHelper {
 
     static final Password HASHED_PASSWORD_INVALID = new HashedPassword(PASSWORD_INVALID);
 
-    static final String MD5_ENCODED = "4c44c99c6edf7120bbf1c9f1dffb7f89";
+    static final String BLOWFISH_ENCODED = "4c44c99c6edf7120bbf1c9f1dffb7f89";
 
     static AuthenticationChecker givenADefaultAuthenticationChecker() {
         return new AuthenticationChecker(AuthenticationRules.DEFAULT);

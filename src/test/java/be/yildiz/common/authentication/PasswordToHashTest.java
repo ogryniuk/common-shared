@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * @author Grégory Van den Borre
@@ -41,10 +42,8 @@ public final class PasswordToHashTest {
 
     @Test
     public void testPasswordToHash() {
-        PasswordToHash p = new PasswordToHash("");
-        Assert.assertEquals("d41d8cd98f00b204e9800998ecf8427e", p.getHashedPassword());
-        p = new PasswordToHash(AuthenticationTestHelper.PASSWORD_OK);
-        Assert.assertEquals(AuthenticationTestHelper.MD5_ENCODED, p.getHashedPassword());
+        PasswordToHash p = new PasswordToHash("azerty");
+        Assert.assertTrue(BCrypt.checkpw("azerty", p.getHashedPassword()));
     }
 
     @Test(expected = NullPointerException.class)

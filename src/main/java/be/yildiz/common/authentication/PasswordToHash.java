@@ -25,10 +25,7 @@
 
 package be.yildiz.common.authentication;
 
-import be.yildiz.common.resource.ResourceUtil;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Wrap a password, take a clear password as input and hash it. Once this object
@@ -44,44 +41,6 @@ public final class PasswordToHash extends Password {
      * @param clearPassword Clear password.
      */
     public PasswordToHash(final String clearPassword) {
-        super(PasswordToHash.hash(PasswordToHash.salt(clearPassword)));
-    }
-
-    /**
-     * Add a salt to a password.
-     *
-     * @param clearPassword Clear password.
-     * @return The salted password.
-     */
-    private static String salt(final String clearPassword) {
-        //FIXME <MEDIUM> implements.
-        return clearPassword;
-    }
-
-    /**
-     * Hash the password.
-     *
-     * @param clearPassword Clear password.
-     * @return the hashed password.
-     */
-    private static String hash(final String clearPassword) {
-        //FIXME <HIGH> use a better hash algo
-        byte[] hash;
-        try {
-            hash = MessageDigest.getInstance("MD5").digest(ResourceUtil.getByteArray(clearPassword));
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException("MD5 algorithm is not available.");
-        }
-        final StringBuilder hashString = new StringBuilder();
-        for (byte b : hash) {
-            final String hex = Integer.toHexString(b);
-            if (hex.length() == 1) {
-                hashString.append('0');
-                hashString.append(hex.charAt(hex.length() - 1));
-            } else {
-                hashString.append(hex.substring(hex.length() - 2));
-            }
-        }
-        return hashString.toString();
+        super(BCrypt.hashpw(clearPassword, BCrypt.gensalt()));
     }
 }
