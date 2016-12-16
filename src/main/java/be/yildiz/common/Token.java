@@ -27,6 +27,7 @@ package be.yildiz.common;
 
 import be.yildiz.common.id.PlayerId;
 import lombok.Getter;
+import lombok.NonNull;
 
 /**
  * A token contains information about a user authentication status.
@@ -56,7 +57,10 @@ public final class Token {
      */
     private final Status status;
 
-    public Token(PlayerId id, long authenticationTime, int key, Status status) {
+    private Token(@NonNull PlayerId id, long authenticationTime, int key, @NonNull Status status) {
+        if(authenticationTime < 0) {
+            throw new IllegalArgumentException("Time must be positive, value is " + authenticationTime);
+        }
         this.id = id;
         this.authenticationTime = authenticationTime;
         this.key = key;
@@ -112,13 +116,19 @@ public final class Token {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Token token = (Token) o;
-
-        if (key != token.key) return false;
-        if (!id.equals(token.id)) return false;
+        if (key != token.key) {
+            return false;
+        }
+        if (!id.equals(token.id)) {
+            return false;
+        }
         return status == token.status;
     }
 
