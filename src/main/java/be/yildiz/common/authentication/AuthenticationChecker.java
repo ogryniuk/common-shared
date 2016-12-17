@@ -80,12 +80,11 @@ public final class AuthenticationChecker {
      * @throws NullPointerException If login or errors is null.
      */
     private void checkLogin(final String login, final List<AuthenticationError> errors) {
-        if (login.length() < this.parameters.loginMinLength) {
+        if (login == null || login.length() < this.parameters.loginMinLength) {
             errors.add(AuthenticationError.LOGIN_TOO_SHORT);
         } else if (login.length() > this.parameters.passMaxLength) {
             errors.add(AuthenticationError.LOGIN_TOO_LONG);
-        }
-        if (!Pattern.matches(this.parameters.loginPattern.pattern(), login)) {
+        } else if (!Pattern.matches(this.parameters.loginPattern.pattern(), login)) {
             errors.add(AuthenticationError.INVALID_LOGIN_CHAR);
         }
     }
@@ -98,12 +97,11 @@ public final class AuthenticationChecker {
      * @throws NullPointerException If password or errors is null.
      */
     private void checkPassword(final String password, final List<AuthenticationError> errors) {
-        if (password.length() < this.parameters.passMinLength) {
+        if (password == null || password.length() < this.parameters.passMinLength) {
             errors.add(AuthenticationError.PASS_TOO_SHORT);
         } else if (password.length() > this.parameters.passMaxLength) {
             errors.add(AuthenticationError.PASS_TOO_LONG);
-        }
-        if (!Pattern.matches(this.parameters.passPattern.pattern(), password)) {
+        } else if (!Pattern.matches(this.parameters.passPattern.pattern(), password)) {
             errors.add(AuthenticationError.INVALID_PASS_CHAR);
         }
     }
