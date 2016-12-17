@@ -60,10 +60,26 @@ public final class AuthenticationCheckerTest {
             c.check(LOGIN_OK, PASSWORD_OK);
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test
         public void stringNull() throws CredentialException {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            c.check(null, PASSWORD_OK);
+            try {
+                c.check(null, PASSWORD_OK);
+                Assert.fail("Should have thrown exception");
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
+            }
+        }
+
+        @Test
+        public void passwordNull() throws CredentialException {
+            AuthenticationChecker c = givenADefaultAuthenticationChecker();
+            try {
+                c.check(LOGIN_OK, null);
+                Assert.fail("Should have thrown exception");
+            } catch (CredentialException e) {
+                checkCredentialError(e, AuthenticationError.PASS_TOO_SHORT);
+            }
         }
 
         @Test
@@ -124,65 +140,6 @@ public final class AuthenticationCheckerTest {
         @Test
         public void passwordInvalid() {
             AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            try {
-                c.check(LOGIN_OK, PASSWORD_INVALID);
-                Assert.fail("Should have thrown exception");
-            } catch (CredentialException e) {
-                checkCredentialError(e, AuthenticationError.INVALID_PASS_CHAR);
-            }
-        }
-    }
-
-    public static class CheckStringPassword {
-
-        @Test
-        public void happyFlow() throws CredentialException{
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            c.check(LOGIN_OK, PASSWORD_OK);
-        }
-
-        @Test(expected = NullPointerException.class)
-        public void stringNull() throws CredentialException {
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            c.check(null, PASSWORD_OK);
-        }
-
-        @Test
-        public void loginTooShort() {
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            try {
-                c.check(LOGIN_TOO_SHORT, PASSWORD_OK);
-                Assert.fail("Should have thrown exception");
-            } catch (CredentialException e) {
-                checkCredentialError(e, AuthenticationError.LOGIN_TOO_SHORT);
-            }
-        }
-
-        @Test
-        public void loginTooLong() {
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            try {
-                c.check(LOGIN_TOO_LONG, PASSWORD_OK);
-                Assert.fail("Should have thrown exception");
-            } catch (CredentialException e) {
-                checkCredentialError(e, AuthenticationError.LOGIN_TOO_LONG);
-            }
-        }
-
-        @Test
-        public void loginInvalid() {
-            AuthenticationChecker c = givenADefaultAuthenticationChecker();
-            try {
-                c.check(LOGIN_INVALID, PASSWORD_OK);
-                Assert.fail("Should have thrown exception");
-            } catch (CredentialException e) {
-                checkCredentialError(e, AuthenticationError.INVALID_LOGIN_CHAR);
-            }
-        }
-
-        @Test
-        public void passwordInvalid() {
-            AuthenticationChecker c = new AuthenticationChecker(AuthenticationRules.DEFAULT);
             try {
                 c.check(LOGIN_OK, PASSWORD_INVALID);
                 Assert.fail("Should have thrown exception");
