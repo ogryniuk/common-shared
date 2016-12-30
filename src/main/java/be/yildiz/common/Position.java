@@ -33,11 +33,6 @@ package be.yildiz.common;
 public final class Position extends BaseCoordinate {
 
     /**
-     * Constant for 0,0.
-     */
-    public static final Position ZERO = new Position(0, 0);
-
-    /**
      * Copy constructor.
      *
      * @param coordinates Coordinates used to get the position.
