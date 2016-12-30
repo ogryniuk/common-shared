@@ -123,6 +123,12 @@ public class TokenTest {
     public static class Equals {
 
         @Test
+        public void isSameObject() {
+            Token t = Token.authenticated(PlayerId.get(6), 12, 10);
+            Assert.assertTrue(t.equals(t));
+        }
+
+        @Test
         public void isSame() {
             Token t = Token.authenticated(PlayerId.get(6), 12, 10);
             Token t2 = Token.authenticated(PlayerId.get(6), 12, 10);

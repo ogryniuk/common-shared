@@ -72,17 +72,23 @@ public interface Sets {
      * objects.
      *
      * @param <T>    Contained objects type.
-     * @param values Objects to store in the created Set.
+     * @param values Objects to store in the created Set, null values are not allowed.
      * @return The new set.
      */
     @SuppressWarnings("unchecked")
     static <T> Set<T> newSet(final T... values) {
         Set<T> set = new HashSet<>(values.length);
         Collections.addAll(set, values);
+        if(set.contains(null)) {
+            throw new NullPointerException("Null value is not allowed.");
+        }
         return set;
     }
 
     static <T> Set<T> newSet(final Collection<T> values) {
+        if(values.contains(null)) {
+            throw new NullPointerException("Null value is not allowed.");
+        }
         return new HashSet<>(values);
     }
 }
