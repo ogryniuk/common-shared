@@ -82,6 +82,7 @@ public interface GameMaterialization extends Movable {
     /**
      * Delete the graphic/physic object.
      */
+    @Override
     void delete();
 
     void sleep(boolean b);
