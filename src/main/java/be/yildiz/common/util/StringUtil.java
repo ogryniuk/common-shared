@@ -120,7 +120,6 @@ public interface StringUtil {
             int index = result.indexOf(name);
             while (index != -1) {
                 result.replace(index, index + name.length(), replacement[i].toString());
-                //index += name.length();
                 index = result.indexOf(name);
             }
         }
