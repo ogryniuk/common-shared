@@ -26,13 +26,13 @@
 package be.yildiz.common.util;
 
 import be.yildiz.common.collections.Lists;
+import be.yildiz.common.log.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -78,10 +78,14 @@ public interface Util {
             if (f.isDirectory()) {
                 Util.deleteFolder(f);
             } else {
-                f.delete();
+                if(!f.delete()) {
+                    Logger.warning(f.getAbsolutePath() + "has not been deleted properly.");
+                }
             }
         }
-        folder.delete();
+        if(!folder.delete()) {
+            Logger.warning(folder.getAbsolutePath() + "has not been deleted properly.");
+        }
     }
 
     /**
@@ -105,16 +109,6 @@ public interface Util {
     static void execute(final String applicationName, final String workingDirectory) throws IOException {
         Runtime.getRuntime().exec(new String[]{new File(workingDirectory + File.separator + applicationName).getAbsolutePath()}, null,
                 new File(workingDirectory).getAbsoluteFile());
-    }
-
-    /**
-     * Convert a float to an integer by removing values after comma.
-     *
-     * @param value Original float value.
-     * @return The integer value.
-     */
-    static int floatToInt(final float value) {
-        return Float.valueOf(value).intValue();
     }
 
     /**
@@ -152,7 +146,7 @@ public interface Util {
      * @return true if the current operating system is Linux.
      */
     static boolean isLinux() {
-        return "linux".equals(System.getProperty("os.name").toLowerCase(Locale.ENGLISH));
+        return "linux".equalsIgnoreCase(System.getProperty("os.name"));
     }
 
     /**

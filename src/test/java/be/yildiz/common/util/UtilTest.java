@@ -76,16 +76,6 @@ public final class UtilTest {
         Assert.assertFalse(Util.equalFloat(t2, result2));
     }
 
-    /***/
-    @Test
-    public void testFloatToInt() {
-        final int expected = 5;
-        final float littleHigher = expected + 0.00001f;
-        final float muchHigher = expected + 0.999f;
-        Assert.assertEquals(Util.floatToInt(littleHigher), expected);
-        Assert.assertEquals(Util.floatToInt(muchHigher), expected);
-    }
-
     /**
      * Test method for {@link be.yildiz.common.util.Util#getRandom()}.
      */
