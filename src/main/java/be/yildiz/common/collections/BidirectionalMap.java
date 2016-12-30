@@ -39,6 +39,11 @@ import java.util.Map.Entry;
 public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
 
     /**
+     * For error messages.
+     */
+    private static final String NULL_NOT_ALLOWED = "null value not allowed.";
+
+    /**
      * Base map.
      */
     private final Map<K, V> map = new HashMap<>();
@@ -56,7 +61,7 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      */
     public K getKey(final Object value) {
         if (value == null) {
-            throw new IllegalArgumentException("null value not allowed.");
+            throw new IllegalArgumentException(NULL_NOT_ALLOWED);
         }
         return this.inverseMap.get(value);
     }
@@ -70,10 +75,10 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      */
     public K getKeyOr(final V value, final K replacementValue) {
         if (value == null) {
-            throw new IllegalArgumentException("null value not allowed.");
+            throw new IllegalArgumentException(NULL_NOT_ALLOWED);
         }
         if (replacementValue == null) {
-            throw new IllegalArgumentException("null value not allowed.");
+            throw new IllegalArgumentException(NULL_NOT_ALLOWED);
         }
         return this.inverseMap.getOrDefault(value, replacementValue);
     }
@@ -114,10 +119,10 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
     }
 
     public List<V> getValues() {
-        return new ArrayList<V>(this.map.values());
+        return new ArrayList<>(this.map.values());
     }
 
     public List<K> getKeys() {
-        return new ArrayList<K>(this.inverseMap.values());
+        return new ArrayList<>(this.inverseMap.values());
     }
 }
