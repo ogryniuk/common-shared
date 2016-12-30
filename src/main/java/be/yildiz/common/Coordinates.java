@@ -35,11 +35,6 @@ package be.yildiz.common;
 public final class Coordinates extends BaseCoordinate implements Cloneable {
 
     /**
-     * Constant with 0 values coordinates.
-     */
-    public static final Coordinates ZERO = new Coordinates(0, 0, 0, 0);
-
-    /**
      * Full constructor.
      *
      * @param widthValue  Width coordinate.

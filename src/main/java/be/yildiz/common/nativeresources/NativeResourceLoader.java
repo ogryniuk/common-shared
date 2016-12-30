@@ -127,7 +127,7 @@ public final class NativeResourceLoader {
      * @param libs Native library name to load.
      */
     public static void loadLibrary(final String... libs) {
-        String nativePath = null;
+        String nativePath;
         for (String lib : libs) {
             Logger.info("Loading native : " + lib);
             File f = new File(lib + NativeResourceLoader.LIBRARY_EXTENSION);
@@ -155,9 +155,9 @@ public final class NativeResourceLoader {
      */
     private static void registerLibInDir(final File dir) {
         if (dir.exists() && dir.isDirectory()) {
-            File[] contents = dir.listFiles(p -> {
-                return p.isFile() && p.getName().endsWith(NativeResourceLoader.LIBRARY_EXTENSION);
-            });
+            File[] contents = dir.listFiles(p ->
+                p.isFile() && p.getName().endsWith(NativeResourceLoader.LIBRARY_EXTENSION)
+            );
             for (File f : contents) {
                 NativeResourceLoader.AVAILABLE_LIB
                         .put(f.getName().replace(NativeResourceLoader.LIBRARY_EXTENSION, ""), f.getAbsolutePath());
@@ -185,7 +185,7 @@ public final class NativeResourceLoader {
         try {
             Field lib = ClassLoader.class.getDeclaredField("loadedLibraryNames");
             lib.setAccessible(true);
-            return new ArrayList<String>(Vector.class.cast(lib.get(ClassLoader.getSystemClassLoader())));
+            return new ArrayList<>(Vector.class.cast(lib.get(ClassLoader.getSystemClassLoader())));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new IllegalArgumentException(e);
         }
