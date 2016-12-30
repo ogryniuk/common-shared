@@ -29,6 +29,7 @@ package be.yildiz.common.id;
  * Provide the id from this Entity.
  * @author Grégory Van den Borre
  */
+@FunctionalInterface
 public interface EntityIdentifiable {
 
     /**
