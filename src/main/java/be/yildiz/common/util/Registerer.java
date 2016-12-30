@@ -78,7 +78,7 @@ public final class Registerer<T extends Registerable> {
      * @return A new Registerer instance with default NoResult behavior.
      */
     public static <T extends Registerable> Registerer<T> newRegisterer() {
-        return new Registerer<T>();
+        return new Registerer<>();
     }
 
     /**
@@ -89,7 +89,7 @@ public final class Registerer<T extends Registerable> {
      * @return A new Registerer instance.
      */
     public static <T extends Registerable> Registerer<T> newRegisterer(final NoResult<T> noResult) {
-        return new Registerer<T>(noResult);
+        return new Registerer<>(noResult);
     }
 
     /**
