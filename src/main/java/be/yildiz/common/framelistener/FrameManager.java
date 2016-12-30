@@ -28,6 +28,7 @@ package be.yildiz.common.framelistener;
 /**
  * @author Grégory Van den Borre
  */
+@FunctionalInterface
 public interface FrameManager {
 
     void addFrameListener(FrameListener listener);
