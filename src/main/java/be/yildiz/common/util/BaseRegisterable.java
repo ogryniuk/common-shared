@@ -71,6 +71,7 @@ public class BaseRegisterable implements Registerable {
     /**
      * @return The registerable name.
      */
+    @Override
     public final String getName() {
         return this.name;
     }
