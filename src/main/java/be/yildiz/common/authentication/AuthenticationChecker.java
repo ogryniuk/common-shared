@@ -64,9 +64,9 @@ public final class AuthenticationChecker {
      */
     public Credentials check(final String login, final String password) throws CredentialException {
         List<AuthenticationError> errors = Lists.newList();
-        this.checkLogin(login, errors);
-        this.checkPassword(password, errors);
-        if (errors.isEmpty()) {
+        boolean loginValid = this.checkLogin(login, errors);
+        boolean pwdValid = this.checkPassword(password, errors);
+        if (loginValid && pwdValid) {
             return new Credentials(login, password);
         }
         throw new CredentialException(errors);
@@ -77,16 +77,22 @@ public final class AuthenticationChecker {
      *
      * @param login  Login to check.
      * @param errors List to store the errors.
-     * @throws NullPointerException If login or errors is null.
+     * @return True if the login is valid.
+     * @throws NullPointerException If errors is null.
      */
-    private void checkLogin(final String login, final List<AuthenticationError> errors) {
+    private boolean checkLogin(final String login, final List<AuthenticationError> errors) {
+        boolean noError = true;
         if (login == null || login.length() < this.parameters.loginMinLength) {
             errors.add(AuthenticationError.LOGIN_TOO_SHORT);
+            noError = false;
         } else if (login.length() > this.parameters.passMaxLength) {
             errors.add(AuthenticationError.LOGIN_TOO_LONG);
+            noError = false;
         } else if (!Pattern.matches(this.parameters.loginPattern.pattern(), login)) {
             errors.add(AuthenticationError.INVALID_LOGIN_CHAR);
+            noError = false;
         }
+        return noError;
     }
 
     /**
@@ -94,16 +100,22 @@ public final class AuthenticationChecker {
      *
      * @param password Password to check.
      * @param errors   List to store the errors.
-     * @throws NullPointerException If password or errors is null.
+     * @return True if password is valid.
+     * @throws NullPointerException If errors is null.
      */
-    private void checkPassword(final String password, final List<AuthenticationError> errors) {
+    private boolean checkPassword(final String password, final List<AuthenticationError> errors) {
+        boolean noError = true;
         if (password == null || password.length() < this.parameters.passMinLength) {
             errors.add(AuthenticationError.PASS_TOO_SHORT);
+            noError = false;
         } else if (password.length() > this.parameters.passMaxLength) {
             errors.add(AuthenticationError.PASS_TOO_LONG);
+            noError = false;
         } else if (!Pattern.matches(this.parameters.passPattern.pattern(), password)) {
             errors.add(AuthenticationError.INVALID_PASS_CHAR);
+            noError = false;
         }
+        return noError;
     }
 
     /**
