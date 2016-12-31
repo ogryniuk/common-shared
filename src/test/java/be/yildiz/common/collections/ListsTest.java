@@ -50,4 +50,15 @@ public final class ListsTest {
             // ok
         }
     }
+
+    @Test
+    public void testInt() {
+        List<Integer> l = Lists.fromInts(4,5,8,9);
+        Assert.assertNotNull(l);
+        Assert.assertEquals(4, l.size());
+        Assert.assertTrue(l.contains(4));
+        Assert.assertTrue(l.contains(5));
+        Assert.assertTrue(l.contains(8));
+        Assert.assertTrue(l.contains(9));
+    }
 }

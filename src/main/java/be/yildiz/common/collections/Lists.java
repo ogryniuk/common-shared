@@ -44,7 +44,7 @@ public interface Lists {
     static List<Float> fromFloat(final float... values) {
         List<Float> list = new ArrayList<>(values.length);
         for (float f : values) {
-            list.add(Float.valueOf(f));
+            list.add(f);
         }
         return list;
     }
@@ -66,10 +66,10 @@ public interface Lists {
      * @param values Collection of objects placed in the list.
      * @return The new list.
      */
-    static List<Integer> newList(final int... values) {
+    static List<Integer> fromInts(final int... values) {
         List<Integer> list = new ArrayList<>(values.length);
         for (int f : values) {
-            list.add(Integer.valueOf(f));
+            list.add(f);
         }
         return list;
     }
@@ -93,7 +93,7 @@ public interface Lists {
      * @param t   Collection of objects placed in the list.
      * @return The new list.
      */
-    @SuppressWarnings("unchecked")
+    @SafeVarargs
     static <T> List<T> newList(final T... t) {
         return new ArrayList<>(Arrays.asList(t));
     }

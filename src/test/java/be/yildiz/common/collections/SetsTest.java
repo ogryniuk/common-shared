@@ -31,7 +31,6 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +47,6 @@ public class SetsTest {
             Set<String> m = Sets.newSet();
             Assert.assertNotNull(m);
             Assert.assertTrue(m.isEmpty());
-            Assert.assertTrue(m instanceof HashSet);
         }
 
         @Test
@@ -56,7 +54,6 @@ public class SetsTest {
             Set<String> m = Sets.newSet("azerty", "azerty1");
             Assert.assertNotNull(m);
             Assert.assertEquals(2, m.size());
-            Assert.assertTrue(m instanceof HashSet);
         }
 
         @Test(expected = NullPointerException.class)
@@ -70,7 +67,6 @@ public class SetsTest {
             Set<String> m = Sets.newSet(l);
             Assert.assertNotNull(m);
             Assert.assertEquals(2, m.size());
-            Assert.assertTrue(m instanceof HashSet);
         }
 
         @Test(expected = NullPointerException.class)
@@ -79,6 +75,13 @@ public class SetsTest {
             l.add("azerty");
             l.add(null);
             Set<String> m = Sets.newSet(l);
+        }
+
+        @Test
+        public void newOrderedSet() {
+            Set<String> s = Sets.newOrderedSet();
+            Assert.assertNotNull(s);
+            Assert.assertTrue(s.isEmpty());
         }
     }
 }
