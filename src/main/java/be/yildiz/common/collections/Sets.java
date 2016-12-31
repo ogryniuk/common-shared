@@ -41,7 +41,7 @@ public interface Sets {
      * @param <T> Contained objects type.
      * @return The new set.
      */
-    static <T> Set<T> newInsertionOrderedSet() {
+    static <T> LinkedHashSet<T> newInsertionOrderedSet() {
         return new LinkedHashSet<>();
     }
 
@@ -52,7 +52,7 @@ public interface Sets {
      * @param <T> Contained objects type.
      * @return The new set.
      */
-    static <T> Set<T> newOrderedSet() {
+    static <T> TreeSet<T> newOrderedSet() {
         return new TreeSet<>();
     }
 
@@ -63,7 +63,7 @@ public interface Sets {
      * @param <T> Contained objects type.
      * @return The new set.
      */
-    static <T> Set<T> newSet() {
+    static <T> HashSet<T> newSet() {
         return new HashSet<>();
     }
 
@@ -75,9 +75,9 @@ public interface Sets {
      * @param values Objects to store in the created Set, null values are not allowed.
      * @return The new set.
      */
-    @SuppressWarnings("unchecked")
-    static <T> Set<T> newSet(final T... values) {
-        Set<T> set = new HashSet<>(values.length);
+    @SafeVarargs
+    static <T> HashSet<T> newSet(final T... values) {
+        HashSet<T> set = new HashSet<>(values.length);
         Collections.addAll(set, values);
         if(set.contains(null)) {
             throw new NullPointerException("Null value is not allowed.");
@@ -85,7 +85,7 @@ public interface Sets {
         return set;
     }
 
-    static <T> Set<T> newSet(final Collection<T> values) {
+    static <T> HashSet<T> newSet(final Collection<T> values) {
         if(values.contains(null)) {
             throw new NullPointerException("Null value is not allowed.");
         }
