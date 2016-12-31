@@ -276,12 +276,21 @@ public final class FileResource {
      */
     public void listFile(final List<FileResource> files, final String... toIgnore) throws IOException {
         Path folder = Paths.get(this.getName());
-        try (DirectoryStream<Path> directory =
-                     Files.newDirectoryStream(folder,
-                             entry -> !entry.toString().contains("Thumbs.db") && !entry.toString().contains("list.xml"))) {
+        DirectoryStream.Filter<Path> filter = entry -> {
+            if(toIgnore == null) {
+                return true;
+            }
+            for(String s : toIgnore) {
+                if (entry.toString().contains(s)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        try (DirectoryStream<Path> directory = Files.newDirectoryStream(folder, filter)) {
             for (Path p : directory) {
                 if (p.toFile().isDirectory()) {
-                    new FileResource(p.toString()).listFile(files);
+                    new FileResource(p.toString()).listFile(files, toIgnore);
                 } else {
                     files.add(new FileResource(p.toString()));
                 }
