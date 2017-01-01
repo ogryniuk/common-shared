@@ -26,6 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>Yildiz Common Shared</name>
   <description>Common library for the yildiz project, contains utilities, helper classes and more.</description>
+  <url>https://bitbucket.org/yildiz-engine-team/common-shared</url>
 
   <artifactId>common-shared</artifactId>
   <version>1.0.5-SNAPSHOT</version>
@@ -42,11 +43,6 @@
     <artifactId>parent</artifactId>
     <version>1.0.8-SNAPSHOT</version>
   </parent>
-
-  <properties>
-    <version.bom-lombok>1.0.3-SNAPSHOT</version.bom-lombok>
-    <version.bom-junit>1.0.4-SNAPSHOT</version.bom-junit>
-  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -66,6 +62,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
