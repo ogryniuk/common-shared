@@ -23,6 +23,8 @@
 
 package be.yildiz.common.collections;
 
+import lombok.NonNull;
+
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -35,11 +37,6 @@ import java.util.Map.Entry;
  * @author Grégory Van den Borre
  */
 public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
-
-    /**
-     * For error messages.
-     */
-    private static final String NULL_NOT_ALLOWED = "null value not allowed.";
 
     /**
      * Base map.
@@ -57,10 +54,7 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      * @param value Stored value.
      * @return Associated key.
      */
-    public K getKey(final Object value) {
-        if (value == null) {
-            throw new IllegalArgumentException(NULL_NOT_ALLOWED);
-        }
+    public K getKey(@NonNull final Object value) {
         return this.inverseMap.get(value);
     }
 
@@ -71,13 +65,7 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      * @param replacementValue Value to return in case if the given does not match the key.
      * @return The matching key, or the replacement value.
      */
-    public K getKeyOr(final V value, final K replacementValue) {
-        if (value == null) {
-            throw new IllegalArgumentException(NULL_NOT_ALLOWED);
-        }
-        if (replacementValue == null) {
-            throw new IllegalArgumentException(NULL_NOT_ALLOWED);
-        }
+    public K getKeyOr(@NonNull final V value, @NonNull final K replacementValue) {
         return this.inverseMap.getOrDefault(value, replacementValue);
     }
 
@@ -87,7 +75,7 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      * @param key Stored key.
      * @return Associated value.
      */
-    public V getValue(final K key) {
+    public V getValue(@NonNull final K key) {
         return this.map.get(key);
     }
 
@@ -102,7 +90,7 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      * @param key   The map key.
      * @param value The value associated to the key.
      */
-    public void put(final K key, final V value) {
+    public void put(@NonNull final K key, @NonNull final V value) {
         this.map.put(key, value);
         this.inverseMap.put(value, key);
     }
@@ -112,7 +100,7 @@ public final class BidirectionalMap<K, V> implements Iterable<Entry<K, V>> {
      *
      * @param key Object to remove.
      */
-    public void remove(final K key) {
+    public void remove(@NonNull final K key) {
         this.inverseMap.remove(this.map.remove(key));
     }
 
