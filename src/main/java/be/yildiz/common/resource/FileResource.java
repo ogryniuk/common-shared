@@ -50,7 +50,7 @@ public final class FileResource {
     /**
      * Associated File object.
      */
-    private final File file;
+    private File file;
     /**
      * Path and name of the file.
      */
@@ -68,13 +68,19 @@ public final class FileResource {
     @Getter
     private long size;
 
+    private FileResource() {
+        super();
+    }
+
     /**
      * Full constructor. Build the associated file, throw a
      * {@link ResourceMissingException} if the file does not exist, retrieve the
      * size, and compute the CRC32.
+     * @deprecated Use findResource or createFile / directory / resource instead. TO BE REMOVED IN 2.x.x
      *
      * @param fileName Path and name of the resource.
      */
+    @Deprecated
     public FileResource(final String fileName) {
         super();
         this.file = new File(fileName);
@@ -88,12 +94,14 @@ public final class FileResource {
     /**
      * Full constructor. Build the associated file, throw a if the file does not
      * exist, it is created. Retrieve the size, and compute the CRC32.
+     * @deprecated Use findResource or createFile / directory / resource instead. TO BE REMOVED IN 2.x.x
      *
      * @param fileName Path and name of the resource.
      * @param type     Directory or file.
      * @throws ResourceMissingException If the file cannot be created.
      * @throws NullPointerException If fileName is null or empty or if type is null.
      */
+    @Deprecated
     public FileResource(@NonNull final String fileName, @NonNull final FileType type) {
         super();
         this.file = new File(fileName);
@@ -111,6 +119,46 @@ public final class FileResource {
             }
         }
         this.size = this.file.length();
+    }
+
+    public static FileResource createFile(@NonNull String name) {
+        return createFileResource(name, FileType.FILE);
+    }
+
+    public static FileResource createDirectory(@NonNull String name) {
+        return createFileResource(name, FileType.DIRECTORY);
+    }
+
+    public static FileResource createFileResource(@NonNull String name, @NonNull FileType type) {
+        FileResource resource = new FileResource();
+        resource.name = name;
+        resource.file = new File(name);
+        resource.size = resource.file.length();
+        if (resource.exists()) {
+            return resource;
+        }
+        try {
+            resource.file.getParentFile().mkdirs();
+            if (type == FileType.DIRECTORY && !resource.file.mkdir()) {
+                throw new ResourceMissingException("File " + name + " could not be created");
+            } else if (type == FileType.FILE && !resource.file.createNewFile()) {
+                throw new ResourceMissingException("Directory " + name + " could not be created");
+            }
+        } catch (IOException | SecurityException e) {
+            throw new ResourceMissingException("The file " + resource.file.getAbsolutePath() + " could not be created.", e);
+        }
+        return resource;
+    }
+
+    public static FileResource findResource(@NonNull String name) {
+        FileResource resource = new FileResource();
+        resource.file = new File(name);
+        resource.name = name;
+        if (!resource.exists()) {
+            throw new ResourceMissingException("The file " + resource.file.getAbsolutePath() + " does not exist.");
+        }
+        resource.size = resource.file.length();
+        return resource;
     }
 
     /**
@@ -221,7 +269,7 @@ public final class FileResource {
 
             byte[] bytes = new byte[(int) this.size];
             int offset = 0;
-            int numRead = 0;
+            int numRead;
             while (true) {
                 numRead = is.read(bytes, offset, bytes.length - offset);
                 if (offset < bytes.length && numRead >= 0) {
@@ -288,9 +336,9 @@ public final class FileResource {
         try (DirectoryStream<Path> directory = Files.newDirectoryStream(folder, filter)) {
             for (Path p : directory) {
                 if (p.toFile().isDirectory()) {
-                    new FileResource(p.toString()).listFile(files, toIgnore);
+                    FileResource.findResource(p.toString()).listFile(files, toIgnore);
                 } else {
-                    files.add(new FileResource(p.toString()));
+                    files.add(FileResource.findResource(p.toString()));
                 }
             }
         }

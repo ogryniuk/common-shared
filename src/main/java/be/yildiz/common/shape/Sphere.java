@@ -24,12 +24,14 @@
 package be.yildiz.common.shape;
 
 import be.yildiz.common.util.Checker;
+import lombok.EqualsAndHashCode;
 
 /**
  * Data to create a sphere.
  *
  * @author Grégory Van den Borre
  */
+@EqualsAndHashCode
 public final class Sphere {
 
     /**

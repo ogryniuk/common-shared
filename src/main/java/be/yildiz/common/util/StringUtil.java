@@ -40,11 +40,15 @@ public interface StringUtil {
      * @return A string containing all the array values.
      */
     static String arrayToString(final float[] array) {
+        if(array.length == 0) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
-        for (Object o : array) {
+        for (Float o : array) {
             sb.append(o.toString());
             sb.append('|');
         }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
@@ -56,11 +60,15 @@ public interface StringUtil {
      * @return A string containing all the array values.
      */
     static String arrayToString(final Object[] array) {
+        if(array.length == 0) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         for (Object o : array) {
             sb.append(o.toString());
             sb.append('|');
         }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
@@ -93,10 +101,12 @@ public interface StringUtil {
 
     /**
      * Build a String from a list of objects.
+     * @deprecated Use array to string instead TO BE REMOVED IN 2.x.x
      *
      * @param objects Objects to use.
      * @return The string built from the parameters.
      */
+    @Deprecated
     static String buildToString(final Object... objects) {
         final StringBuilder sb = new StringBuilder();
         for (Object object : objects) {

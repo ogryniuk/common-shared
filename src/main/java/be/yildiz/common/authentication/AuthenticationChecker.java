@@ -45,6 +45,7 @@ public final class AuthenticationChecker {
     /**
      * Create a new AuthenticationChecker from rules.
      * @param parameters List of rules to apply when authenticating, cannot be null.
+     * @throws NullPointerException if parameters is null.
      */
     public AuthenticationChecker(@NonNull AuthenticationRules parameters) {
         this.parameters = parameters;
@@ -53,12 +54,11 @@ public final class AuthenticationChecker {
     /**
      * Check if provided login and password are valid against the given rules.
      *
-     * @param login    Login to check.
-     * @param password Password to check, provided in clear.
+     * @param login    Login to check, null is allowed.
+     * @param password Password to check, provided in clear, null is allowed.
      * @return The credentials created from the login and the password, password
      * returned is hashed.
      * @throws CredentialException If the check fails.
-     * @throws NullPointerException If login or password is null.
      */
     public Credentials check(final String login, final String password) throws CredentialException {
         List<AuthenticationError> errors = Lists.newList();
@@ -162,8 +162,8 @@ public final class AuthenticationChecker {
          * Initialize the enum value.
          *
          * @param messageKey Translation key associated to the error message.
-         * @Requires messageKey != null.
          */
+        //@Requires messageKey != null.
         AuthenticationError(final String messageKey) {
             this.messageKey = messageKey;
         }

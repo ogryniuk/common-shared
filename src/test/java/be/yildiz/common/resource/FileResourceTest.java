@@ -30,7 +30,10 @@ import be.yildiz.common.util.Util;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,88 +44,216 @@ import java.io.RandomAccessFile;
  *
  * @author Grégory Van den Borre
  */
+@RunWith(Enclosed.class)
 public final class FileResourceTest {
 
-    @Rule
-    public ExpectedException rule = ExpectedException.none();
+    public static class FileResourceBasic {
 
-    /***/
-    @Test
-    public void testFileResource() {
-        String nonExstingFile = "none.none";
-        this.rule.expect(ResourceMissingException.class);
-        new FileResource(nonExstingFile);
-        String existingFile = "test.log";
-        final int size = 18;
-        final int crc = 331922151;
-        String content = "blablabla";
-        File file = new File(existingFile);
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            Assert.fail(e.getMessage());
+        @Rule
+        public ExpectedException rule = ExpectedException.none();
+
+        /***/
+        @Test
+        public void testFileResource() {
+            String nonExstingFile = "none.none";
+            this.rule.expect(ResourceMissingException.class);
+            new FileResource(nonExstingFile);
+            String existingFile = "test.log";
+            final int size = 18;
+            final int crc = 331922151;
+            String content = "blablabla";
+            File file = new File(existingFile);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                Assert.fail(e.getMessage());
+            }
+            FileResource f = null;
+            try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+                raf.writeChars(content);
+                f = new FileResource(existingFile);
+                Assert.assertEquals(size, f.getSize());
+                String check = existingFile + Literals.TOSTRING_SEPARATOR + crc + Literals.TOSTRING_SEPARATOR + size;
+                this.rule.expect(IndexOutOfBoundsException.class);
+                f.check(check);
+                f.deleteFile();
+            } catch (ResourceMissingException e) {
+                Assert.fail("The file exist, " + "an RessourceMissingException " + "should not have been thrown.");
+            } catch (IOException e) {
+                Assert.fail(e.getMessage());
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                Assert.fail(e.getMessage());
+            }
+            try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+                raf.writeChars(content);
+                final int badCrc = 33122151;
+                f = new FileResource(existingFile);
+                Assert.assertEquals(size, f.getSize());
+
+                String check = existingFile + Literals.TOSTRING_SEPARATOR + badCrc + Literals.TOSTRING_SEPARATOR + size;
+                f.check(check);
+                Assert.fail("the crc is bad, check " + "should have thrown an exception");
+            } catch (ResourceMissingException e) {
+                Assert.fail("The file exist, " + "an RessourceMissingException " + "should not have been thrown.");
+            } catch (ResourceCorruptedException e) {
+                // ok
+                f.deleteFile();
+            } catch (IOException e) {
+                Assert.fail(e.getMessage());
+            }
         }
-        FileResource f = null;
-        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            raf.writeChars(content);
-            f = new FileResource(existingFile);
+
+        @Test(expected = NullPointerException.class)
+        public void constructorFileNull() {
+            new FileResource(null, FileResource.FileType.FILE);
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void constructorFileEmpty() {
+            new FileResource("", FileResource.FileType.FILE);
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void constructorTypeNull() {
+            new FileResource("file.txt", null);
+        }
+
+        @Test(expected = ResourceMissingException.class)
+        public void constructorFileNotExistFailCreate() {
+            String path;
+            if(Util.isLinux()) {
+                path = "/dev/null/f.txt";
+            } else {
+                path = "V:\f.txt";
+            }
+            new FileResource(path, FileResource.FileType.FILE);
+        }
+    }
+
+    private static File getFile(String name) {
+        return new File(FileResourceTest.class.getClassLoader().getResource(name).getFile()).getAbsoluteFile();
+    }
+
+    public static class FindResource {
+
+        @Test
+        public void happyFlow() {
+            FileResource.findResource(getFile("test.properties").getAbsolutePath());
+        }
+
+        @Test(expected = ResourceMissingException.class)
+        public void notExisting() {
+            FileResource.findResource("azerty");
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void fromNull() {
+            FileResource.findResource(null);
+        }
+    }
+
+
+    public static class createFile {
+
+        @Rule
+        public TemporaryFolder folder = new TemporaryFolder();
+
+        @Test
+        public void happyFlow() throws IOException {
+            folder.create();
+            String file = folder.getRoot().getAbsolutePath() + "/test.txt";
+            Assert.assertFalse(new File(file).exists());
+            FileResource.createFile(file);
+            Assert.assertTrue(new File(file).exists());
+            Assert.assertTrue(new File(file).isFile());
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void fromNull() {
+            FileResource.createFile(null);
+        }
+
+        @Test
+        public void alreadyExisting() throws IOException {
+            folder.create();
+            String file = getFile("test-resource.txt").getAbsolutePath();
+            Assert.assertTrue(new File(file).exists());
+            long size = new File(file).length();
+            FileResource f = FileResource.createFile(file);
+            Assert.assertTrue(new File(file).exists());
+            Assert.assertTrue(new File(file).isFile());
             Assert.assertEquals(size, f.getSize());
-            String check = existingFile + Literals.TOSTRING_SEPARATOR + crc + Literals.TOSTRING_SEPARATOR + size;
-            this.rule.expect(IndexOutOfBoundsException.class);
-            f.check(check);
-            f.deleteFile();
-        } catch (ResourceMissingException e) {
-            Assert.fail("The file exist, " + "an RessourceMissingException " + "should not have been thrown.");
-        } catch (IOException e) {
-            Assert.fail(e.getMessage());
         }
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            Assert.fail(e.getMessage());
+    }
+
+    public static class createDirectory {
+        @Rule
+        public TemporaryFolder folder = new TemporaryFolder();
+
+        @Test
+        public void happyFlow() throws IOException {
+            folder.create();
+            String file = folder.getRoot().getAbsolutePath() + "/test";
+            Assert.assertFalse(new File(file).exists());
+            FileResource.createDirectory(file);
+            Assert.assertTrue(new File(file).exists());
+            Assert.assertTrue(new File(file).isDirectory());
         }
-        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            raf.writeChars(content);
-            final int badCrc = 33122151;
-            f = new FileResource(existingFile);
+
+        @Test(expected = NullPointerException.class)
+        public void fromNull() {
+            FileResource.createDirectory(null);
+        }
+
+        @Test
+        public void alreadyExisting() throws IOException {
+            folder.create();
+            String file = folder.newFolder().getAbsolutePath();
+            Assert.assertTrue(new File(file).exists());
+            FileResource.createDirectory(file);
+            Assert.assertTrue(new File(file).exists());
+            Assert.assertTrue(new File(file).isDirectory());
+        }
+    }
+
+    public static class createResource {
+
+        @Rule
+        public TemporaryFolder folder = new TemporaryFolder();
+
+        @Test
+        public void file() throws IOException {
+            folder.create();
+            String file = getFile("test-resource.txt").getAbsolutePath();
+            Assert.assertTrue(new File(file).exists());
+            long size = new File(file).length();
+            FileResource f = FileResource.createFileResource(file, FileResource.FileType.FILE);
+            Assert.assertTrue(new File(file).exists());
+            Assert.assertTrue(new File(file).isFile());
             Assert.assertEquals(size, f.getSize());
-
-            String check = existingFile + Literals.TOSTRING_SEPARATOR + badCrc + Literals.TOSTRING_SEPARATOR + size;
-            f.check(check);
-            Assert.fail("the crc is bad, check " + "should have thrown an exception");
-        } catch (ResourceMissingException e) {
-            Assert.fail("The file exist, " + "an RessourceMissingException " + "should not have been thrown.");
-        } catch (ResourceCorruptedException e) {
-            // ok
-            f.deleteFile();
-        } catch (IOException e) {
-            Assert.fail(e.getMessage());
         }
-    }
 
-    @Test(expected = NullPointerException.class)
-    public void constructorFileNull() {
-        new FileResource(null, FileResource.FileType.FILE);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void constructorFileEmpty() {
-        new FileResource("", FileResource.FileType.FILE);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void constructorTypeNull() {
-        new FileResource("file.txt", null);
-    }
-
-    @Test(expected = ResourceMissingException.class)
-    public void constructorFileNotExistFailCreate() {
-        String path;
-        if(Util.isLinux()) {
-            path = "/dev/null/f.txt";
-        } else {
-            path = "V:\f.txt";
+        @Test
+        public void directory() throws IOException {
+            folder.create();
+            String file = folder.getRoot().getAbsolutePath() + "/test";
+            Assert.assertFalse(new File(file).exists());
+            FileResource.createFileResource(file, FileResource.FileType.DIRECTORY);
+            Assert.assertTrue(new File(file).exists());
+            Assert.assertTrue(new File(file).isDirectory());
         }
-        new FileResource(path, FileResource.FileType.FILE);
+
+        @Test(expected = NullPointerException.class)
+        public void fromNullName() {
+            FileResource.createFileResource(null, FileResource.FileType.FILE);
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void fromNullType() {
+            FileResource.createFileResource("ok", null);
+        }
     }
 }
