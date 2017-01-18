@@ -97,7 +97,7 @@ public final class Logger {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
-        Logger.WRAPPED_LOGGER.log(Level.SEVERE, message + " : " + sw.toString());
+        Logger.WRAPPED_LOGGER.log(Level.SEVERE, () -> message + " : " + sw.toString());
     }
 
     /**
@@ -109,7 +109,7 @@ public final class Logger {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
-        Logger.WRAPPED_LOGGER.log(Level.SEVERE, sw.toString());
+        Logger.WRAPPED_LOGGER.log(Level.SEVERE, sw::toString);
     }
 
     /**
@@ -118,7 +118,7 @@ public final class Logger {
      * @param object Message to log.
      */
     public static void info(final Object object) {
-        Logger.WRAPPED_LOGGER.info(object.toString());
+        Logger.WRAPPED_LOGGER.info(object::toString);
     }
 
     /**
@@ -175,6 +175,6 @@ public final class Logger {
     }
 
     public enum LogLevel {
-        DEBUG, INFO, WARNING, ERROR;
+        DEBUG, INFO, WARNING, ERROR
     }
 }
