@@ -122,6 +122,9 @@ public interface StringUtil {
     }
 
     static String fillVariable(String base, Object[] replacement) {
+        if(replacement.length == 0) {
+            return base;
+        }
         StringBuilder result = new StringBuilder(base);
         for (int i = 0; i < replacement.length; i++) {
             String name = "${" + i + "}";

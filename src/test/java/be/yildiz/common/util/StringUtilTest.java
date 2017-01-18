@@ -97,6 +97,13 @@ public final class StringUtilTest {
         }
 
         @Test
+        public void empty() {
+            String base = "hello ${0} !";
+            String[] replacement = {};
+            Assert.assertEquals("hello ${0} !", StringUtil.fillVariable(base, replacement));
+        }
+
+        @Test
         public void withSeveralBase() {
             String base = "hello ${0} ${0} !";
             String[] replacement = {"world"};
