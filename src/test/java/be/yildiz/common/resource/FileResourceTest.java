@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Test class for FileResouce.
@@ -268,8 +269,10 @@ public final class FileResourceTest {
             List<FileResource> result = Lists.newList();
             f.listFile(result);
             Assert.assertEquals(2, result.size());
-            Assert.assertEquals(file + File.separator + "file1.txt", result.get(0).getName());
-            Assert.assertEquals(file + File.separator + "file2.txt", result.get(1).getName());
+            List<String> names = result.stream()
+                    .map(FileResource::getName)
+                    .collect(Collectors.toList());
+            Assert.assertTrue(names.contains(file + File.separator + "file1.txt") && names.contains(file + File.separator + "file2.txt"));
         }
 
         @Test
