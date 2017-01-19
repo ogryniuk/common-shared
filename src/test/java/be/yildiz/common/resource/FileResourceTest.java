@@ -23,6 +23,7 @@
 
 package be.yildiz.common.resource;
 
+import be.yildiz.common.collections.Lists;
 import be.yildiz.common.exeption.ResourceCorruptedException;
 import be.yildiz.common.exeption.ResourceMissingException;
 import be.yildiz.common.util.Literals;
@@ -38,6 +39,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.List;
 
 /**
  * Test class for FileResouce.
@@ -254,6 +256,30 @@ public final class FileResourceTest {
         @Test(expected = NullPointerException.class)
         public void fromNullType() {
             FileResource.createFileResource("ok", null);
+        }
+    }
+
+    public static class ListFile {
+
+        @Test
+        public void happyFlow() throws IOException{
+            String file = getFile("fileresource-listfiles").getAbsolutePath();
+            FileResource f = FileResource.findResource(file);
+            List<FileResource> result = Lists.newList();
+            f.listFile(result);
+            Assert.assertEquals(2, result.size());
+            Assert.assertEquals(file + File.separator + "file1.txt", result.get(0).getName());
+            Assert.assertEquals(file + File.separator + "file2.txt", result.get(1).getName());
+        }
+
+        @Test
+        public void withIgnoredFile() throws IOException{
+            String file = getFile("fileresource-listfiles").getAbsolutePath();
+            FileResource f = FileResource.findResource(file);
+            List<FileResource> result = Lists.newList();
+            f.listFile(result, "file1.txt");
+            Assert.assertEquals(1, result.size());
+            Assert.assertEquals(file + File.separator + "file2.txt", result.get(0).getName());
         }
     }
 }
