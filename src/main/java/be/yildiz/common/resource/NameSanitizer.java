@@ -32,6 +32,10 @@ import java.net.URI;
  */
 public class NameSanitizer {
 
+    private NameSanitizer() {
+        super();
+    }
+
     public static String sanitize(String name) {
         if(name == null) {
             throw new IllegalArgumentException("Name cannot be null");

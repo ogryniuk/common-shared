@@ -23,12 +23,9 @@
 
 package be.yildiz.common.resource;
 
-import be.yildiz.common.exeption.ResourceMissingException;
 import be.yildiz.common.log.Logger;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
