@@ -77,9 +77,8 @@ public final class ZipUtil {
      * @param keepRootDir Keep the root directory or extract all its content.
      * @throws IllegalArgumentException If the zip file does not exists.
      */
-    public static void extractFiles(File zipFile, final String destination, final boolean keepRootDir) {
-        zipFile = NameSanitizer.sanitize(zipFile);
-        try (ZipFile file = new ZipFile(zipFile)) {
+    public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
+        try (ZipFile file = new ZipFile(NameSanitizer.sanitize(zipFile))) {
             String rootDir = "";
             ResourceUtil.createDirectoryTree(destination);
             Enumeration<? extends ZipEntry> entries = file.entries();
@@ -117,9 +116,8 @@ public final class ZipUtil {
      * @param destination Path where the directory will be extracted.
      * @throws IllegalArgumentException If the zip file does not exists.
      */
-    public static void extractFilesFromDirectory(File zipFile, final String directory, final String destination) {
-        zipFile = NameSanitizer.sanitize(zipFile);
-        try (ZipFile file = new ZipFile(zipFile)) {
+    public static void extractFilesFromDirectory(final File zipFile, final String directory, final String destination) {
+        try (ZipFile file = new ZipFile(NameSanitizer.sanitize(zipFile))) {
             ResourceUtil.createDirectoryTree(destination + File.separator + directory);
             Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {

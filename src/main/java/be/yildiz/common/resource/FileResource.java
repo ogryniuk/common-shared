@@ -102,7 +102,7 @@ public final class FileResource {
      * @throws IllegalArgumentException If fileName is null or empty or if type is null.
      */
     @Deprecated
-    public FileResource(String fileName, FileType type) {
+    public FileResource(final String fileName, final FileType type) {
         super();
         if(fileName == null || fileName.isEmpty()) {
             throw new IllegalArgumentException("File name cannot be null or empty.");
@@ -110,16 +110,16 @@ public final class FileResource {
         if(type == null) {
             throw new IllegalArgumentException("Type cannot be null.");
         }
-        fileName = NameSanitizer.sanitize(fileName);
-        this.file = new File(fileName);
-        this.name = fileName;
+        String sanitizedName = NameSanitizer.sanitize(fileName);
+        this.file = new File(sanitizedName);
+        this.name = sanitizedName;
         if (!this.exists()) {
             try {
                 Optional.ofNullable(this.file.getParentFile()).ifPresent(File::mkdirs);
                 if (type == FileType.DIRECTORY) {
                     this.file.mkdir();
                 } else if (type == FileType.FILE && !this.file.createNewFile()) {
-                    throw new ResourceMissingException(fileName + " could not be created");
+                    throw new ResourceMissingException(sanitizedName + " could not be created");
                 }
             } catch (IOException | SecurityException e) {
                 throw new ResourceMissingException("The file " + this.file.getAbsolutePath() + " could not be created due to an exception.", e);
@@ -136,14 +136,14 @@ public final class FileResource {
         return createFileResource(name, FileType.DIRECTORY);
     }
 
-    public static FileResource createFileResource(String name, FileType type) {
+    public static FileResource createFileResource(final String name, final FileType type) {
         if(type == null) {
             throw new IllegalArgumentException("Type cannot be null.");
         }
         FileResource resource = new FileResource();
-        name = NameSanitizer.sanitize(name);
-        resource.name = name;
-        resource.file = new File(name);
+        String sanitizedName = NameSanitizer.sanitize(name);
+        resource.name = sanitizedName;
+        resource.file = new File(sanitizedName);
         resource.size = resource.file.length();
         if (resource.exists()) {
             return resource;
@@ -151,9 +151,9 @@ public final class FileResource {
         try {
             resource.file.getParentFile().mkdirs();
             if (type == FileType.DIRECTORY && !resource.file.mkdir()) {
-                throw new ResourceMissingException("File " + name + " could not be created");
+                throw new ResourceMissingException("File " + sanitizedName + " could not be created");
             } else if (type == FileType.FILE && !resource.file.createNewFile()) {
-                throw new ResourceMissingException("Directory " + name + " could not be created");
+                throw new ResourceMissingException("Directory " + sanitizedName + " could not be created");
             }
         } catch (IOException | SecurityException e) {
             throw new ResourceMissingException("The file " + resource.file.getAbsolutePath() + " could not be created.", e);
@@ -161,11 +161,11 @@ public final class FileResource {
         return resource;
     }
 
-    public static FileResource findResource(String name) {
+    public static FileResource findResource(final String name) {
         FileResource resource = new FileResource();
-        name = NameSanitizer.sanitize(name);
-        resource.file = new File(name);
-        resource.name = name;
+        String sanitizedName = NameSanitizer.sanitize(name);
+        resource.file = new File(sanitizedName);
+        resource.name = sanitizedName;
         if (!resource.exists()) {
             throw new ResourceMissingException("The file " + resource.file.getAbsolutePath() + " does not exist.");
         }
