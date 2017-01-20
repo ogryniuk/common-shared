@@ -29,7 +29,6 @@ import be.yildiz.common.exeption.ResourceMissingException;
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.util.Literals;
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -40,6 +39,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.zip.CRC32;
 
 /**
@@ -99,16 +99,23 @@ public final class FileResource {
      * @param fileName Path and name of the resource.
      * @param type     Directory or file.
      * @throws ResourceMissingException If the file cannot be created.
-     * @throws NullPointerException If fileName is null or empty or if type is null.
+     * @throws IllegalArgumentException If fileName is null or empty or if type is null.
      */
     @Deprecated
-    public FileResource(@NonNull final String fileName, @NonNull final FileType type) {
+    public FileResource(String fileName, FileType type) {
         super();
+        if(fileName == null || fileName.isEmpty()) {
+            throw new IllegalArgumentException("File name cannot be null or empty.");
+        }
+        if(type == null) {
+            throw new IllegalArgumentException("Type cannot be null.");
+        }
+        fileName = NameSanitizer.sanitize(fileName);
         this.file = new File(fileName);
         this.name = fileName;
         if (!this.exists()) {
             try {
-                this.file.getParentFile().mkdirs();
+                Optional.ofNullable(this.file.getParentFile()).ifPresent(File::mkdirs);
                 if (type == FileType.DIRECTORY) {
                     this.file.mkdir();
                 } else if (type == FileType.FILE && !this.file.createNewFile()) {
@@ -121,16 +128,20 @@ public final class FileResource {
         this.size = this.file.length();
     }
 
-    public static FileResource createFile(@NonNull String name) {
+    public static FileResource createFile(String name) {
         return createFileResource(name, FileType.FILE);
     }
 
-    public static FileResource createDirectory(@NonNull String name) {
+    public static FileResource createDirectory(String name) {
         return createFileResource(name, FileType.DIRECTORY);
     }
 
-    public static FileResource createFileResource(@NonNull String name, @NonNull FileType type) {
+    public static FileResource createFileResource(String name, FileType type) {
+        if(type == null) {
+            throw new IllegalArgumentException("Type cannot be null.");
+        }
         FileResource resource = new FileResource();
+        name = NameSanitizer.sanitize(name);
         resource.name = name;
         resource.file = new File(name);
         resource.size = resource.file.length();
@@ -150,8 +161,9 @@ public final class FileResource {
         return resource;
     }
 
-    public static FileResource findResource(@NonNull String name) {
+    public static FileResource findResource(String name) {
         FileResource resource = new FileResource();
+        name = NameSanitizer.sanitize(name);
         resource.file = new File(name);
         resource.name = name;
         if (!resource.exists()) {

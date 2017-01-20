@@ -43,12 +43,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Test class for FileResouce.
+ * Test class for FileResource.
  *
  * @author Grégory Van den Borre
  */
 @RunWith(Enclosed.class)
-public final class FileResourceTest {
+public final class  FileResourceTest {
 
     public static class FileResourceBasic {
 
@@ -109,17 +109,17 @@ public final class FileResourceTest {
             }
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void constructorFileNull() {
             new FileResource(null, FileResource.FileType.FILE);
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void constructorFileEmpty() {
             new FileResource("", FileResource.FileType.FILE);
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void constructorTypeNull() {
             new FileResource("file.txt", null);
         }
@@ -143,8 +143,8 @@ public final class FileResourceTest {
     public static class FindResource {
 
         @Test
-        public void happyFlow() {
-            FileResource.findResource(getFile("test.properties").getAbsolutePath());
+        public void happyFlow() throws IOException {
+            FileResource.findResource(getFile("file with space.txt").getAbsolutePath());
         }
 
         @Test(expected = ResourceMissingException.class)
@@ -152,7 +152,7 @@ public final class FileResourceTest {
             FileResource.findResource("azerty");
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void fromNull() {
             FileResource.findResource(null);
         }
@@ -174,7 +174,7 @@ public final class FileResourceTest {
             Assert.assertTrue(new File(file).isFile());
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void fromNull() {
             FileResource.createFile(null);
         }
@@ -182,7 +182,7 @@ public final class FileResourceTest {
         @Test
         public void alreadyExisting() throws IOException {
             folder.create();
-            String file = getFile("test-resource.txt").getAbsolutePath();
+            String file = NameSanitizer.sanitize(getFile("test-resource.txt").getAbsolutePath());
             Assert.assertTrue(new File(file).exists());
             long size = new File(file).length();
             FileResource f = FileResource.createFile(file);
@@ -206,7 +206,7 @@ public final class FileResourceTest {
             Assert.assertTrue(new File(file).isDirectory());
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void fromNull() {
             FileResource.createDirectory(null);
         }
@@ -230,7 +230,7 @@ public final class FileResourceTest {
         @Test
         public void file() throws IOException {
             folder.create();
-            String file = getFile("test-resource.txt").getAbsolutePath();
+            String file = NameSanitizer.sanitize(getFile("test-resource.txt").getAbsolutePath());
             Assert.assertTrue(new File(file).exists());
             long size = new File(file).length();
             FileResource f = FileResource.createFileResource(file, FileResource.FileType.FILE);
@@ -249,12 +249,12 @@ public final class FileResourceTest {
             Assert.assertTrue(new File(file).isDirectory());
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void fromNullName() {
             FileResource.createFileResource(null, FileResource.FileType.FILE);
         }
 
-        @Test(expected = NullPointerException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void fromNullType() {
             FileResource.createFileResource("ok", null);
         }
@@ -272,7 +272,8 @@ public final class FileResourceTest {
             List<String> names = result.stream()
                     .map(FileResource::getName)
                     .collect(Collectors.toList());
-            Assert.assertTrue(names.contains(file + File.separator + "file1.txt") && names.contains(file + File.separator + "file2.txt"));
+            Assert.assertTrue(names.contains(NameSanitizer.sanitize(file + File.separator + "file1.txt"))
+                    && names.contains(NameSanitizer.sanitize(file + File.separator + "file2.txt")));
         }
 
         @Test
@@ -282,7 +283,7 @@ public final class FileResourceTest {
             List<FileResource> result = Lists.newList();
             f.listFile(result, "file1.txt");
             Assert.assertEquals(1, result.size());
-            Assert.assertEquals(file + File.separator + "file2.txt", result.get(0).getName());
+            Assert.assertEquals(NameSanitizer.sanitize(file + File.separator + "file2.txt"), result.get(0).getName());
         }
     }
 }

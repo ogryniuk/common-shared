@@ -23,9 +23,12 @@
 
 package be.yildiz.common.resource;
 
+import be.yildiz.common.exeption.ResourceMissingException;
 import be.yildiz.common.log.Logger;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -74,7 +77,8 @@ public final class ZipUtil {
      * @param keepRootDir Keep the root directory or extract all its content.
      * @throws IllegalArgumentException If the zip file does not exists.
      */
-    public static void extractFiles(final File zipFile, final String destination, final boolean keepRootDir) {
+    public static void extractFiles(File zipFile, final String destination, final boolean keepRootDir) {
+        zipFile = NameSanitizer.sanitize(zipFile);
         try (ZipFile file = new ZipFile(zipFile)) {
             String rootDir = "";
             ResourceUtil.createDirectoryTree(destination);
@@ -113,7 +117,8 @@ public final class ZipUtil {
      * @param destination Path where the directory will be extracted.
      * @throws IllegalArgumentException If the zip file does not exists.
      */
-    public static void extractFilesFromDirectory(final File zipFile, final String directory, final String destination) {
+    public static void extractFilesFromDirectory(File zipFile, final String directory, final String destination) {
+        zipFile = NameSanitizer.sanitize(zipFile);
         try (ZipFile file = new ZipFile(zipFile)) {
             ResourceUtil.createDirectoryTree(destination + File.separator + directory);
             Enumeration<? extends ZipEntry> entries = file.entries();
