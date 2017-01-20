@@ -24,7 +24,6 @@
 package be.yildiz.common.resource;
 
 import java.io.File;
-import java.net.URI;
 
 /**
  * Transform escaped chars into file chars.
@@ -40,10 +39,7 @@ public class NameSanitizer {
         if(name == null) {
             throw new IllegalArgumentException("Name cannot be null");
         }
-        if(name.contains("%")) {
-            return URI.create(name).getSchemeSpecificPart();
-        }
-        return name;
+        return name.replace("%20", " ");
     }
 
     public static File sanitize(File file) {
