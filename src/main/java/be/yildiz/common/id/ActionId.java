@@ -92,8 +92,12 @@ public class ActionId implements Serializable {
      *
      * @param id Id to check.
      * @return <code>true</code> if Id matches world Id.
+     * @throws IllegalArgumentException If id is null.
      */
     public static boolean isWorld(final ActionId id) {
+        if(id == null) {
+            throw new IllegalArgumentException("Id cannot be null.");
+        }
         return id.value == ActionId.WORLD_VALUE;
     }
 
