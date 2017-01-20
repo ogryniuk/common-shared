@@ -34,6 +34,23 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class ActionIdTest {
 
+    public static class Get {
+
+        @Test
+        public void happyFlow() {
+            ActionId id = ActionId.get(1000);
+            Assert.assertNotNull(id);
+            Assert.assertEquals(1000, id.value);
+        }
+
+        @Test
+        public void cached() {
+            ActionId id = ActionId.get(2000);
+            ActionId id2 = ActionId.get(2000);
+            Assert.assertTrue(id == id2);
+        }
+    }
+
     public static class IsWorld {
 
         @Test
@@ -86,6 +103,48 @@ public class ActionIdTest {
         public void not() {
             ActionId id = ActionId.get(5);
             Assert.assertFalse(id.isNegative());
+        }
+    }
+
+    public static class HashCode {
+
+        @Test
+        public void happyFlow() {
+            ActionId id = ActionId.get(5);
+            ActionId id2 = ActionId.get(5);
+            Assert.assertEquals(id.hashCode(), id2.hashCode());
+        }
+    }
+
+    public static class Equals {
+
+        @Test
+        public void happyFlow() {
+            ActionId id = ActionId.get(5);
+            ActionId id2 = ActionId.get(5);
+            Assert.assertEquals(id, id2);
+        }
+
+        @Test
+        public void notSame() {
+            ActionId id = ActionId.get(5);
+            ActionId id2 = ActionId.get(6);
+            Assert.assertNotEquals(id, id2);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void otherType() {
+            ActionId id = ActionId.get(5);
+            id.equals("ok");
+        }
+    }
+
+    public static class ToString {
+
+        @Test
+        public void happyFlow() {
+            ActionId id = ActionId.get(8);
+            Assert.assertEquals("8", id.toString());
         }
     }
 }
