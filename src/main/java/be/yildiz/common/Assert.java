@@ -23,6 +23,8 @@
 
 package be.yildiz.common;
 
+import be.yildiz.common.log.Logger;
+
 /**
  * @author Grégory Van den Borre
  */
@@ -34,7 +36,8 @@ public class Assert {
 
     public static boolean notNull(Object o) {
         if(o == null) {
-            throw new IllegalArgumentException("Argument is null.");
+            Logger.error("Argument is null.");
+            return false;
         }
         return true;
     }
