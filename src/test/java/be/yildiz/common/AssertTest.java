@@ -52,9 +52,9 @@ public class AssertTest {
             org.junit.Assert.assertTrue(Assert.notNull("ok"));
         }
 
-        @Test(expected = IllegalArgumentException.class)
+        @Test
         public void withNull() {
-            org.junit.Assert.assertTrue(Assert.notNull(null));
+            org.junit.Assert.assertFalse(Assert.notNull(null));
         }
     }
 }
