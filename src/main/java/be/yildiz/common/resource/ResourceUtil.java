@@ -103,6 +103,7 @@ public final class ResourceUtil {
     }
 
     public static void createDirectoryTree(final String path) {
+        assert path!= null : "Path should not be null.";
         File file = new File(path);
         if(!file.exists() && !file.mkdirs()) {
             Logger.warning("Directories were not created successfully for " + path);
@@ -110,7 +111,9 @@ public final class ResourceUtil {
     }
 
     public static void createDirectory(final String path) {
-        if(!new File(path).mkdir()) {
+        assert path!= null : "Path should not be null.";
+        File file = new File(path);
+        if(!file.exists() && !file.mkdir()) {
             Logger.warning("Directory was not created successfully for " + path);
         }
     }

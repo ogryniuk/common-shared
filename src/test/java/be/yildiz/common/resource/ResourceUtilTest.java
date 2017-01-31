@@ -74,9 +74,50 @@ public class ResourceUtilTest {
             Assert.assertTrue(new File(path + "test/exist").exists());
         }
 
-        @Test
+        @Test(expected = AssertionError.class)
         public void testCreateDirectoryTreeWithNull() {
+            ResourceUtil.createDirectoryTree(null);
+        }
+    }
 
+    public static class CreateDirectory {
+
+
+        @Rule
+        public final TemporaryFolder folder = new TemporaryFolder();
+
+        @Test
+        public void happyFlow() throws IOException {
+            String path = folder.newFolder("test").getAbsolutePath() + "/";
+            ResourceUtil.createDirectory(path + "test");
+            Assert.assertTrue(new File(path + "test").exists());
+        }
+
+        @Test
+        public void withSpace() throws IOException {
+            String path = folder.newFolder("test").getAbsolutePath() + "/";
+            ResourceUtil.createDirectory(path + "tes t");
+            Assert.assertTrue(new File(path + "tes t").exists());
+        }
+
+        @Test
+        public void withDot() throws IOException {
+            String path = folder.newFolder("test").getAbsolutePath() + "/";
+            ResourceUtil.createDirectory(path + "te.st");
+            Assert.assertTrue(new File(path + "te.st").exists());
+        }
+
+        @Test
+        public void alreadyExisting() throws IOException {
+            String path = folder.newFolder("test").getAbsolutePath() + "/";
+            ResourceUtil.createDirectory(path + "exist");
+            ResourceUtil.createDirectory(path + "exist");
+            Assert.assertTrue(new File(path + "exist").exists());
+        }
+
+        @Test(expected = AssertionError.class)
+        public void testCreateDirectoryTreeWithNull() {
+            ResourceUtil.createDirectory(null);
         }
     }
 }
