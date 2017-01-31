@@ -103,7 +103,8 @@ public final class ResourceUtil {
     }
 
     public static void createDirectoryTree(final String path) {
-        if(!new File(path).mkdirs()) {
+        File file = new File(path);
+        if(!file.exists() && !file.mkdirs()) {
             Logger.warning("Directories were not created successfully for " + path);
         }
     }
