@@ -111,7 +111,10 @@ public final class NativeResourceLoader {
      * @return The absolute path of the given library.
      */
     public static String getLibPath(final String lib) {
-        File f = new File(lib + NativeResourceLoader.LIBRARY_EXTENSION);
+        if(lib == null) {
+            throw new AssertionError("lib cannot be null.");
+        }
+        File f = new File(lib.endsWith(LIBRARY_EXTENSION) ? lib : lib + LIBRARY_EXTENSION);
         if (f.exists()) {
             return f.getAbsolutePath();
         }
