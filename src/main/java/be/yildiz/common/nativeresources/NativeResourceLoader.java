@@ -45,36 +45,27 @@ public final class NativeResourceLoader {
      * architecture.
      */
     public final String directory;
+
     /**
      * Will contains the native libraries to be loaded.
      */
     public final File libDirectory;
+
     /**
      * Library file extension, can be .dll on windows, .so on linux.
      */
     public final String libraryExtension;
+
     /**
      * Contains the found native libraries and their full path.
      */
     private final Map<String, String> availableLib = Maps.newMap();
 
-    public NativeResourceLoader(String path) {
+    public NativeResourceLoader(String path, NativeOperatingSystem... systemToSupport) {
         super();
-        if (Util.isLinux()) {
-            libraryExtension = ".so";
-            if (Util.isX86()) {
-                directory = "linux32";
-            } else {
-                directory = "linux64";
-            }
-        } else {
-            libraryExtension = ".dll";
-            if (Util.isX86()) {
-                directory = "win32";
-            } else {
-                directory = "win64";
-            }
-        }
+        NativeOperatingSystem nos = this.findSystem(systemToSupport);
+        this.libraryExtension = nos.getExtension();
+        this.directory = nos.getName();
         this.libDirectory = new File(path);
         Arrays.stream(System.getProperty("java.class.path", "").split(File.pathSeparator))
                 .filter(s -> s.endsWith(".jar"))
@@ -83,8 +74,16 @@ public final class NativeResourceLoader {
         this.registerLibInDir();
     }
 
-    public NativeResourceLoader() {
-        this(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data");
+    private NativeOperatingSystem findSystem(NativeOperatingSystem[] systemToSupport) {
+        return Arrays
+                .stream(systemToSupport)
+                .filter(n -> n.getCondition())
+                .findFirst()
+                .orElseThrow(AssertionError::new);
+    }
+
+    public NativeResourceLoader(NativeOperatingSystem... systemToSupport) {
+        this(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data", systemToSupport);
     }
 
     /**

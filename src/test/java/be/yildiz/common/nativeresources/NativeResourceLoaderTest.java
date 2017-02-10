@@ -41,19 +41,21 @@ public class NativeResourceLoaderTest {
 
     public static class GetLibPath {
 
+        private final NativeOperatingSystem[] systems = {new SystemLinux64(), new SystemWin32()};
+
         @Rule
         public final TemporaryFolder folder = new TemporaryFolder();
 
         @Test
         public void withExistingFileWithExtension() throws IOException {
-            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath(), systems);
             File f = getFile("lib_out" + nrl.libraryExtension);
             Assert.assertEquals(f.getAbsolutePath(), nrl.getLibPath(f.getAbsolutePath()));
         }
 
         @Test
         public void withExistingFileWithoutExtension() throws IOException {
-            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath(), systems);
             File f = getFile("lib_out" + nrl.libraryExtension);
             Assert.assertEquals(f.getAbsolutePath(), nrl.getLibPath(f.getAbsolutePath().replace(nrl.libraryExtension, "")));
         }
@@ -61,19 +63,19 @@ public class NativeResourceLoaderTest {
         @Test
         public void withNotExistingFileRegistered() throws IOException {
             System.setProperty("java.class.path", System.getProperty("java.class.path", "") + File.pathSeparator + getFile("test.jar").getAbsolutePath());
-            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath(), systems);
             Assert.assertEquals(nrl.libDirectory + File.separator + nrl.directory + File.separator + "lib" + nrl.libraryExtension, nrl.getLibPath("lib"));
         }
 
         @Test(expected = AssertionError.class)
         public void withNotExistingFileNotRegistered() throws IOException {
-            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath(), systems);
             Assert.assertEquals(null, nrl.getLibPath("lib"));
         }
 
         @Test(expected = AssertionError.class)
         public void withNullFilePath() throws IOException {
-            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath(), systems);
             nrl.getLibPath(null);
         }
     }
