@@ -79,8 +79,7 @@ public final class NativeResourceLoader {
         Arrays.stream(System.getProperty("java.class.path", "").split(File.pathSeparator))
                 .filter(s -> s.endsWith(".jar"))
                 .map(File::new)
-                .forEach(app -> {
-                    System.out.println(app); ZipUtil.extractFilesFromDirectory(app, this.directory, libDirectory.getAbsolutePath());});
+                .forEach(app -> ZipUtil.extractFilesFromDirectory(app, this.directory, libDirectory.getAbsolutePath()));
         this.registerLibInDir();
     }
 
@@ -144,7 +143,7 @@ public final class NativeResourceLoader {
         }
     }
 
-    public void registerLibInDir() {
+    private void registerLibInDir() {
         registerLibInDir(new File(libDirectory.getAbsolutePath() + File.separator + this.directory));
     }
 
