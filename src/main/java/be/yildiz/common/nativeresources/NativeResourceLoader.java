@@ -46,7 +46,7 @@ public final class NativeResourceLoader {
      */
     public final String directory;
     /**
-     * Will contains the native librairies to be loaded.
+     * Will contains the native libraries to be loaded.
      */
     public final File libDirectory;
     /**
@@ -134,12 +134,11 @@ public final class NativeResourceLoader {
      */
     private void registerLibInDir(final File dir) {
         if (dir.exists() && dir.isDirectory()) {
-            File[] contents = dir.listFiles(p ->
-                p.isFile() && p.getName().endsWith(this.libraryExtension)
-            );
-            for (File f : contents) {
-                this.availableLib.put(f.getName().replace(this.libraryExtension, ""), f.getAbsolutePath());
-            }
+            Optional
+                    .ofNullable(dir.listFiles(p -> p.isFile() && p.getName().endsWith(this.libraryExtension)))
+                    .ifPresent(files -> Arrays.stream(files).forEach(
+                            f -> this.availableLib.put(f.getName().replace(this.libraryExtension, ""), f.getAbsolutePath())
+                    ));
         }
     }
 
