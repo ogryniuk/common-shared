@@ -23,7 +23,6 @@
 
 package be.yildiz.common.nativeresources;
 
-import be.yildiz.common.collections.Lists;
 import be.yildiz.common.collections.Maps;
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.resource.ZipUtil;
@@ -31,18 +30,13 @@ import be.yildiz.common.util.Util;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Utility class to load the native library from the classpath or a jar.
  *
  * @author Grégory Van den Borre
  */
-// FIXME delete
 public final class NativeResourceLoader {
 
     /**
@@ -50,58 +44,48 @@ public final class NativeResourceLoader {
      * linux64 depending on the operating system and the underlying
      * architecture.
      */
-    public static final String DIRECTORY;
+    public final String directory;
     /**
      * Will contains the native librairies to be loaded.
      */
-    public static final File LIB_DIRECTORY = new File(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data");
+    public final File libDirectory;
     /**
      * Library file extension, can be .dll on windows, .so on linux.
      */
-    public static final String LIBRARY_EXTENSION;
+    public final String libraryExtension;
     /**
      * Contains the found native libraries and their full path.
      */
-    private static final Map<String, String> AVAILABLE_LIB = Maps.newMap();
+    private final Map<String, String> availableLib = Maps.newMap();
 
-    static {
-
+    public NativeResourceLoader(String path) {
+        super();
         if (Util.isLinux()) {
-            LIBRARY_EXTENSION = ".so";
+            libraryExtension = ".so";
             if (Util.isX86()) {
-                DIRECTORY = "linux32";
+                directory = "linux32";
             } else {
-                DIRECTORY = "linux64";
+                directory = "linux64";
             }
         } else {
-            LIBRARY_EXTENSION = ".dll";
+            libraryExtension = ".dll";
             if (Util.isX86()) {
-                DIRECTORY = "win32";
+                directory = "win32";
             } else {
-                DIRECTORY = "win64";
+                directory = "win64";
             }
         }
-        // register all available libs:
-        String[] classPath = System.getProperty("java.class.path", "").split(File.pathSeparator);
-        List<String> jarList = Lists.newList();
-        for (String s : classPath) {
-            if (s.endsWith(".jar")) {
-                jarList.add(s);
-            }
-        }
-        // register libs from jar and extract them.
-        for (String current : jarList) {
-            File app = new File(current);
-            ZipUtil.extractFilesFromDirectory(app, NativeResourceLoader.DIRECTORY, LIB_DIRECTORY.getAbsolutePath());
-        }
-        NativeResourceLoader.registerLibInDir();
+        this.libDirectory = new File(path);
+        Arrays.stream(System.getProperty("java.class.path", "").split(File.pathSeparator))
+                .filter(s -> s.endsWith(".jar"))
+                .map(File::new)
+                .forEach(app -> {
+                    System.out.println(app); ZipUtil.extractFilesFromDirectory(app, this.directory, libDirectory.getAbsolutePath());});
+        this.registerLibInDir();
     }
 
-    /**
-     * Simple constructor, private to prevent use.
-     */
-    private NativeResourceLoader() {
-        super();
+    public NativeResourceLoader() {
+        this(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data");
     }
 
     /**
@@ -110,15 +94,22 @@ public final class NativeResourceLoader {
      * @param lib Library to check.
      * @return The absolute path of the given library.
      */
-    public static String getLibPath(final String lib) {
+    public String getLibPath(final String lib) {
         if(lib == null) {
             throw new AssertionError("lib cannot be null.");
         }
-        File f = new File(lib.endsWith(LIBRARY_EXTENSION) ? lib : lib + LIBRARY_EXTENSION);
+        File f = new File(lib.endsWith(libraryExtension) ? lib : lib + libraryExtension);
         if (f.exists()) {
             return f.getAbsolutePath();
         }
-        return NativeResourceLoader.AVAILABLE_LIB.get(lib);
+        String nativePath = this.availableLib.get(lib);
+        if (nativePath == null) {
+            nativePath = "/usr/lib/x86_64-linux-gnu/" + lib + ".so";
+            if(!new File(nativePath).exists()) {
+                throw new AssertionError(lib + " has not been found in path.");
+            }
+        }
+        return nativePath;
     }
 
     /**
@@ -127,23 +118,11 @@ public final class NativeResourceLoader {
      *
      * @param libs Native library name to load.
      */
-    public static void loadLibrary(final String... libs) {
+    public void loadLibrary(final String... libs) {
         String nativePath;
         for (String lib : libs) {
             Logger.info("Loading native : " + lib);
-            File f = new File(lib + NativeResourceLoader.LIBRARY_EXTENSION);
-            if (f.exists()) {
-                nativePath = f.getAbsolutePath();
-            } else {
-                nativePath = NativeResourceLoader.AVAILABLE_LIB.get(lib);
-                if (nativePath == null) {
-                    nativePath = "/usr/lib/x86_64-linux-gnu/" + lib + ".so";
-                    if(!new File(nativePath).exists()) {
-                        throw new InvalidParameterException(lib + " has not been found in path.");
-                    }
-
-                }
-            }
+            nativePath = getLibPath(lib);
             System.load(nativePath);
             Logger.info(nativePath + " loaded.");
         }
@@ -154,20 +133,19 @@ public final class NativeResourceLoader {
      *
      * @param dir Directory holding the libraries.
      */
-    private static void registerLibInDir(final File dir) {
+    private void registerLibInDir(final File dir) {
         if (dir.exists() && dir.isDirectory()) {
             File[] contents = dir.listFiles(p ->
-                p.isFile() && p.getName().endsWith(NativeResourceLoader.LIBRARY_EXTENSION)
+                p.isFile() && p.getName().endsWith(this.libraryExtension)
             );
             for (File f : contents) {
-                NativeResourceLoader.AVAILABLE_LIB
-                        .put(f.getName().replace(NativeResourceLoader.LIBRARY_EXTENSION, ""), f.getAbsolutePath());
+                this.availableLib.put(f.getName().replace(this.libraryExtension, ""), f.getAbsolutePath());
             }
         }
     }
 
-    public static void registerLibInDir() {
-        registerLibInDir(new File(LIB_DIRECTORY.getAbsolutePath() + File.separator + NativeResourceLoader.DIRECTORY));
+    public void registerLibInDir() {
+        registerLibInDir(new File(libDirectory.getAbsolutePath() + File.separator + this.directory));
     }
 
     /**
@@ -176,13 +154,13 @@ public final class NativeResourceLoader {
      *
      * @param libs Libraries to be loaded only on windows.
      */
-    public static void loadBaseLibrary(String... libs) {
+    public void loadBaseLibrary(String... libs) {
         if (!Util.isLinux()) {
             loadLibrary(libs);
         }
     }
 
-    public static List<String> getLoadedLibraries() {
+    public List<String> getLoadedLibraries() {
         try {
             Field lib = ClassLoader.class.getDeclaredField("loadedLibraryNames");
             lib.setAccessible(true);

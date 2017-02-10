@@ -24,14 +24,14 @@
 package be.yildiz.common.nativeresources;
 
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-
-import static be.yildiz.common.nativeresources.NativeResourceLoader.*;
+import java.io.IOException;
 
 /**
  * @author Grégory Van den Borre
@@ -41,33 +41,40 @@ public class NativeResourceLoaderTest {
 
     public static class GetLibPath {
 
+        @Rule
+        public final TemporaryFolder folder = new TemporaryFolder();
+
         @Test
-        public void withExistingFileWithExtension() {
-            File f = getFile("lib_out" + NativeResourceLoader.LIBRARY_EXTENSION);
-            Assert.assertEquals(f.getAbsolutePath(), NativeResourceLoader.getLibPath(f.getAbsolutePath()));
+        public void withExistingFileWithExtension() throws IOException {
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            File f = getFile("lib_out" + nrl.libraryExtension);
+            Assert.assertEquals(f.getAbsolutePath(), nrl.getLibPath(f.getAbsolutePath()));
         }
 
         @Test
-        public void withExistingFileWithoutExtension() {
-            File f = getFile("lib_out" + NativeResourceLoader.LIBRARY_EXTENSION);
-            Assert.assertEquals(f.getAbsolutePath(), NativeResourceLoader.getLibPath(f.getAbsolutePath().replace(LIBRARY_EXTENSION, "")));
+        public void withExistingFileWithoutExtension() throws IOException {
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            File f = getFile("lib_out" + nrl.libraryExtension);
+            Assert.assertEquals(f.getAbsolutePath(), nrl.getLibPath(f.getAbsolutePath().replace(nrl.libraryExtension, "")));
         }
 
         @Test
-        public void withNotExistingFileRegistered() {
+        public void withNotExistingFileRegistered() throws IOException {
             System.setProperty("java.class.path", System.getProperty("java.class.path", "") + File.pathSeparator + getFile("test.jar").getAbsolutePath());
-            Assert.assertEquals(LIB_DIRECTORY + File.separator + DIRECTORY + File.separator + "lib" + LIBRARY_EXTENSION, NativeResourceLoader.getLibPath("lib"));
-        }
-
-        @Test
-        @Ignore("cannot pass since context is static, lib is registered while should not")
-        public void withNotExistingFileNotRegistered() {
-            Assert.assertEquals(null, NativeResourceLoader.getLibPath("lib"));
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            Assert.assertEquals(nrl.libDirectory + File.separator + nrl.directory + File.separator + "lib" + nrl.libraryExtension, nrl.getLibPath("lib"));
         }
 
         @Test(expected = AssertionError.class)
-        public void withNullFilePath() {
-            NativeResourceLoader.getLibPath(null);
+        public void withNotExistingFileNotRegistered() throws IOException {
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            Assert.assertEquals(null, nrl.getLibPath("lib"));
+        }
+
+        @Test(expected = AssertionError.class)
+        public void withNullFilePath() throws IOException {
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath());
+            nrl.getLibPath(null);
         }
     }
 
