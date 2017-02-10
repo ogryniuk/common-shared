@@ -61,6 +61,10 @@ public final class NativeResourceLoader {
      */
     private final Map<String, String> availableLib = Maps.newMap();
 
+    public NativeResourceLoader(NativeOperatingSystem... systemToSupport) {
+        this(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data", systemToSupport);
+    }
+
     public NativeResourceLoader(String path, NativeOperatingSystem... systemToSupport) {
         super();
         NativeOperatingSystem nos = this.findSystem(systemToSupport);
@@ -77,13 +81,9 @@ public final class NativeResourceLoader {
     private NativeOperatingSystem findSystem(NativeOperatingSystem[] systemToSupport) {
         return Arrays
                 .stream(systemToSupport)
-                .filter(n -> n.getCondition())
+                .filter(NativeOperatingSystem::getCondition)
                 .findFirst()
                 .orElseThrow(AssertionError::new);
-    }
-
-    public NativeResourceLoader(NativeOperatingSystem... systemToSupport) {
-        this(System.getProperty("user.home") + File.separator + "app-root" + File.separator + "data", systemToSupport);
     }
 
     /**
@@ -135,8 +135,10 @@ public final class NativeResourceLoader {
         if (dir.exists() && dir.isDirectory()) {
             Optional
                     .ofNullable(dir.listFiles(p -> p.isFile() && p.getName().endsWith(this.libraryExtension)))
-                    .ifPresent(files -> Arrays.stream(files).forEach(
-                            f -> this.availableLib.put(f.getName().replace(this.libraryExtension, ""), f.getAbsolutePath())
+                    .ifPresent(files -> Arrays
+                            .stream(files)
+                            .forEach(f -> this.availableLib
+                                    .put(f.getName().replace(this.libraryExtension, ""), f.getAbsolutePath())
                     ));
         }
     }
