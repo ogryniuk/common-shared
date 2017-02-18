@@ -23,6 +23,7 @@
 
 package be.yildiz.common.nativeresources;
 
+import be.yildiz.common.collections.Lists;
 import be.yildiz.common.collections.Maps;
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.resource.ZipUtil;
@@ -163,7 +164,7 @@ public final class NativeResourceLoader {
         try {
             Field lib = ClassLoader.class.getDeclaredField("loadedLibraryNames");
             lib.setAccessible(true);
-            return new ArrayList<>(Vector.class.cast(lib.get(ClassLoader.getSystemClassLoader())));
+            return Lists.newList(Vector.class.cast(lib.get(ClassLoader.getSystemClassLoader())));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new IllegalArgumentException(e);
         }
