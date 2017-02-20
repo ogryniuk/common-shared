@@ -160,6 +160,7 @@ public final class NativeResourceLoader {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<String> getLoadedLibraries() {
         try {
             Field lib = ClassLoader.class.getDeclaredField("loadedLibraryNames");

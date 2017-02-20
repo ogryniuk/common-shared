@@ -26,8 +26,6 @@ package be.yildiz.common.util.table;
 import lombok.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -35,7 +33,7 @@ import java.util.List;
  * @param <T> Type of the contained element.
  * @author Grégory Van den Borre
  */
-public class Table <T> {
+public class Table <T extends Comparable<T>> {
 
     /**
      * Table header.
@@ -45,27 +43,18 @@ public class Table <T> {
     /**
      * List of all rows contained in the table.
      */
-    private final List<TableRow> rows = new ArrayList<>();
+    private final List<TableRow<T>> rows = new ArrayList<>();
 
     /**
      * Build a table from
      * @param header Table header.
      * @param objects Table content.
      */
-    public Table(@NonNull final TableHeader header, @NonNull final List<TableRow> objects) {
+    public Table(@NonNull final TableHeader header, @NonNull final List<TableRow<T>> objects) {
         super();
         this.header = header;
         this.rows.addAll(objects);
 
-    }
-
-    public void reorder(final int column) {
-        Collections.sort(rows, Comparator.comparing(o -> o.getColumn(column)));
-    }
-
-    public void reorderInvert(final int column) {
-        this.reorder(column);
-        Collections.reverse(this.rows);
     }
 
     public int getWidth() {
