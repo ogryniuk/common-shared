@@ -41,7 +41,7 @@ public class NativeResourceLoaderTest {
 
     public static class GetLibPath {
 
-        private final NativeOperatingSystem[] systems = {new SystemLinux64(), new SystemWin32()};
+        private final NativeOperatingSystem[] systems = {new SystemLinux64(), new SystemWin32(), new SystemWin64()};
 
         @Rule
         public final TemporaryFolder folder = new TemporaryFolder();
