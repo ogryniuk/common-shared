@@ -108,6 +108,9 @@ public final class Token {
         return new Token(id, 0, key, status);
     }
 
+    /**
+     * @return True if this token has authenticated status.
+     */
     public boolean isAuthenticated() {
         return this.status == Status.AUTHENTICATED;
     }
