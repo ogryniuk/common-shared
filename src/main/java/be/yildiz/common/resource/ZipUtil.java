@@ -119,7 +119,7 @@ public final class ZipUtil {
             Enumeration<? extends ZipEntry> entries = file.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipentry = entries.nextElement();
-                if (zipentry.getName().startsWith(directory + File.separator)) {
+                if (zipentry.getName().replace("/", File.separator).startsWith(directory + File.separator)) {
                     if (zipentry.isDirectory()) {
                         ResourceUtil.createDirectory(zipentry.getName());
                     } else {
