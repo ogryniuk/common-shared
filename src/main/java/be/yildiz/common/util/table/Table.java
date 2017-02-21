@@ -33,7 +33,7 @@ import java.util.List;
  * @param <T> Type of the contained element.
  * @author Grégory Van den Borre
  */
-public class Table <T extends Comparable<T>> {
+public class Table <T> {
 
     /**
      * Table header.
