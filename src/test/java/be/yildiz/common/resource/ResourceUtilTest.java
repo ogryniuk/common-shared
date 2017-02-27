@@ -75,7 +75,7 @@ public class ResourceUtilTest {
         }
 
         @Test(expected = AssertionError.class)
-        public void testCreateDirectoryTreeWithNull() {
+        public void withNull() {
             ResourceUtil.createDirectoryTree(null);
         }
     }
@@ -116,7 +116,7 @@ public class ResourceUtilTest {
         }
 
         @Test(expected = AssertionError.class)
-        public void testCreateDirectoryTreeWithNull() {
+        public void withNull() {
             ResourceUtil.createDirectory(null);
         }
     }
