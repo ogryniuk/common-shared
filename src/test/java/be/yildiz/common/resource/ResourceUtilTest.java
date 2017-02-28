@@ -120,4 +120,8 @@ public class ResourceUtilTest {
             ResourceUtil.createDirectory(null);
         }
     }
+
+    private static File getFile(String name) {
+        return new File(ResourceUtil.class.getClassLoader().getResource(name).getFile()).getAbsoluteFile();
+    }
 }
