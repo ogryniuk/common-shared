@@ -80,6 +80,26 @@ public class NativeResourceLoaderTest {
         }
     }
 
+        public static class LoadLibrary {
+
+        private final NativeOperatingSystem[] systems = {new SystemLinux64(), new SystemWin32(), new SystemWin64()};
+
+        @Rule
+        public final TemporaryFolder folder = new TemporaryFolder();
+
+        @Test(expected = UnsatisfiedLinkError.class)
+        public void happyFlow() throws IOException {
+            NativeResourceLoader nrl = new NativeResourceLoader(folder.newFolder().getAbsolutePath(), systems);
+
+            String[] libs = new String[]{getFile("lib_one" + nrl.libraryExtension).getAbsolutePath(),
+                getFile("lib_two" + nrl.libraryExtension).getAbsolutePath(),
+                getFile("lib_three" + nrl.libraryExtension).getAbsolutePath()};
+
+            nrl.loadLibrary(libs);
+        }
+    }
+    
+    
     private static File getFile(String name) {
         return new File(NativeResourceLoader.class.getClassLoader().getResource(name).getFile()).getAbsoluteFile();
     }
